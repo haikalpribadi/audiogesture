@@ -56,9 +56,12 @@ class Strings(genpy.Message):
         if python3 or type(val1) == unicode:
           val1 = val1.encode('utf-8')
           length = len(val1)
-        buff.write(struct.pack('<I%ss'%length, length, val1))
-    except struct.error as se: self._check_types(se)
-    except TypeError as te: self._check_types(te)
+        if python3:
+          buff.write(struct.pack('<I%sB'%length, length, *val1))
+        else:
+          buff.write(struct.pack('<I%ss'%length, length, val1))
+    except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(_x))))
+    except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(_x))))
 
   def deserialize(self, str):
     """
@@ -101,9 +104,12 @@ class Strings(genpy.Message):
         if python3 or type(val1) == unicode:
           val1 = val1.encode('utf-8')
           length = len(val1)
-        buff.write(struct.pack('<I%ss'%length, length, val1))
-    except struct.error as se: self._check_types(se)
-    except TypeError as te: self._check_types(te)
+        if python3:
+          buff.write(struct.pack('<I%sB'%length, length, *val1))
+        else:
+          buff.write(struct.pack('<I%ss'%length, length, val1))
+    except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(_x))))
+    except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(_x))))
 
   def deserialize_numpy(self, str, numpy):
     """

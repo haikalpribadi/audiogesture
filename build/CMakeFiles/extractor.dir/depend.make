@@ -16,6 +16,8 @@ CMakeFiles/extractor.dir/src/main.cpp.o: /opt/ros/hydro/include/ros/assert.h
 CMakeFiles/extractor.dir/src/main.cpp.o: /opt/ros/hydro/include/ros/builtin_message_traits.h
 CMakeFiles/extractor.dir/src/main.cpp.o: /opt/ros/hydro/include/ros/common.h
 CMakeFiles/extractor.dir/src/main.cpp.o: /opt/ros/hydro/include/ros/console.h
+CMakeFiles/extractor.dir/src/main.cpp.o: /opt/ros/hydro/include/ros/console_backend.h
+CMakeFiles/extractor.dir/src/main.cpp.o: /opt/ros/hydro/include/ros/datatypes.h
 CMakeFiles/extractor.dir/src/main.cpp.o: /opt/ros/hydro/include/ros/duration.h
 CMakeFiles/extractor.dir/src/main.cpp.o: /opt/ros/hydro/include/ros/exception.h
 CMakeFiles/extractor.dir/src/main.cpp.o: /opt/ros/hydro/include/ros/exceptions.h

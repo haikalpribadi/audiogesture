@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="90">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture" name="0">
+      <df name="src">
+        <in>bextract.cpp</in>
+        <in>main.cpp</in>
+      </df>
+    </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false"
                    kind="IMPORTANT_FILES_FOLDER">
-      <itemPath>Makefile</itemPath>
+      <itemPath>/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
   <sourceRootList>
     <Elem>/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture</Elem>
   </sourceRootList>
-  <projectmakefile>Makefile</projectmakefile>
+  <projectmakefile>/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/Makefile</projectmakefile>
   <confs>
     <conf name="Default" type="0">
       <toolsSet>
@@ -24,28 +30,74 @@
       </codeAssistance>
       <makefileType>
         <makeTool>
-          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommandWorkingDir>/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f Makefile</buildCommand>
           <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
           <executablePath></executablePath>
-          <cTool>
-            <incDir>
-              <pElem>/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/msg_gen/cpp/include</pElem>
-              <pElem>/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/srv_gen/cpp/include</pElem>
-              <pElem>/opt/ros/hydro/include</pElem>
-              <pElem>/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture</pElem>
-            </incDir>
-          </cTool>
           <ccTool>
             <incDir>
               <pElem>/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/msg_gen/cpp/include</pElem>
               <pElem>/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/srv_gen/cpp/include</pElem>
               <pElem>/opt/ros/hydro/include</pElem>
-              <pElem>/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture</pElem>
+              <pElem>/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include</pElem>
             </incDir>
           </ccTool>
         </makeTool>
       </makefileType>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/bextract.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/local/include/marsyas</pElem>
+            <pElem>src</pElem>
+            <pElem>include/audiogesture</pElem>
+            <pElem>build</pElem>
+          </incDir>
+        </ccTool>
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/main.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/boost/exception</pElem>
+            <pElem>/usr/include/boost/smart_ptr/detail</pElem>
+            <pElem>/opt/ros/hydro/include/ros</pElem>
+            <pElem>/usr/include/boost/function</pElem>
+            <pElem>/usr/include/boost</pElem>
+            <pElem>/usr/local/include/marsyas</pElem>
+            <pElem>src</pElem>
+            <pElem>/usr/include/boost/smart_ptr</pElem>
+            <pElem>srv_gen/cpp/include/audiogesture</pElem>
+            <pElem>/usr/include/boost/format</pElem>
+            <pElem>/usr/include/boost/math/special_functions/detail</pElem>
+            <pElem>/usr/include/boost/math/tools</pElem>
+            <pElem>/usr/include/boost/math/policies</pElem>
+            <pElem>/usr/include/boost/mpl/aux_</pElem>
+            <pElem>/usr/include/boost/mpl</pElem>
+            <pElem>/usr/include/boost/mpl/aux_/preprocessed/gcc</pElem>
+            <pElem>/usr/include/boost/format/detail</pElem>
+            <pElem>/usr/include/boost/type_traits/detail</pElem>
+            <pElem>/usr/include/boost/detail</pElem>
+            <pElem>/usr/include/boost/type_traits</pElem>
+            <pElem>/usr/include/boost/optional</pElem>
+            <pElem>/usr/include/boost/bind</pElem>
+            <pElem>/usr/include/log4cxx</pElem>
+            <pElem>/usr/include/log4cxx/helpers</pElem>
+            <pElem>/usr/include/log4cxx/spi</pElem>
+            <pElem>/usr/include/boost/utility</pElem>
+            <pElem>/opt/ros/hydro/include</pElem>
+            <pElem>msg_gen/cpp/include/audiogesture</pElem>
+            <pElem>include/audiogesture</pElem>
+            <pElem>msg_gen/cpp/include</pElem>
+            <pElem>srv_gen/cpp/include</pElem>
+            <pElem>build</pElem>
+          </incDir>
+        </ccTool>
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>
