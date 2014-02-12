@@ -4,7 +4,8 @@
     <df root="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture" name="0">
       <df name="src">
         <in>bextract.cpp</in>
-        <in>main.cpp</in>
+        <in>music_extractor.cpp</in>
+        <in>sample_listener.cpp</in>
       </df>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -57,7 +58,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/main.cpp"
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/music_extractor.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -97,6 +98,8 @@
             <pElem>build</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="src/sample_listener.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

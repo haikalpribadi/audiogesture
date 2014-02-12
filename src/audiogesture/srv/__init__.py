@@ -1,2 +1,1 @@
-from ._Bextract import *
-from ._Bextractor import *
+from ._MusicExtractor import *

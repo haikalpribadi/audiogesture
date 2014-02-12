@@ -30,5 +30,6 @@ rosbuild_gensrv()
 #target_link_libraries(example ${PROJECT_NAME})
 
 include_directories (include/audiogesture)
-rosbuild_add_executable(extractor src/main.cpp src/bextract.cpp)
-target_link_libraries(extractor marsyas)
+rosbuild_add_executable(music_extractor src/music_extractor.cpp src/bextract.cpp)
+rosbuild_add_executable(sample_listener src/sample_listener.cpp)
+target_link_libraries(music_extractor marsyas)

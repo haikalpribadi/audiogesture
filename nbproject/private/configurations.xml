@@ -126,10 +126,6 @@
         <df name="lisp">
         </df>
       </df>
-      <df name="music">
-      </df>
-      <df name="music2">
-      </df>
       <df name="src">
         <df name="audiogesture">
           <df name="msg">
@@ -138,7 +134,8 @@
           </df>
         </df>
         <in>bextract.cpp</in>
-        <in>main.cpp</in>
+        <in>music_extractor.cpp</in>
+        <in>sample_listener.cpp</in>
       </df>
       <df name="srv">
       </df>
