@@ -7,34 +7,40 @@
 
 #include <cstdlib>
 #include <sys/inotify.h>
+#include <signal.h>
 #include <ros/ros.h>
-
 
 #define EVENT_SIZE      ( sizeof ( struct inotify_event ))
 #define BUF_LEN         ( 1024 * ( EVENT_SIZE + NAME_MAX + 1 ))
+#define WATCH_FLAGS     ( IN_CREATE | IN_MOVED_TO )
 
 using namespace std;
 
-/*
- * 
- */
+static bool run = true;
+
+void signalCallback(int signal)
+{
+    run = false;
+}
+
 int main(int argc, char** argv) 
 {
     ros::init(argc, argv, "MusicSampleListener");
     ros::NodeHandle node;
     
-    int length, i = 0;
-    int listener = inotify_init1(IN_NONBLOCK);
-    int working_dir;
+    int i = 0;
+    int descriptor = inotify_init();
+    int watched_dir;
     char buffer[BUF_LEN];
     string dir;
     
-    if(node.getParam("music_dir", dir) && listener >= 0 )
+    if(node.getParam("music_dir", dir) && descriptor >= 0 )
     {
         ROS_INFO("MusicSampleListener using music_dir: %s", dir.c_str());
-        working_dir = inotify_add_watch(listener, dir.c_str(), IN_CREATE);
+        watched_dir = inotify_add_watch(descriptor, dir.c_str(), WATCH_FLAGS);
+        
     }
-    else if(listener < 0)
+    else if(descriptor < 0)
     {
         ROS_ERROR("Unable to listen to music directory");
         ros::requestShutdown();
@@ -45,22 +51,22 @@ int main(int argc, char** argv)
         ros::requestShutdown();
     }
     
-    while(length = read(listener, buffer, BUF_LEN))
+    signal(SIGINT, signalCallback);
+    
+    while(run)
     {
-        struct inotify_event *event = (struct inotify_event *) &buffer[i];
-        if(event->len && !(event->mask & IN_ISDIR))
+        while(run && read(descriptor, buffer, BUF_LEN)>0)
         {
-            ROS_INFO("A music file was created %s", event->name);
+            struct inotify_event *event = (struct inotify_event *) &buffer[i];
+            if(event->len && !(event->mask & IN_ISDIR))
+            {
+                ROS_INFO("A music file was entered: %s", event->name);
+            }
         }
     }
     
-    if(length<0)
-    {
-        ROS_ERROR("Error while reading file");
-    }
-    
-    inotify_rm_watch(listener, working_dir);
-    close(listener);
+    inotify_rm_watch(descriptor, watched_dir);
+    close(descriptor);
     
     return 0;
 }

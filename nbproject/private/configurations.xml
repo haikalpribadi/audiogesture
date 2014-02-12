@@ -38,9 +38,11 @@
           </df>
           <df name="doxygen.dir">
           </df>
-          <df name="extractor.dir">
+          <df name="music_extractor.dir">
             <df name="src">
             </df>
+          </df>
+          <df name="Progress">
           </df>
           <df name="rosbuild_clean-test-results.dir">
           </df>
@@ -71,6 +73,10 @@
           <df name="rospack_gensrv_all.dir">
           </df>
           <df name="run_tests.dir">
+          </df>
+          <df name="sample_listener.dir">
+            <df name="src">
+            </df>
           </df>
           <df name="test-future.dir">
           </df>
@@ -111,6 +117,8 @@
           <in>bextract.h</in>
         </df>
       </df>
+      <df name="launch">
+      </df>
       <df name="lib">
       </df>
       <df name="msg">
@@ -143,7 +151,7 @@
         <df name="cpp">
           <df name="include">
             <df name="audiogesture">
-              <in>Bextractor.h</in>
+              <in>MusicExtractor.h</in>
             </df>
           </df>
         </df>

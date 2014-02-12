@@ -26,16 +26,14 @@ bool bextract(audiogesture::MusicExtractor::Request &req,
     ROS_INFO("BEXTRACTOR CALLED");
     return true;
 }
-/*
- * 
- */
+
 int main(int argc, char** argv) 
 {
     
     ros::init(argc, argv, "MusicFeatureExtractor");
     ros::NodeHandle node;
     
-    ros::ServiceServer music_extractor_srv_ = node.advertiseService("music_extractor", bextract);
+    ros::ServiceServer musicExtractor_srv = node.advertiseService("music_extractor", bextract);
     
     ROS_INFO("Music Feature Extractor");
     
