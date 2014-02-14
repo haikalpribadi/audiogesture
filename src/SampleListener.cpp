@@ -8,40 +8,36 @@
 #include "SampleListener.h"
 
 SampleListener::SampleListener() {
+    if(node.getParam("music_dir", music_dir)) {
+        ROS_INFO("MusicSampleListener using music_dir: %s", music_dir.c_str());
+    }
+    else {
+        ROS_ERROR("Please set the music_directory (file) parameter for extractor");
+        ros::requestShutdown();
+    }
+    
     featureExtractor_pub = node.advertise<std_msgs::String>("music_extractor", 1000);
+    collectionGenerator_pub = node.advertise<std_msgs::String>("collection_generator", 1000);
 }
 
-SampleListener::SampleListener(const SampleListener& orig) {
-}
-
-SampleListener::~SampleListener() {
-}
-
-
-
-void SampleListener::monitorDirectory(){
+void SampleListener::monitorDirectory() {
     int i = 0;
     int descriptor = inotify_init();
     int watched_dir;
     char buffer[BUF_LEN];
     
-    if(node.getParam("music_dir", music_dir) && descriptor >= 0 ){
-        ROS_INFO("MusicSampleListener using music_dir: %s", music_dir.c_str());
+    if(descriptor >= 0 ) {
         watched_dir = inotify_add_watch(descriptor, music_dir.c_str(), WATCH_FLAGS);
     }
-    else if(descriptor < 0){
+    else {
         ROS_ERROR("Unable to listen to music directory");
-        ros::requestShutdown();
-    }
-    else{
-        ROS_ERROR("Please set the music_directory (file) parameter for extractor");
         ros::requestShutdown();
     }
     
     signal(SIGINT, signalCallback);
     
-    while(run){
-        while(run && read(descriptor, buffer, BUF_LEN)>0){
+    while(run) {
+        while(run && read(descriptor, buffer, BUF_LEN)>0) {
             struct inotify_event *event = (struct inotify_event *) &buffer[i];
             if(event->len && !(event->mask & IN_ISDIR))
             {
@@ -50,12 +46,12 @@ void SampleListener::monitorDirectory(){
                 if(hasFormat(event->name, ARFF))                {
                     
                 }
-                else if(hasFormat(name, MF)){
+                else if(hasFormat(name, MF)) {
                     if(name != "bextract_single.mf")
                         publishToFeatureExtraction(name);
                 }
                 else{
-                    generateCollectionFile(name);
+                    publishToCollectionGenerator(name);
                 }
             }
         }
@@ -65,21 +61,17 @@ void SampleListener::monitorDirectory(){
     close(descriptor);
 }
 
-void SampleListener::generateCollectionFile(string sampleName)
+void SampleListener::publishToCollectionGenerator(string sample)
 {
-    string name = sampleName.substr(0, sampleName.find(".")) + MF;
-    replace(name.begin(), name.end(), ' ', '_');
-    name = music_dir + "/" + name;
-    FILE * file;
-    file = fopen(name.c_str(), "w");
-    if(file!=NULL){
-        fputs(sampleName.c_str(), file);
-        fclose(file);
-    }
+    std_msgs::String msg;
+    msg.data = sample;
+    
+    collectionGenerator_pub.publish(msg);
+    ROS_INFO("Collection Generator called for: %s", msg.data.c_str());
     return;
 }
 
-void SampleListener::publishToFeatureExtraction(string filename){
+void SampleListener::publishToFeatureExtraction(string filename) {
     string outname = filename.substr(0, filename.find(".")) + ARFF;
     
     string args = "";
@@ -96,7 +88,7 @@ void SampleListener::publishToFeatureExtraction(string filename){
     ROS_INFO("Music Feature Extraction called for: %s", msg.data.c_str());
 }
 
-bool SampleListener::hasFormat (string file, string format){
+bool SampleListener::hasFormat (string file, string format) {
     if (file.length() >= format.length())
     {
         return (0 == file.compare (file.length() - format.length(), format.length(), format));
@@ -105,13 +97,13 @@ bool SampleListener::hasFormat (string file, string format){
     return false;
 }
 
-void signalCallback(int signal){
+void signalCallback(int signal) {
     run = false;
     ros::shutdown();
     exit(0);
 }
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
     ros::init(argc, argv, "MusicSampleListener");
     
     SampleListener listener;

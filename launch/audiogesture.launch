@@ -7,6 +7,7 @@
 	
 	<node pkg="audiogesture" type="music_extractor" name="MusicFeatureExtractor" output="screen"/>
 	<node pkg="audiogesture" type="sample_listener" name="SampleListener" output="screen"/>
+	<node pkg="audiogesture" type="collection_generator" name="CollectionGenerator" output="screen"/>
 	
 </launch>
 <!--%EndTag(FULL)%-->

@@ -22,7 +22,6 @@
 */
 
 #include "Bextract.h"
-#include <ros/ros.h>
 
 int helpopt;
 int usageopt;

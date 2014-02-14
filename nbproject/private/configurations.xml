@@ -30,6 +30,10 @@
               </df>
             </df>
           </df>
+          <df name="collection_generator.dir">
+            <df name="src">
+            </df>
+          </df>
           <df name="CompilerIdC">
             <in>CMakeCCompilerId.c</in>
           </df>
@@ -53,8 +57,6 @@
           <df name="ROSBUILD_gensrv_cpp.dir">
           </df>
           <df name="ROSBUILD_gensrv_lisp.dir">
-          </df>
-          <df name="ROSBUILD_gensrv_py.dir">
           </df>
           <df name="rosbuild_precompile.dir">
           </df>
@@ -113,6 +115,8 @@
       <df name="include">
         <df name="audiogesture">
           <in>Bextract.h</in>
+          <in>CollectionGenerator.h</in>
+          <in>MusicExtractor.h</in>
           <in>SampleListener.h</in>
         </df>
       </df>
@@ -141,6 +145,7 @@
           </df>
         </df>
         <in>Bextract.cpp</in>
+        <in>CollectionGenerator.cpp</in>
         <in>MusicExtractor.cpp</in>
         <in>SampleListener.cpp</in>
       </df>

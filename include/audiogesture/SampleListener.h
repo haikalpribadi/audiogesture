@@ -16,8 +16,6 @@
 #include <std_msgs/String.h>
 #include <sys/inotify.h>
 
-#include "audiogesture/MusicExtractor.h"
-
 
 #define EVENT_SIZE      ( sizeof ( struct inotify_event ))
 #define BUF_LEN         ( 1024 * ( EVENT_SIZE + NAME_MAX + 1 ))
@@ -32,9 +30,6 @@ static bool run = true;
 class SampleListener {
 public:
     SampleListener();
-    SampleListener(const SampleListener& orig);
-    virtual ~SampleListener();
-    
     void monitorDirectory();
     
 private:
@@ -43,8 +38,9 @@ private:
     
     ros::NodeHandle node;
     ros::Publisher featureExtractor_pub;
+    ros::Publisher collectionGenerator_pub;
     
-    void generateCollectionFile(string sampleName);
+    void publishToCollectionGenerator(string sample);
     void publishToFeatureExtraction(string filename);
     bool hasFormat(string file, string format);
 };
