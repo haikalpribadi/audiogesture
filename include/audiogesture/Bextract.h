@@ -10,13 +10,14 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include <marsyas/Collection.h>
-#include <marsyas/MarSystemManager.h>
 #include <marsyas/Accumulator.h>
-#include <marsyas/Fanout.h>
+#include <marsyas/Collection.h>
 #include <marsyas/CommandLineOptions.h>
-#include <marsyas/TimeLine.h>
+#include <marsyas/Fanout.h>
 #include <marsyas/FileName.h>
+#include <marsyas/MarSystemManager.h>
+#include <marsyas/TimeLine.h>
+
 //#include <marsyas/common.h>
 #include <string>
 #include <vector>

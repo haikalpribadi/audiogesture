@@ -21,7 +21,8 @@
    bextract: batch feature extraction
 */
 
-#include "bextract.h"
+#include "Bextract.h"
+#include <ros/ros.h>
 
 int helpopt;
 int usageopt;
@@ -3969,8 +3970,9 @@ int bextractor(vector<string> args)
   args.insert(args.begin(), progName);
   
   vector<const char*> cStrings;
-  for(int i = 0; i < args.size(); ++i)
+  for(int i = 0; i < args.size(); ++i){
       cStrings.push_back(args[i].c_str());
+  }
   
   const char** cStringArray = &cStrings[0];
 
@@ -4019,7 +4021,6 @@ int bextractor(vector<string> args)
 
   vector<string> soundfiles = cmd_options.getRemaining();
   vector<string>::iterator sfi;
-
 
   for (sfi = soundfiles.begin(); sfi != soundfiles.end(); ++sfi)
   {

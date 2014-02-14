@@ -2,10 +2,15 @@
 <configurationDescriptor version="90">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture" name="0">
+      <df name="include">
+        <df name="audiogesture">
+          <in>SampleListener.h</in>
+        </df>
+      </df>
       <df name="src">
-        <in>bextract.cpp</in>
-        <in>music_extractor.cpp</in>
-        <in>sample_listener.cpp</in>
+        <in>Bextract.cpp</in>
+        <in>MusicExtractor.cpp</in>
+        <in>SampleListener.cpp</in>
       </df>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -45,7 +50,12 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/bextract.cpp"
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/SampleListener.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/Bextract.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -58,7 +68,7 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/music_extractor.cpp"
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/MusicExtractor.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -99,7 +109,10 @@
           </incDir>
         </ccTool>
       </item>
-      <item path="src/sample_listener.cpp" ex="false" tool="1" flavor2="0">
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/SampleListener.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
     </conf>
   </confs>

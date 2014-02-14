@@ -42,8 +42,6 @@
             <df name="src">
             </df>
           </df>
-          <df name="Progress">
-          </df>
           <df name="rosbuild_clean-test-results.dir">
           </df>
           <df name="ROSBUILD_genmsg_cpp.dir">
@@ -114,7 +112,8 @@
       </df>
       <df name="include">
         <df name="audiogesture">
-          <in>bextract.h</in>
+          <in>Bextract.h</in>
+          <in>SampleListener.h</in>
         </df>
       </df>
       <df name="launch">
@@ -141,9 +140,9 @@
           <df name="srv">
           </df>
         </df>
-        <in>bextract.cpp</in>
-        <in>music_extractor.cpp</in>
-        <in>sample_listener.cpp</in>
+        <in>Bextract.cpp</in>
+        <in>MusicExtractor.cpp</in>
+        <in>SampleListener.cpp</in>
       </df>
       <df name="srv">
       </df>
