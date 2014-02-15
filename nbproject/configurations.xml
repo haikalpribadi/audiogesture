@@ -58,6 +58,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/MusicExtractor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/SampleListener.h"
             ex="false"
             tool="3"
@@ -125,11 +130,6 @@
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/SampleListener.cpp"
             ex="false"
             tool="1"
-            flavor2="0">
-      </item>
-      <item path="include/audiogesture/MusicExtractor.h"
-            ex="false"
-            tool="3"
             flavor2="0">
       </item>
     </conf>

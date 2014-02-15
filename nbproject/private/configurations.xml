@@ -141,8 +141,6 @@
         <df name="audiogesture">
           <df name="msg">
           </df>
-          <df name="srv">
-          </df>
         </df>
         <in>Bextract.cpp</in>
         <in>CollectionGenerator.cpp</in>
@@ -150,17 +148,6 @@
         <in>SampleListener.cpp</in>
       </df>
       <df name="srv">
-      </df>
-      <df name="srv_gen">
-        <df name="cpp">
-          <df name="include">
-            <df name="audiogesture">
-              <in>MusicExtractor.h</in>
-            </df>
-          </df>
-        </df>
-        <df name="lisp">
-        </df>
       </df>
     </df>
   </logicalFolder>
