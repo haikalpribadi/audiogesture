@@ -2,7 +2,7 @@
 <launch>
 	
 	<param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/music"/>
-	<!--<param name="bextract_args" value="" />-->	
+	<param name="bextract_args" value="-chroma" />
 	<!--<param name="osc_port" value="" />-->
 	
 	<node pkg="audiogesture" type="music_extractor" name="MusicFeatureExtractor" output="screen"/>
