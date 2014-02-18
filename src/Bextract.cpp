@@ -2270,11 +2270,6 @@ void bextract_train_refactored(string pluginName, string wekafname,
         bextractNetwork->updControl("WekaSink/wsink/mrs_string/filename", wekafname);
     }
 
-
-
-
-
-
     // main processing loop for training
     MarControlPtr ctrl_hasData = bextractNetwork->getctrl("mrs_bool/hasData");
     MarControlPtr ctrl_currentlyPlaying = bextractNetwork->getctrl("mrs_string/currentlyPlaying");
@@ -2357,14 +2352,14 @@ void bextract_train_refactored(string pluginName, string wekafname,
             if (ctrl_currentCollectionNewFile->to<mrs_bool>()) {
                 // if (memSize != 0)
                 // featureNetwork->updControl("TextureStats/tStats/mrs_bool/reset",  true);
+                const string& data = bextractNetwork->getctrl("mrs_string/onObsNames")->to<mrs_string>();
+                cout << "Data: " << data << endl;
                 cout << "Processing: " << n << " - " << currentlyPlaying << endl;
                 n++;
             }
+            bextractNetwork->put_html(cout);
 
         }
-
-
-
     }
 
 
