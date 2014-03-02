@@ -118,6 +118,7 @@
           <in>CollectionGenerator.h</in>
           <in>MusicExtractor.h</in>
           <in>SampleListener.h</in>
+          <in>WekaSink.h</in>
         </df>
       </df>
       <df name="launch">
@@ -146,6 +147,7 @@
         <in>CollectionGenerator.cpp</in>
         <in>MusicExtractor.cpp</in>
         <in>SampleListener.cpp</in>
+        <in>WekaSink.cpp</in>
       </df>
       <df name="srv">
       </df>

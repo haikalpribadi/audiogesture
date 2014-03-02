@@ -8,6 +8,10 @@
 #ifndef BEXTRACT_H
 #define	BEXTRACT_H
 
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+
 #include <cstdio>
 #include <cstdlib>
 #include <marsyas/Accumulator.h>

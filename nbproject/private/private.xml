@@ -12,7 +12,9 @@
         <group>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/MusicExtractor.cpp</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/Bextract.cpp</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/SampleListener.cpp</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/WekaSink.h</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/Bextract.h</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/WekaSink.cpp</file>
         </group>
     </open-files>
 </project-private>

@@ -51,6 +51,7 @@ void SampleListener::monitorDirectory() {
                         publishToFeatureExtraction(name);
                 }
                 else{
+                    if(!hasFormat(name, HTML))
                     publishToCollectionGenerator(name);
                 }
             }

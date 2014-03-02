@@ -22,6 +22,7 @@
 #define WATCH_FLAGS     ( IN_CREATE | IN_MOVED_TO )
 #define MF      ".mf"
 #define ARFF    ".arff"
+#define HTML    ".html"
 
 using namespace std;
 
