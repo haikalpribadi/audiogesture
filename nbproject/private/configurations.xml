@@ -42,6 +42,10 @@
           </df>
           <df name="doxygen.dir">
           </df>
+          <df name="function_extractor.dir">
+            <df name="src">
+            </df>
+          </df>
           <df name="music_extractor.dir">
             <df name="src">
             </df>
@@ -116,6 +120,7 @@
         <df name="audiogesture">
           <in>Bextract.h</in>
           <in>CollectionGenerator.h</in>
+          <in>FunctionExtractor.h</in>
           <in>MusicExtractor.h</in>
           <in>SampleListener.h</in>
           <in>WekaSink.h</in>
@@ -145,6 +150,7 @@
         </df>
         <in>Bextract.cpp</in>
         <in>CollectionGenerator.cpp</in>
+        <in>FunctionExtractor.cpp</in>
         <in>MusicExtractor.cpp</in>
         <in>SampleListener.cpp</in>
         <in>WekaSink.cpp</in>

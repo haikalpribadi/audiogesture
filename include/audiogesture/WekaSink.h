@@ -22,9 +22,15 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <vector>
 
 #include <marsyas/MarSystem.h>
 #include <ros/ros.h>
+#include <std_msgs/Float32.h>
+
+using namespace std;
+
+vector<ros::Publisher> publishers;
 
 namespace Marsyas
 {
@@ -94,7 +100,9 @@ private:
 
 	mrs_natural stabilizingTicks_;
 	mrs_natural count_;
-
+    
+    
+    
 public:
 	/// WekaSink constructor.
 	WekaSink(std::string name);
@@ -117,14 +125,12 @@ public:
 	{
 		return mos_;
 	}
-
 };
 
 }//namespace Marsyas
 
 
 #endif
-
 
 
 

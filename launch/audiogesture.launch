@@ -2,12 +2,85 @@
 <launch>
 	
 	<param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/music"/>
-	<param name="bextract_args" value="-chroma" />
+	<param name="bextract_args" value="-mfcc" />
 	<!--<param name="osc_port" value="" />-->
 	
 	<node pkg="audiogesture" type="music_extractor" name="MusicFeatureExtractor" output="screen"/>
+	
 	<node pkg="audiogesture" type="sample_listener" name="SampleListener" output="screen"/>
+	
 	<node pkg="audiogesture" type="collection_generator" name="CollectionGenerator" output="screen"/>
 	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor1" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC0_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor2" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC1_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor3" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC2_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor4" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC3_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor5" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC4_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor6" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC5_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor7" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC6_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor8" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC7_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor9" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC8_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor10" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC9_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor11" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC10_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor12" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC11_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
+	
+	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor13" output="screen">
+	  <param name="feature" value="Mean_Mem20_MFCC12_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
+	</node>
 </launch>
 <!--%EndTag(FULL)%-->
+
+
+<!--
+
+"Std_Mem20_MFCC0_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC1_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC2_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC3_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC4_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC5_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC6_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC7_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC8_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC9_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC10_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC11_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+"Std_Mem20_MFCC12_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
+
+
+-->

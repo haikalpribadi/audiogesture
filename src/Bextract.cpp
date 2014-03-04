@@ -2357,16 +2357,6 @@ void bextract_train_refactored(string pluginName, string wekafname,
                
                 cout << "Processing: " << n << " - " << currentlyPlaying << endl;
                 n++;
-                
-                /*
-                string filename = "processedData.html";
-                filename = music_dir + "/" + filename;
-
-                ofstream file;
-                file.open(filename.c_str());
-                file << *bextractNetwork;
-                file.close();
-                 */
             }
 
         }
@@ -2530,34 +2520,6 @@ void bextract_train_refactored(string pluginName, string wekafname,
             }
         }
     }
-    
-    string datafilename = "processedData.html";
-    datafilename = music_dir + "/" + datafilename;
-
-    ofstream datafile;
-    datafile.open(datafilename.c_str());
-    
-
-    const realvec& out = bextractNetwork->getctrl("WekaSink/wsink/mrs_realvec/processedData")->to<mrs_realvec>();
-    
-    datafile << out << endl;
-    for (int t = 0; t < 64; t++)
-    {
-      for (int o=0; o < 28; o++)
-        {
-          datafile << out(o,t) << ",";
-        }
-      datafile << endl;
-    }
-    
-    datafile.close();
-    
-    string networkfilename = "networkData.html";
-    networkfilename = music_dir + "/" + networkfilename;
-    ofstream networkfile;
-    networkfile.open(networkfilename.c_str());
-    bextractNetwork->put_html(networkfile);
-    networkfile.close();
     
     delete bextractNetwork;
     return;

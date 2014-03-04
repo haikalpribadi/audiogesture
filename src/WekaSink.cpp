@@ -140,6 +140,9 @@ WekaSink::putHeader(mrs_string inObsNames)
 		// TODO: this is could be done way more elegant
 		// (e.g. using a 'split()' or 'explode()' function).
 		mrs_natural i;
+                
+                ros::NodeHandle node;
+                
 		for (i =0; i < nAttributes; ++i)
 		{
 			mrs_string inObsName;
@@ -151,7 +154,20 @@ WekaSink::putHeader(mrs_string inObsNames)
 			ostringstream oss;
 			// oss << "attribute" << i;
 			(*mos_) << "@attribute " << inObsName << " real" << endl;
+                        
+                        if(filename_ != "weka.arff" && publishers.size() < nAttributes) {
+                            string name = inObsName;
+                            replace(name.begin(), name.end(), '#', 'S');
+                            ros::Publisher pub = node.advertise<std_msgs::Float32>(name, 10000);
+                            publishers.push_back(pub);
+                            for(int j=0; publishers.size() == nAttributes && publishers.back().getNumSubscribers()==0 && j<20000; j++){
+                                usleep(100);
+                            }
+                        }
 		}
+                if(filename_ != "weka.arff") {
+                    node.setParam("sample_rate", israte_);
+                }
 
 		// The attribute for the label.
 		if (!ctrl_regression_->isTrue())
@@ -260,7 +276,6 @@ WekaSink::myUpdate(MarControlPtr sender)
 void
 WekaSink::myProcess(realvec& in, realvec& out)
 {
-        (*mos_) << "========================== We hacked this ==========================";
 	mrs_natural o,t;
 	// If muted: just copy input to output.
 	if (ctrl_mute_->isTrue())
@@ -310,6 +325,10 @@ WekaSink::myProcess(realvec& in, realvec& out)
 	      (*mos_) << "% filename " << ctrl_currentlyPlaying_->to<mrs_string>() << endl;
 	      (*mos_) << "% srate " << israte_ << endl;
 	      prev_playing_ = ctrl_currentlyPlaying_->to<mrs_string>();
+              
+              //std_msgs::Float32 msg;
+              //msg.data = israte_;
+              //publishers.back().publish(msg);
 	    }
 	  
 	  // round value, in case of weird floating-point effects
@@ -340,8 +359,12 @@ WekaSink::myProcess(realvec& in, realvec& out)
 			    }
 			  else
 			    {
-			      (*mos_) << out(o,t) << ",";
+			      (*mos_) << fixed << setprecision(precision_) << out(o,t) << ",";
                               
+                              std_msgs::Float32 msg;
+                              msg.data = out(o,t);
+                              publishers[o].publish(msg);
+                                      
 			      //notPrint = false;
 			    }
 			}
@@ -349,45 +372,46 @@ WekaSink::myProcess(realvec& in, realvec& out)
 		    }
 		}
 	    }
-          //(*mos_) << endl;
+          (*mos_) << endl;
 	  // Output last value (e.g. as label).
-	  
+	  /*
           ostringstream oss;
-	  if ((count_ % downsample_) == 0)
-	    {
-	    if (print_line)
-	    {
-	        if (!ctrl_regression_->isTrue())
-		{
-	            if (label_class >= 0)
-		    {
-		      //  if (!notPrint)
-		      //{
-		      if (label_class >= (mrs_natural)labelNames_.size())
-			{
-			  MRSWARN("WekaSink: label number is too big");
-			  oss << "non-label";
-			}
-		      else
-			{
-			  oss << labelNames_[label_class];
-			}
-		      (*mos_) << oss.str();
-		      (*mos_) << endl;
-		    }
-		  //  else
-		  //{
-		  //  cout << "skipping instance" << endl;
-		  //}
-		  //}
-		}
-	    	else
-	    	{
-	     	  (*mos_) << in(inObservations_ - 1, t);
-	    	  (*mos_) << endl;
-		}
-	    }
-	  }
+          if ((count_ % downsample_) == 0)
+            {
+            if (print_line)
+            {
+                if (!ctrl_regression_->isTrue())
+                {
+                    if (label_class >= 0)
+                    {
+                      //  if (!notPrint)
+                      //{
+                      if (label_class >= (mrs_natural)labelNames_.size())
+                        {
+                          MRSWARN("WekaSink: label number is too big");
+                          oss << "non-label";
+                        }
+                      else
+                        {
+                          oss << labelNames_[label_class];
+                        }
+                      (*mos_) << oss.str();
+                      (*mos_) << endl;
+                    }
+                  //  else
+                  //{
+                  //  cout << "skipping instance" << endl;
+                  //}
+                  //}
+                }
+                else
+                {
+                  (*mos_) << in(inObservations_ - 1, t);
+                  (*mos_) << endl;
+                }
+            }
+          }
+           */
           
 	}
 	count_++;
