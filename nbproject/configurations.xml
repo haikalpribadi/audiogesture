@@ -5,8 +5,11 @@
       <df name="include">
         <df name="audiogesture">
           <in>CollectionGenerator.h</in>
+          <in>FeatureNormalizer.h</in>
           <in>FunctionExtractor.h</in>
+          <in>GestureReceiver.h</in>
           <in>MusicExtractor.h</in>
+          <in>MusicExtractorBuffer.h</in>
           <in>SampleListener.h</in>
           <in>WekaSink.h</in>
         </df>
@@ -14,8 +17,11 @@
       <df name="src">
         <in>Bextract.cpp</in>
         <in>CollectionGenerator.cpp</in>
+        <in>FeatureNormalizer.cpp</in>
         <in>FunctionExtractor.cpp</in>
+        <in>GestureReceiver.cpp</in>
         <in>MusicExtractor.cpp</in>
+        <in>MusicExtractorBuffer.cpp</in>
         <in>SampleListener.cpp</in>
         <in>WekaSink.cpp</in>
       </df>
@@ -62,12 +68,22 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/FeatureNormalizer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/FunctionExtractor.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/MusicExtractor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/MusicExtractorBuffer.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -96,6 +112,11 @@
         </ccTool>
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/CollectionGenerator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/FeatureNormalizer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -146,6 +167,11 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/MusicExtractorBuffer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/SampleListener.cpp"
             ex="false"
             tool="1"
@@ -155,6 +181,13 @@
             ex="false"
             tool="1"
             flavor2="0">
+      </item>
+      <item path="include/audiogesture/GestureReceiver.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/GestureReceiver.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

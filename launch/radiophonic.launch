@@ -1,0 +1,24 @@
+<!--%Tag(FULL)%-->
+<launch>
+	
+	<param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music"/>
+	<param name="bextract_args" value="-mfcc" />
+	<param name="feature_subs" value="1" />
+	
+	<!--<param name="osc_port" value="" />-->
+	
+	<node pkg="audiogesture" type="music_extractor" name="MusicFeatureExtractor" output="screen"/>
+	
+	<node pkg="audiogesture" type="music_extractor_buffer" name="MusicFeatureExtractorBuffer" output="screen"/>
+	
+	<node pkg="audiogesture" type="sample_listener" name="SampleListener" output="screen"/>
+	
+	<node pkg="audiogesture" type="collection_generator" name="CollectionGenerator" output="screen"/>
+	
+	<node pkg="audiogesture" type="feature_normalizer" name="FeatureNormalizer" output="screen"/>
+	
+	
+	
+	
+</launch>
+<!--%EndTag(FULL)%-->

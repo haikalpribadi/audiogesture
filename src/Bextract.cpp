@@ -1707,7 +1707,7 @@ void bextract_train(vector<Collection> cls, Collection cl,
             featureNetwork->tick();
             cout << "Processed " << l.entry(i) << endl;
         }
-    }
+    }        
         //**********************
         // if using timelines
         //**********************
@@ -2354,7 +2354,7 @@ void bextract_train_refactored(string pluginName, string wekafname,
             if (ctrl_currentCollectionNewFile->to<mrs_bool>()) {
                 // if (memSize != 0)
                 // featureNetwork->updControl("TextureStats/tStats/mrs_bool/reset",  true);
-               
+
                 cout << "Processing: " << n << " - " << currentlyPlaying << endl;
                 n++;
             }
@@ -2504,8 +2504,7 @@ void bextract_train_refactored(string pluginName, string wekafname,
                 prout << currentlyPlaying << "\t" << l.labelName((mrs_natural) pr(0, 0)) << endl;
             }
             cout << "Correct instances = " << correct_instances << "/" << num_instances << endl;
-        }
-        else {
+        } else {
 
             cout << "bextract_train_refactored: predicting test collection: " << testCollection << endl;
             bextractNetwork->updControl("mrs_string/filename", testCollection);
@@ -2520,7 +2519,7 @@ void bextract_train_refactored(string pluginName, string wekafname,
             }
         }
     }
-    
+
     delete bextractNetwork;
     return;
 }
@@ -3632,8 +3631,7 @@ void saivq_train_refactored(string pluginName, string wekafname,
                 prout << currentlyPlaying << "\t" << l.labelName((mrs_natural) pr(0, 0)) << endl;
             }
             cout << "Correct instances = " << correct_instances << "/" << num_instances << endl;
-        }
-        else {
+        } else {
 
             cout << "bextract_train_refactored: predicting test collection: " << testCollection << endl;
             bextractNetwork->updControl("mrs_string/filename", testCollection);
@@ -3791,7 +3789,7 @@ int bextractor(vector<string> args) {
 
         bextract_trainAccumulator(cls, i, pluginName, classNames, wekafname, memSize, extrName,
                 withBeatFeatures);
-    }        //REMOVE_SILENCE Extractor
+    }//REMOVE_SILENCE Extractor
     else if (extractorStr.substr(0, 2) == "RS") {
         string extrName = extractorName.substr(2, extractorName.length());
         if (featExtractors.find(extrName) == featExtractors.end()) {
@@ -3805,12 +3803,12 @@ int bextractor(vector<string> args) {
         bextract_trainStereoMFCC(cls, classNames, wekafname, memSize);
     } else if (extractorStr == "STEREOSPSMFCC") {
         bextract_trainStereoSPSMFCC(cls, classNames, wekafname, memSize);
-    }        //---------------- ADRess extractors -----------------------------
+    }//---------------- ADRess extractors -----------------------------
     else if (extractorStr == "ADRessSTEREOSPS") {
         bextract_trainADRessStereoSPS(cls, classNames, wekafname, memSize);
     } else if (extractorStr == "ADRessSTEREOSPSMFCC") {
         bextract_trainADRessStereoSPSMFCC(cls, classNames, wekafname, memSize);
-    }        //----------------------------------------------------------------
+    }//----------------------------------------------------------------
     else if (extractorStr == "BEAT") {
         bool withBeatFeatures = true;
         string extrName;
@@ -3818,7 +3816,7 @@ int bextractor(vector<string> args) {
         cout << "extrName = " << extrName << endl;
         bextract_trainAccumulator(cls, i, pluginName, classNames, wekafname, memSize, extrName,
                 withBeatFeatures);
-    }        //NORMAL Extractor
+    }//NORMAL Extractor
     else {
         if (featExtractors.find(extractorStr) == featExtractors.end()) {
             cout << extractorStr << ": Unsupported extractor!" << endl;

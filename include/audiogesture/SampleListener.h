@@ -20,9 +20,11 @@
 #define EVENT_SIZE      ( sizeof ( struct inotify_event ))
 #define BUF_LEN         ( 1024 * ( EVENT_SIZE + NAME_MAX + 1 ))
 #define WATCH_FLAGS     ( IN_CREATE | IN_MOVED_TO )
-#define MF      ".mf"
+
 #define ARFF    ".arff"
+#define FV      ".fv"
 #define HTML    ".html"
+#define MF      ".mf"
 
 using namespace std;
 
@@ -36,6 +38,7 @@ public:
 private:
     bool run;
     string music_dir;
+    string args;
     
     ros::NodeHandle node;
     ros::Publisher featureExtractor_pub;

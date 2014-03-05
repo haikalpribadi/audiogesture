@@ -1,17 +1,32 @@
 <!--%Tag(FULL)%-->
 <launch>
 	
-	<param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/music"/>
+	<param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music"/>
 	<param name="bextract_args" value="-mfcc" />
+	<param name="feature_subs" value="1" />
+	
 	<!--<param name="osc_port" value="" />-->
 	
 	<node pkg="audiogesture" type="music_extractor" name="MusicFeatureExtractor" output="screen"/>
+	
+	<node pkg="audiogesture" type="music_extractor_buffer" name="MusicFeatureExtractorBuffer" output="screen"/>
 	
 	<node pkg="audiogesture" type="sample_listener" name="SampleListener" output="screen"/>
 	
 	<node pkg="audiogesture" type="collection_generator" name="CollectionGenerator" output="screen"/>
 	
-	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor1" output="screen">
+	<node pkg="audiogesture" type="feature_normalizer" name="FeatureNormalizer" output="screen"/>
+	
+	
+	
+	
+</launch>
+<!--%EndTag(FULL)%-->
+
+
+<!--
+
+  <node pkg="audiogesture" type="function_extractor" name="FunctionExtractor1" output="screen">
 	  <param name="feature" value="Mean_Mem20_MFCC0_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
 	</node>
 	
@@ -62,11 +77,7 @@
 	<node pkg="audiogesture" type="function_extractor" name="FunctionExtractor13" output="screen">
 	  <param name="feature" value="Mean_Mem20_MFCC12_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"/>
 	</node>
-</launch>
-<!--%EndTag(FULL)%-->
 
-
-<!--
 
 "Std_Mem20_MFCC0_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"
 "Std_Mem20_MFCC1_Power_powerFFT_WinHamming_HopSize512_WinSize512_Sum_AudioCh0"

@@ -42,11 +42,19 @@
           </df>
           <df name="doxygen.dir">
           </df>
+          <df name="feature_normalizer.dir">
+            <df name="src">
+            </df>
+          </df>
           <df name="function_extractor.dir">
             <df name="src">
             </df>
           </df>
           <df name="music_extractor.dir">
+            <df name="src">
+            </df>
+          </df>
+          <df name="music_extractor_buffer.dir">
             <df name="src">
             </df>
           </df>
@@ -120,8 +128,11 @@
         <df name="audiogesture">
           <in>Bextract.h</in>
           <in>CollectionGenerator.h</in>
+          <in>FeatureNormalizer.h</in>
           <in>FunctionExtractor.h</in>
+          <in>GestureReceiver.h</in>
           <in>MusicExtractor.h</in>
+          <in>MusicExtractorBuffer.h</in>
           <in>SampleListener.h</in>
           <in>WekaSink.h</in>
         </df>
@@ -136,6 +147,8 @@
         <df name="cpp">
           <df name="include">
             <df name="audiogesture">
+              <in>ExtractorStatus.h</in>
+              <in>FeatureVector.h</in>
               <in>Strings.h</in>
             </df>
           </df>
@@ -150,8 +163,11 @@
         </df>
         <in>Bextract.cpp</in>
         <in>CollectionGenerator.cpp</in>
+        <in>FeatureNormalizer.cpp</in>
         <in>FunctionExtractor.cpp</in>
+        <in>GestureReceiver.cpp</in>
         <in>MusicExtractor.cpp</in>
+        <in>MusicExtractorBuffer.cpp</in>
         <in>SampleListener.cpp</in>
         <in>WekaSink.cpp</in>
       </df>

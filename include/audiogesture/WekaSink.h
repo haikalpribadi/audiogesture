@@ -20,17 +20,17 @@
 #define MARSYAS_WEKASINK_H
 
 #include <fstream>
-#include <sstream>
-#include <iomanip>
-#include <vector>
-
+#include <iostream>
 #include <marsyas/MarSystem.h>
+#include <math.h>
 #include <ros/ros.h>
-#include <std_msgs/Float32.h>
+#include <vector>
 
 using namespace std;
 
-vector<ros::Publisher> publishers;
+//vector<ros::Publisher> publishers;
+ros::Publisher publisher;
+int iter = 0;
 
 namespace Marsyas
 {
@@ -101,6 +101,7 @@ private:
 	mrs_natural stabilizingTicks_;
 	mrs_natural count_;
     
+    int subscribers;
     
     
 public:

@@ -14,6 +14,8 @@
 #include <sstream>
 #include <std_msgs/String.h>
 
+#include "audiogesture/ExtractorStatus.h"
+#include "audiogesture/FeatureVector.h"
 #include "Bextract.h"
 
 using namespace std;
@@ -26,7 +28,8 @@ private:
     string music_dir;
     
     ros::NodeHandle node;
-    ros::Subscriber musicExtractor_sub;
+    ros::Subscriber extractor_sub;
+    ros::Publisher extractorStatus_pub;
     
     void extractorCallback(const std_msgs::String::ConstPtr& msg);
 };

@@ -11,8 +11,12 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ros/ros.h>
+#include <sstream>
 #include <std_msgs/Float32.h>
+#include <std_msgs/Float32MultiArray.h>
 #include <std_msgs/String.h>
+
+#include "audiogesture/FeatureVector.h"
 
 using namespace std;
 
@@ -22,11 +26,11 @@ public:
     
 private:
     ros::NodeHandle node;
-    ros::Subscriber subscriber;
+    ros::Subscriber extractor_sub;
     
-    string feature;
+    //string feature;
     
-    void extractorCallback(const std_msgs::Float32::ConstPtr& msg);
+    void extractorCallback(const audiogesture::FeatureVector::ConstPtr& msg);
 };
 
 #endif	/* FUNCTIONEXTRACTOR_H */
