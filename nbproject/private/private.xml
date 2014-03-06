@@ -13,8 +13,9 @@
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/FunctionExtractor.cpp</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/MusicExtractor.h</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/MusicExtractor.cpp</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/FeatureNormalizer.cpp</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/FeatureNormalizer.h</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/FeatureNormalizer.cpp</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/GestureReceiver.cpp</file>
         </group>
     </open-files>
 </project-private>

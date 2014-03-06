@@ -131,6 +131,7 @@
           <in>FeatureNormalizer.h</in>
           <in>FunctionExtractor.h</in>
           <in>GestureReceiver.h</in>
+          <in>GestureTest.h</in>
           <in>MusicExtractor.h</in>
           <in>MusicExtractorBuffer.h</in>
           <in>SampleListener.h</in>
@@ -166,6 +167,7 @@
         <in>FeatureNormalizer.cpp</in>
         <in>FunctionExtractor.cpp</in>
         <in>GestureReceiver.cpp</in>
+        <in>GestureTest.cpp</in>
         <in>MusicExtractor.cpp</in>
         <in>MusicExtractorBuffer.cpp</in>
         <in>SampleListener.cpp</in>

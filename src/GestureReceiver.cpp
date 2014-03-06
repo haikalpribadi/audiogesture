@@ -12,6 +12,7 @@ GestureReceiver::GestureReceiver() {
                                        &GestureReceiver::gestureVectorCallback, this);
     gestureMessage_sub = node.subscribe("osc_receive_message", 1000,
                                         &GestureReceiver::gestureMessageCallback, this);
+    ROS_INFO("GestureReciever has started listening to gesture control data");
 }
 
 void GestureReceiver::gestureMessageCallback(const std_msgs::String::ConstPtr& msg) {

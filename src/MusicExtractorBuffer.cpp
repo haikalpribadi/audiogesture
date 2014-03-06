@@ -13,6 +13,8 @@ MusicExtractorBuffer::MusicExtractorBuffer() {
     buffer_sub = node.subscribe("music_extractor_buffer", 1000,
                                 &MusicExtractorBuffer::bufferCallback, this);
     
+    ROS_INFO("MusicFeatureExtractorBuffer has started listening to the command buffer");
+    
 }
 
 void MusicExtractorBuffer::bufferCallback(const std_msgs::String::ConstPtr& msg) {
@@ -36,7 +38,7 @@ void MusicExtractorBuffer::processBuffer() {
 int main(int argc, char** argv) {
     ros::init(argc, argv, "MusicFeatureExtractorBuffer");
     MusicExtractorBuffer buffer;
-    ros::Rate rate(10);
+    ros::Rate rate(100);
     
     
     while(ros::ok()) {
