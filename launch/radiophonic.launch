@@ -17,12 +17,22 @@
 	
 	<node pkg="audiogesture" type="feature_normalizer" name="FeatureNormalizer" output="screen"/>
 	
+	<node pkg="audiogesture" type="gesture_receiver" name="GestureReceiver" output="screen"/>
+	
 	<node pkg="audiogesture" type="gesture_test" name="GestureTest" output="screen"/>
 	
 	<node pkg="oscpack" type="osc_receiver" name="OscReceiver" output="screen"/>
 	
 	<node pkg="oscpack" type="osc_sender" name="OscSender" output="screen"/>
 	
-	
 </launch>
 <!--%EndTag(FULL)%-->
+
+
+
+<!--
+
+<node pkg="audiogesture" type="audio_gesture_trainer" name="AudioGestureTrainer" output="screen"/>
+
+-->
+

@@ -22,6 +22,14 @@
         <df name="CMakeFiles">
           <df name="_catkin_empty_exported_target.dir">
           </df>
+          <df name="audio_gesture_trainer.dir">
+            <df name="src">
+            </df>
+          </df>
+          <df name="audiogesture_trainer.dir">
+            <df name="src">
+            </df>
+          </df>
           <df name="clean_test_results.dir">
           </df>
           <df name="CMakeTmp">
@@ -47,6 +55,14 @@
             </df>
           </df>
           <df name="function_extractor.dir">
+            <df name="src">
+            </df>
+          </df>
+          <df name="gesture_receiver.dir">
+            <df name="src">
+            </df>
+          </df>
+          <df name="gesture_test.dir">
             <df name="src">
             </df>
           </df>
@@ -126,6 +142,7 @@
       </df>
       <df name="include">
         <df name="audiogesture">
+          <in>AudioGestureTrainer.h</in>
           <in>Bextract.h</in>
           <in>CollectionGenerator.h</in>
           <in>FeatureNormalizer.h</in>
@@ -151,6 +168,7 @@
               <in>ExtractorStatus.h</in>
               <in>FeatureVector.h</in>
               <in>Strings.h</in>
+              <in>TrainerStatus.h</in>
             </df>
           </df>
         </df>
@@ -162,6 +180,7 @@
           <df name="msg">
           </df>
         </df>
+        <in>AudioGestureTrainer.cpp</in>
         <in>Bextract.cpp</in>
         <in>CollectionGenerator.cpp</in>
         <in>FeatureNormalizer.cpp</in>

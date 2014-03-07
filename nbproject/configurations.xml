@@ -4,6 +4,7 @@
     <df root="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture" name="0">
       <df name="include">
         <df name="audiogesture">
+          <in>AudioGestureTrainer.h</in>
           <in>CollectionGenerator.h</in>
           <in>FeatureNormalizer.h</in>
           <in>FunctionExtractor.h</in>
@@ -16,6 +17,7 @@
         </df>
       </df>
       <df name="src">
+        <in>AudioGestureTrainer.cpp</in>
         <in>Bextract.cpp</in>
         <in>CollectionGenerator.cpp</in>
         <in>FeatureNormalizer.cpp</in>
@@ -65,6 +67,11 @@
           </ccTool>
         </makeTool>
       </makefileType>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureTrainer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/CollectionGenerator.h"
             ex="false"
             tool="3"
@@ -81,6 +88,11 @@
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/GestureReceiver.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/GestureTest.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -103,6 +115,11 @@
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/WekaSink.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureTrainer.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/Bextract.cpp"
@@ -134,6 +151,11 @@
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/GestureReceiver.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/GestureTest.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -193,10 +215,6 @@
             ex="false"
             tool="1"
             flavor2="0">
-      </item>
-      <item path="include/audiogesture/GestureTest.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/GestureTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>
