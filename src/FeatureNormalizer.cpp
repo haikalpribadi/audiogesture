@@ -6,6 +6,7 @@
  */
 
 #include "FeatureNormalizer.h"
+
 float FeatureNormalizer::fv_max = 0.0;
 float FeatureNormalizer::fv_min = 0.0;
 ofstream FeatureNormalizer::file;
@@ -51,6 +52,14 @@ void FeatureNormalizer::normalizeFeatureVectors() {
         return;
     
     transform(featureVectors.begin(), featureVectors.end(), featureVectors.begin(), normalize_m);
+    /*
+    for(int i=0; i<featureVectors.size(); i++) {
+        for(int j=0; j<featureVectors[i].size(); j++) {
+            float val = featureVectors[i][j];
+            featureVectors[i][j] = (val-fv_min)/(fv_max-fv_min);
+        }
+    }
+    */
 }
 
 void FeatureNormalizer::outputToFile(string name) {
@@ -64,6 +73,7 @@ void FeatureNormalizer::outputToFile(string name) {
     
     file.close();
     
+    featureVectors.clear();
     fv_min = 0.0;
     fv_max = 0.0;
     
@@ -72,10 +82,10 @@ void FeatureNormalizer::outputToFile(string name) {
     ofstream file;
     file.open(filename.c_str());
 
-    for(int i=0; i<featureVector.size(); i++) {
-        for(int j=0; j<featureVector[i].size(); j++) {
-            file << featureVector[i][j];
-            if(j < featureVector[i].size()-1)
+    for(int i=0; i<featureVectors.size(); i++) {
+        for(int j=0; j<featureVectors[i].size(); j++) {
+            file << featureVectors[i][j];
+            if(j < featureVectors[i].size()-1)
                 file << ",";
         }
         file << endl;
