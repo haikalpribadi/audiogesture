@@ -24,10 +24,6 @@ GestureReceiver::GestureReceiver() {
                                         &GestureReceiver::gestureMessageCallback, this);
     trainerStatus_sub = node.subscribe("trainer_status", 1000,
                                        &GestureReceiver::trainerStatusCallback, this);
-    recordSwitch_sub = node.subscribe("gesture_record", 1000,
-                                      &GestureReceiver::recordSwitchCallback, this);
-    
-    
     
     ROS_INFO("GestureReciever has started listening to gesture control data");
 }
@@ -42,18 +38,11 @@ void GestureReceiver::gestureVectorCallback(const std_msgs::Int32MultiArray::Con
     }
 }
 
-void GestureReceiver::recordSwitchCallback(const std_msgs::Bool::ConstPtr& msg) {
-    record = msg->data;
-    if(!record && output) {
-        stopOutputToFile();
-    }
-}
-
 void GestureReceiver::trainerStatusCallback(const audiogesture::TrainerStatus::ConstPtr& msg) {
     samplename = msg->name;
     string status = msg->status;
     
-    if(record && status == "start") {
+    if(status == "start") {
         startOutputTofile();
         
     } else if(status == "end") {

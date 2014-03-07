@@ -41,14 +41,12 @@ private:
     string music_dir;
     string samplename;
     bool output;
-    bool record;
     int id;
     
     ofstream file;
     
     void gestureMessageCallback(const std_msgs::String::ConstPtr& msg);
     void gestureVectorCallback(const std_msgs::Int32MultiArray::ConstPtr& msg);
-    void recordSwitchCallback(const std_msgs::Bool::ConstPtr& msg);
     void trainerStatusCallback(const audiogesture::TrainerStatus::ConstPtr& msg);
     
     void outputToFile(const std_msgs::Int32MultiArray::ConstPtr& msg);
