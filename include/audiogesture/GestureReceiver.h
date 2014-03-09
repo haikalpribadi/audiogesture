@@ -20,19 +20,22 @@
 #include <vector>
 
 #include "audiogesture/TrainerStatus.h"
+#include "audiogesture/ProcessedOutput.h"
 
 #define GV  ".gv"
 
 using namespace std;
 
-struct stat sb;
 
 class GestureReceiver {
 public:
     GestureReceiver();
     
+    struct stat sb;
+    
 private:
     ros::NodeHandle node;
+    ros::Publisher processedOutput_pub;
     ros::Subscriber gestureVector_sub;
     ros::Subscriber gestureMessage_sub;
     ros::Subscriber recordSwitch_sub;
@@ -40,6 +43,7 @@ private:
     
     string music_dir;
     string samplename;
+    string filename;
     bool output;
     int id;
     
@@ -50,6 +54,7 @@ private:
     void trainerStatusCallback(const audiogesture::TrainerStatus::ConstPtr& msg);
     
     void outputToFile(const std_msgs::Int32MultiArray::ConstPtr& msg);
+    void publishToProcessedOutput();
     void startOutputTofile();
     void stopOutputToFile();
 };

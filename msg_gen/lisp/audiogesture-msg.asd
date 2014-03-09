@@ -12,4 +12,6 @@
     (:file "_package_FeatureVector" :depends-on ("_package"))
     (:file "Strings" :depends-on ("_package_Strings"))
     (:file "_package_Strings" :depends-on ("_package"))
+    (:file "ProcessedOutput" :depends-on ("_package_ProcessedOutput"))
+    (:file "_package_ProcessedOutput" :depends-on ("_package"))
   ))

@@ -4,6 +4,7 @@
     <df root="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture" name="0">
       <df name="include">
         <df name="audiogesture">
+          <in>AudioGestureServer.h</in>
           <in>AudioGestureTrainer.h</in>
           <in>CollectionGenerator.h</in>
           <in>FeatureNormalizer.h</in>
@@ -12,11 +13,13 @@
           <in>GestureTest.h</in>
           <in>MusicExtractor.h</in>
           <in>MusicExtractorBuffer.h</in>
+          <in>Sample.h</in>
           <in>SampleListener.h</in>
           <in>WekaSink.h</in>
         </df>
       </df>
       <df name="src">
+        <in>AudioGestureServer.cpp</in>
         <in>AudioGestureTrainer.cpp</in>
         <in>Bextract.cpp</in>
         <in>CollectionGenerator.cpp</in>
@@ -26,6 +29,7 @@
         <in>GestureTest.cpp</in>
         <in>MusicExtractor.cpp</in>
         <in>MusicExtractorBuffer.cpp</in>
+        <in>Sample.cpp</in>
         <in>SampleListener.cpp</in>
         <in>WekaSink.cpp</in>
       </df>
@@ -67,6 +71,11 @@
           </ccTool>
         </makeTool>
       </makefileType>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureServer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureTrainer.h"
             ex="false"
             tool="3"
@@ -115,6 +124,11 @@
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/WekaSink.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureServer.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureTrainer.cpp"
@@ -215,6 +229,10 @@
             ex="false"
             tool="1"
             flavor2="0">
+      </item>
+      <item path="include/audiogesture/Sample.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Sample.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

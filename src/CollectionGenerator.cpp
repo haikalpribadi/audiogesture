@@ -23,7 +23,6 @@ void CollectionGenerator::collectionGeneratorCallback(const std_msgs::String::Co
     string sample = msg->data;
     string name = sample.substr(0, sample.find(".")) + MF;
 
-    replace(name.begin(), name.end(), ' ', '_');
     name = music_dir + "/" + name;
 
     FILE * file;

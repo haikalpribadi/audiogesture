@@ -142,6 +142,7 @@
       </df>
       <df name="include">
         <df name="audiogesture">
+          <in>AudioGestureServer.h</in>
           <in>AudioGestureTrainer.h</in>
           <in>Bextract.h</in>
           <in>CollectionGenerator.h</in>
@@ -151,6 +152,7 @@
           <in>GestureTest.h</in>
           <in>MusicExtractor.h</in>
           <in>MusicExtractorBuffer.h</in>
+          <in>Sample.h</in>
           <in>SampleListener.h</in>
           <in>WekaSink.h</in>
         </df>
@@ -180,6 +182,7 @@
           <df name="msg">
           </df>
         </df>
+        <in>AudioGestureServer.cpp</in>
         <in>AudioGestureTrainer.cpp</in>
         <in>Bextract.cpp</in>
         <in>CollectionGenerator.cpp</in>
@@ -189,6 +192,7 @@
         <in>GestureTest.cpp</in>
         <in>MusicExtractor.cpp</in>
         <in>MusicExtractorBuffer.cpp</in>
+        <in>Sample.cpp</in>
         <in>SampleListener.cpp</in>
         <in>WekaSink.cpp</in>
       </df>

@@ -10,14 +10,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/FunctionExtractor.cpp</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureServer.cpp</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/GestureReceiver.h</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureTrainer.h</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/FunctionExtractor.h</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/FeatureNormalizer.cpp</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/FeatureNormalizer.h</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/MusicExtractor.cpp</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureServer.h</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/GestureReceiver.cpp</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/SampleListener.cpp</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/Sample.cpp</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureTrainer.cpp</file>
         </group>
     </open-files>

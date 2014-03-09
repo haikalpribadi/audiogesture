@@ -7,6 +7,8 @@
 	
 	<!--<param name="osc_port" value="" />-->
 	
+	<node pkg="audiogesture" type="audio_gesture_server" name="AudioGestureServer" output="screen"/>
+	
 	<node pkg="audiogesture" type="music_extractor" name="MusicFeatureExtractor" output="screen"/>
 	
 	<node pkg="audiogesture" type="music_extractor_buffer" name="MusicFeatureExtractorBuffer" output="screen"/>

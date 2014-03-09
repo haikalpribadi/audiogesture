@@ -30,6 +30,7 @@ rosbuild_gensrv()
 #target_link_libraries(example ${PROJECT_NAME})
 
 include_directories (include/audiogesture)
+rosbuild_add_executable(audio_gesture_server src/AudioGestureServer.cpp src/Sample.cpp)
 rosbuild_add_executable(audio_gesture_trainer src/AudioGestureTrainer.cpp)
 rosbuild_add_executable(collection_generator src/CollectionGenerator.cpp)
 rosbuild_add_executable(feature_normalizer src/FeatureNormalizer.cpp)

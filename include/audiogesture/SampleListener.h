@@ -16,6 +16,7 @@
 #include <std_msgs/String.h>
 #include <sys/inotify.h>
 
+#include "audiogesture/ProcessedOutput.h"
 
 #define EVENT_SIZE      ( sizeof ( struct inotify_event ))
 #define BUF_LEN         ( 1024 * ( EVENT_SIZE + NAME_MAX + 1 ))
@@ -43,10 +44,13 @@ private:
     ros::NodeHandle node;
     ros::Publisher featureExtractor_pub;
     ros::Publisher collectionGenerator_pub;
+    ros::Publisher processedOutput_pub;
     
-    void publishToCollectionGenerator(string sample);
-    void publishToFeatureExtraction(string filename);
-    bool hasFormat(string file, string format);
+    void publishToCollectionGenerator(string filename);
+    void publishToFeatureExtraction(string fiename);
+    void publishToProcessedOutput(string filename);
+    bool hasFormat(string filename, string format);
+    void renameFile(string filename);
 };
 
 void signalCallback(int signal);

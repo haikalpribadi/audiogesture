@@ -15,7 +15,16 @@ AudioGestureTrainer::AudioGestureTrainer() {
         ros::requestShutdown();
     }
     
+    extractorStatus_sub = node.subscribe("extractor_status", 1000,
+                                         &AudioGestureTrainer::extractorStatusCallback, this);
+    
+    
+    //TODO : this is temporary testing publisher
     trainerStatus_pub = node.advertise<audiogesture::TrainerStatus>("trainer_status", 1000);
+    
+}
+
+void AudioGestureTrainer::extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg) {
     
 }
 

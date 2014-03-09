@@ -18,6 +18,7 @@ GestureReceiver::GestureReceiver() {
         ROS_ERROR("Please set the music_directory (file) parameter for GestureReceiver");
         ros::requestShutdown();
     }
+    processedOutput_pub = node.advertise<audiogesture::ProcessedOutput>("processed_output", 1000);
     gestureVector_sub = node.subscribe("osc_receive_vector", 1000,
                                        &GestureReceiver::gestureVectorCallback, this);
     gestureMessage_sub = node.subscribe("osc_receive_message", 1000,
@@ -47,6 +48,7 @@ void GestureReceiver::trainerStatusCallback(const audiogesture::TrainerStatus::C
         
     } else if(status == "end") {
         stopOutputToFile();
+        publishToProcessedOutput();
     }
 }
 
@@ -57,15 +59,29 @@ void GestureReceiver::outputToFile(const std_msgs::Int32MultiArray::ConstPtr& ms
     file << endl;
 }
 
+void GestureReceiver::publishToProcessedOutput() {
+    audiogesture::ProcessedOutput msg;
+    
+    msg.name = samplename;
+    msg.type = "gesture";
+    msg.file = samplename + "/" + filename;
+    
+    processedOutput_pub.publish(msg);
+}
+
 void GestureReceiver::startOutputTofile() {
     output = true;
     string pathname = music_dir + "/" + samplename;
     if (!(stat(pathname.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode))) {
         mkdir(pathname.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     }
-    stringstream filename;
-    filename << pathname << "/" << samplename << "-" << id++ << GV;
-    file.open(filename.str().c_str());
+    
+    stringstream ss;
+    ss << samplename << "-" << id++ << GV;
+    filename = ss.str();
+    string filenamefull = pathname + "/" + filename;
+    
+    file.open(filenamefull.c_str());
 }
 
 void GestureReceiver::stopOutputToFile() {
