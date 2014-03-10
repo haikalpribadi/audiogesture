@@ -22,6 +22,10 @@
         <df name="CMakeFiles">
           <df name="_catkin_empty_exported_target.dir">
           </df>
+          <df name="audio_gesture_server.dir">
+            <df name="src">
+            </df>
+          </df>
           <df name="audio_gesture_trainer.dir">
             <df name="src">
             </df>
@@ -58,6 +62,10 @@
             <df name="src">
             </df>
           </df>
+          <df name="gesture_publisher.dir">
+            <df name="src">
+            </df>
+          </df>
           <df name="gesture_receiver.dir">
             <df name="src">
             </df>
@@ -86,6 +94,8 @@
           </df>
           <df name="ROSBUILD_gensrv_lisp.dir">
           </df>
+          <df name="ROSBUILD_gensrv_py.dir">
+          </df>
           <df name="rosbuild_precompile.dir">
           </df>
           <df name="rosbuild_premsgsrvgen.dir">
@@ -103,6 +113,10 @@
           <df name="run_tests.dir">
           </df>
           <df name="sample_listener.dir">
+            <df name="src">
+            </df>
+          </df>
+          <df name="serial_port_reader.dir">
             <df name="src">
             </df>
           </df>
@@ -146,8 +160,10 @@
           <in>AudioGestureTrainer.h</in>
           <in>Bextract.h</in>
           <in>CollectionGenerator.h</in>
+          <in>CompareNatural.h</in>
           <in>FeatureNormalizer.h</in>
           <in>FunctionExtractor.h</in>
+          <in>GesturePublisher.h</in>
           <in>GestureReceiver.h</in>
           <in>GestureTest.h</in>
           <in>MusicExtractor.h</in>
@@ -155,6 +171,7 @@
           <in>Sample.h</in>
           <in>SampleListener.h</in>
           <in>WekaSink.h</in>
+          <in>alphanum.hpp</in>
         </df>
       </df>
       <df name="launch">
@@ -169,6 +186,7 @@
             <df name="audiogesture">
               <in>ExtractorStatus.h</in>
               <in>FeatureVector.h</in>
+              <in>ProcessedOutput.h</in>
               <in>Strings.h</in>
               <in>TrainerStatus.h</in>
             </df>
@@ -181,6 +199,8 @@
         <df name="audiogesture">
           <df name="msg">
           </df>
+          <df name="srv">
+          </df>
         </df>
         <in>AudioGestureServer.cpp</in>
         <in>AudioGestureTrainer.cpp</in>
@@ -188,6 +208,7 @@
         <in>CollectionGenerator.cpp</in>
         <in>FeatureNormalizer.cpp</in>
         <in>FunctionExtractor.cpp</in>
+        <in>GesturePublisher.cpp</in>
         <in>GestureReceiver.cpp</in>
         <in>GestureTest.cpp</in>
         <in>MusicExtractor.cpp</in>
@@ -197,6 +218,18 @@
         <in>WekaSink.cpp</in>
       </df>
       <df name="srv">
+      </df>
+      <df name="srv_gen">
+        <df name="cpp">
+          <df name="include">
+            <df name="audiogesture">
+              <in>GetSampleFile.h</in>
+              <in>GetSamples.h</in>
+            </df>
+          </df>
+        </df>
+        <df name="lisp">
+        </df>
       </df>
     </df>
   </logicalFolder>

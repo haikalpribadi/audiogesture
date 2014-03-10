@@ -7,8 +7,10 @@
           <in>AudioGestureServer.h</in>
           <in>AudioGestureTrainer.h</in>
           <in>CollectionGenerator.h</in>
+          <in>CompareNatural.h</in>
           <in>FeatureNormalizer.h</in>
           <in>FunctionExtractor.h</in>
+          <in>GesturePublisher.h</in>
           <in>GestureReceiver.h</in>
           <in>GestureTest.h</in>
           <in>MusicExtractor.h</in>
@@ -25,6 +27,7 @@
         <in>CollectionGenerator.cpp</in>
         <in>FeatureNormalizer.cpp</in>
         <in>FunctionExtractor.cpp</in>
+        <in>GesturePublisher.cpp</in>
         <in>GestureReceiver.cpp</in>
         <in>GestureTest.cpp</in>
         <in>MusicExtractor.cpp</in>
@@ -96,6 +99,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/GesturePublisher.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/GestureReceiver.h"
             ex="false"
             tool="3"
@@ -112,6 +120,11 @@
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/MusicExtractorBuffer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/Sample.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -160,6 +173,11 @@
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/FunctionExtractor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/GesturePublisher.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -220,6 +238,11 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/Sample.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/SampleListener.cpp"
             ex="false"
             tool="1"
@@ -230,9 +253,10 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="include/audiogesture/Sample.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/Sample.cpp" ex="false" tool="1" flavor2="0">
+      <item path="include/audiogesture/CompareNatural.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
     </conf>
   </confs>

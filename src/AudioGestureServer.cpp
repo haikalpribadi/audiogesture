@@ -16,6 +16,8 @@ AudioGestureServer::AudioGestureServer() {
         ros::requestShutdown();
     }
     
+    getSampleFile_srv = node.advertiseService("get_sample_file", &AudioGestureServer::getSampleFile, this);
+    getSamples_srv = node.advertiseService("get_samples", &AudioGestureServer::getSamples, this);
     extractorStatus_sub = node.subscribe("extractor_status", 1000,
                                          &AudioGestureServer::extractorStatusCallback, this);
     processedOutput_sub = node.subscribe("processed_output", 1000,
@@ -23,6 +25,26 @@ AudioGestureServer::AudioGestureServer() {
     trainerStatus_sub = node.subscribe("trainer_status", 1000,
                                        &AudioGestureServer::trainerStatusCallback, this);
 }
+
+bool AudioGestureServer::getSampleFile(audiogesture::GetSampleFile::Request& req, audiogesture::GetSampleFile::Response& res) {
+    string name = req.name;
+    
+    if(samples.find(name) == samples.end())
+        return false;
+    
+    res.file = samples.find(name)->second.sampleFile;
+    
+    return true;
+}
+
+bool AudioGestureServer::getSamples(audiogesture::GetSamples::Request& req, audiogesture::GetSamples::Response& res) {
+    map<string, Sample>::iterator it;
+    for(it = samples.begin(); it != samples.end(); ++it) {
+        res.samples.push_back(it->first);
+    }
+    return true;
+}
+
 
 void AudioGestureServer::extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg) {
     

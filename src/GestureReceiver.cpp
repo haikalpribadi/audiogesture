@@ -19,18 +19,12 @@ GestureReceiver::GestureReceiver() {
         ros::requestShutdown();
     }
     processedOutput_pub = node.advertise<audiogesture::ProcessedOutput>("processed_output", 1000);
-    gestureVector_sub = node.subscribe("osc_receive_vector", 1000,
+    gestureVector_sub = node.subscribe("gesture_vector", 1000,
                                        &GestureReceiver::gestureVectorCallback, this);
-    gestureMessage_sub = node.subscribe("osc_receive_message", 1000,
-                                        &GestureReceiver::gestureMessageCallback, this);
     trainerStatus_sub = node.subscribe("trainer_status", 1000,
                                        &GestureReceiver::trainerStatusCallback, this);
     
     ROS_INFO("GestureReciever has started listening to gesture control data");
-}
-
-void GestureReceiver::gestureMessageCallback(const std_msgs::String::ConstPtr& msg) {
-    
 }
 
 void GestureReceiver::gestureVectorCallback(const std_msgs::Int32MultiArray::ConstPtr& msg) {

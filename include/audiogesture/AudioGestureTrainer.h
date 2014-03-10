@@ -8,11 +8,17 @@
 #ifndef AUDIOGESTURETRAINER_H
 #define	AUDIOGESTURETRAINER_H
 
+#include <algorithm>
+#include <iostream>
+#include <math.h>
 #include <ros/ros.h>
 #include <vector>
 
 #include "audiogesture/ExtractorStatus.h"
+#include "audiogesture/GetSampleFile.h"
+#include "audiogesture/GetSamples.h"
 #include "audiogesture/TrainerStatus.h"
+#include "CompareNatural.h"
 
 using namespace std;
 
@@ -21,18 +27,19 @@ public:
     AudioGestureTrainer();
     
     ros::Publisher trainerStatus_pub;
+    ros::ServiceClient getSampleFile_cl;
+    ros::ServiceClient getSamples_cl;
     
+    void run();
     
 private:
     ros::NodeHandle node;
-    ros::Subscriber extractorStatus_sub;
-
+    
+    
     string music_dir;
     vector<string> samples;
     
-    void extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg);
-    
-    
+    void printSamples(const vector<string>& samples);
 };
 
 #endif	/* AUDIOGESTURETRAINER_H */

@@ -15,6 +15,8 @@
 
 #include "audiogesture/ExtractorStatus.h"
 #include "audiogesture/ProcessedOutput.h"
+#include "audiogesture/GetSampleFile.h"
+#include "audiogesture/GetSamples.h"
 #include "audiogesture/TrainerStatus.h"
 #include "Sample.h"
 
@@ -26,6 +28,8 @@ public:
 
 private:
     ros::NodeHandle node;
+    ros::ServiceServer getSampleFile_srv;
+    ros::ServiceServer getSamples_srv;
     ros::Subscriber extractorStatus_sub;
     ros::Subscriber processedOutput_sub;
     ros::Subscriber trainerStatus_sub;
@@ -33,6 +37,10 @@ private:
     string music_dir;
     map<string, Sample> samples;
     
+    bool getSampleFile(audiogesture::GetSampleFile::Request &req,
+                       audiogesture::GetSampleFile::Response &res);
+    bool getSamples(audiogesture::GetSamples::Request &req,
+                    audiogesture::GetSamples::Response &res);
     void extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg);
     void processedOutputCallback(const audiogesture::ProcessedOutput::ConstPtr& msg);
     void trainerStatusCallback(const audiogesture::TrainerStatus::ConstPtr& msg);

@@ -37,7 +37,7 @@ private:
     ros::NodeHandle node;
     ros::Publisher processedOutput_pub;
     ros::Subscriber gestureVector_sub;
-    ros::Subscriber gestureMessage_sub;
+    //ros::Subscriber gestureMessage_sub;
     ros::Subscriber recordSwitch_sub;
     ros::Subscriber trainerStatus_sub;
     
@@ -49,7 +49,7 @@ private:
     
     ofstream file;
     
-    void gestureMessageCallback(const std_msgs::String::ConstPtr& msg);
+    //void gestureMessageCallback(const std_msgs::String::ConstPtr& msg);
     void gestureVectorCallback(const std_msgs::Int32MultiArray::ConstPtr& msg);
     void trainerStatusCallback(const audiogesture::TrainerStatus::ConstPtr& msg);
     
