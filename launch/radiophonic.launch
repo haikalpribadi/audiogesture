@@ -21,6 +21,8 @@
 	
 	<node pkg="audiogesture" type="gesture_publisher" name="GesturePublisher" output="screen"/>
 	
+	<node pkg="audiogesture" type="sample_player" name="SamplePlayer" output="screen"/>
+	
 	<node pkg="serialport" type="serial_port_reader" name="SerialPortReader0" output="screen">
 	  <param name="port" value="/dev/ttyACM0"/>
 	</node>

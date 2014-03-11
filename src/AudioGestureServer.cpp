@@ -16,6 +16,8 @@ AudioGestureServer::AudioGestureServer() {
         ros::requestShutdown();
     }
     
+    deleteLastGestureFile_srv = node.advertiseService("delete_last_gesture_file", &AudioGestureServer::deleteLastGestureFile, this);
+    getLastGestureFile_srv = node.advertiseService("get_last_gesture_file", &AudioGestureServer::getLastGestureFile, this);
     getSampleFile_srv = node.advertiseService("get_sample_file", &AudioGestureServer::getSampleFile, this);
     getSamples_srv = node.advertiseService("get_samples", &AudioGestureServer::getSamples, this);
     extractorStatus_sub = node.subscribe("extractor_status", 1000,
@@ -26,7 +28,32 @@ AudioGestureServer::AudioGestureServer() {
                                        &AudioGestureServer::trainerStatusCallback, this);
 }
 
-bool AudioGestureServer::getSampleFile(audiogesture::GetSampleFile::Request& req, audiogesture::GetSampleFile::Response& res) {
+bool AudioGestureServer::deleteLastGestureFile(audiogesture::GetFile::Request& req, audiogesture::GetFile::Response& res) {
+    string name = req.name;
+    
+    if(samples.find(name) == samples.end())
+        return false;
+    
+    if(samples.find(name)->second.gestureFiles.empty())
+        return false;
+    
+    samples.find(name)->second.gestureFiles.pop_back();
+    return true;
+}
+bool AudioGestureServer::getLastGestureFile(audiogesture::GetFile::Request& req, audiogesture::GetFile::Response& res) {
+    string name = req.name;
+    
+    if(samples.find(name) == samples.end())
+        return false;
+    
+    if(samples.find(name)->second.gestureFiles.empty())
+        return false;
+    
+    res.file = samples.find(name)->second.gestureFiles.back();
+    return true;
+}
+
+bool AudioGestureServer::getSampleFile(audiogesture::GetFile::Request& req, audiogesture::GetFile::Response& res) {
     string name = req.name;
     
     if(samples.find(name) == samples.end())

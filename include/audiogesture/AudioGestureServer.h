@@ -15,7 +15,7 @@
 
 #include "audiogesture/ExtractorStatus.h"
 #include "audiogesture/ProcessedOutput.h"
-#include "audiogesture/GetSampleFile.h"
+#include "audiogesture/GetFile.h"
 #include "audiogesture/GetSamples.h"
 #include "audiogesture/TrainerStatus.h"
 #include "Sample.h"
@@ -28,6 +28,8 @@ public:
 
 private:
     ros::NodeHandle node;
+    ros::ServiceServer deleteLastGestureFile_srv;
+    ros::ServiceServer getLastGestureFile_srv;
     ros::ServiceServer getSampleFile_srv;
     ros::ServiceServer getSamples_srv;
     ros::Subscriber extractorStatus_sub;
@@ -37,8 +39,12 @@ private:
     string music_dir;
     map<string, Sample> samples;
     
-    bool getSampleFile(audiogesture::GetSampleFile::Request &req,
-                       audiogesture::GetSampleFile::Response &res);
+    bool deleteLastGestureFile(audiogesture::GetFile::Request &req,
+                                  audiogesture::GetFile::Response &res);
+    bool getLastGestureFile(audiogesture::GetFile::Request &req,
+                               audiogesture::GetFile::Response &res);
+    bool getSampleFile(audiogesture::GetFile::Request &req,
+                       audiogesture::GetFile::Response &res);
     bool getSamples(audiogesture::GetSamples::Request &req,
                     audiogesture::GetSamples::Response &res);
     void extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg);

@@ -170,6 +170,7 @@
           <in>MusicExtractorBuffer.h</in>
           <in>Sample.h</in>
           <in>SampleListener.h</in>
+          <in>SamplePlayer.h</in>
           <in>WekaSink.h</in>
           <in>alphanum.hpp</in>
         </df>
@@ -215,6 +216,7 @@
         <in>MusicExtractorBuffer.cpp</in>
         <in>Sample.cpp</in>
         <in>SampleListener.cpp</in>
+        <in>SamplePlayer.cpp</in>
         <in>WekaSink.cpp</in>
       </df>
       <df name="srv">

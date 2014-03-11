@@ -36,7 +36,7 @@ void GestureReceiver::gestureVectorCallback(const std_msgs::Int32MultiArray::Con
 void GestureReceiver::trainerStatusCallback(const audiogesture::TrainerStatus::ConstPtr& msg) {
     samplename = msg->name;
     string status = msg->status;
-    
+    ROS_INFO("-------------------------------- trig");
     if(status == "start") {
         startOutputTofile();
         

@@ -21,6 +21,8 @@
 	
 	<node pkg="audiogesture" type="gesture_publisher" name="GesturePublisher" output="screen"/>
 	
+	<node pkg="audiogesture" type="sample_player" name="SamplePlayer" output="screen"/>
+	
 </launch>
 <!--%EndTag(FULL)%-->
 

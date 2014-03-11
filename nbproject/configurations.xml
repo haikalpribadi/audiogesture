@@ -17,6 +17,7 @@
           <in>MusicExtractorBuffer.h</in>
           <in>Sample.h</in>
           <in>SampleListener.h</in>
+          <in>SamplePlayer.h</in>
           <in>WekaSink.h</in>
         </df>
       </df>
@@ -34,6 +35,7 @@
         <in>MusicExtractorBuffer.cpp</in>
         <in>Sample.cpp</in>
         <in>SampleListener.cpp</in>
+        <in>SamplePlayer.cpp</in>
         <in>WekaSink.cpp</in>
       </df>
     </df>
@@ -85,6 +87,11 @@
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/CollectionGenerator.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/CompareNatural.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -253,10 +260,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="include/audiogesture/CompareNatural.h"
+      <item path="include/audiogesture/SamplePlayer.h"
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/SamplePlayer.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>
