@@ -116,6 +116,10 @@
             <df name="src">
             </df>
           </df>
+          <df name="sample_player.dir">
+            <df name="src">
+            </df>
+          </df>
           <df name="serial_port_reader.dir">
             <df name="src">
             </df>
@@ -187,8 +191,10 @@
             <df name="audiogesture">
               <in>ExtractorStatus.h</in>
               <in>FeatureVector.h</in>
+              <in>PlayerCommand.h</in>
               <in>ProcessedOutput.h</in>
               <in>Strings.h</in>
+              <in>TrainerLogStatus.h</in>
               <in>TrainerStatus.h</in>
             </df>
           </df>
@@ -225,6 +231,7 @@
         <df name="cpp">
           <df name="include">
             <df name="audiogesture">
+              <in>GetFile.h</in>
               <in>GetSampleFile.h</in>
               <in>GetSamples.h</in>
             </df>

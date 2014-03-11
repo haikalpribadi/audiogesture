@@ -17,7 +17,13 @@
 	
 	<node pkg="audiogesture" type="feature_normalizer" name="FeatureNormalizer" output="screen"/>
 	
-	<node pkg="audiogesture" type="gesture_receiver" name="GestureReceiver" output="screen"/>
+	<node pkg="audiogesture" type="gesture_receiver" name="GestureReceiver0" output="screen">
+	  <param name="trainer_topic" value="trainer_log_status"/>
+	</node>
+	
+	<node pkg="audiogesture" type="gesture_receiver" name="GestureReceiver1" output="screen">
+	  <param name="trainer_topic" value="trainer_status"/>
+	</node>
 	
 	<node pkg="audiogesture" type="gesture_publisher" name="GesturePublisher" output="screen"/>
 	

@@ -18,10 +18,19 @@ GestureReceiver::GestureReceiver() {
         ROS_ERROR("Please set the music_directory (file) parameter for GestureReceiver");
         ros::requestShutdown();
     }
+    
+    ros::NodeHandle nh("~");
+    if(nh.getParam("trainer_topic", trainer_topic)) {
+        ROS_INFO("%s has subscribed to %s", nh.getNamespace().c_str(), trainer_topic.c_str());
+    }
+    else {
+        ROS_ERROR("Please set trainer_topic for %s", nh.getNamespace().c_str());
+        ros::requestShutdown();
+    }
     processedOutput_pub = node.advertise<audiogesture::ProcessedOutput>("processed_output", 1000);
     gestureVector_sub = node.subscribe("gesture_vector", 1000,
                                        &GestureReceiver::gestureVectorCallback, this);
-    trainerStatus_sub = node.subscribe("trainer_status", 1000,
+    trainerStatus_sub = node.subscribe(trainer_topic, 1000,
                                        &GestureReceiver::trainerStatusCallback, this);
     
     ROS_INFO("GestureReciever has started listening to gesture control data");
@@ -36,7 +45,6 @@ void GestureReceiver::gestureVectorCallback(const std_msgs::Int32MultiArray::Con
 void GestureReceiver::trainerStatusCallback(const audiogesture::TrainerStatus::ConstPtr& msg) {
     samplename = msg->name;
     string status = msg->status;
-    ROS_INFO("-------------------------------- trig");
     if(status == "start") {
         startOutputTofile();
         
@@ -71,7 +79,10 @@ void GestureReceiver::startOutputTofile() {
     }
     
     stringstream ss;
-    ss << samplename << "-" << id++ << GV;
+    ss << samplename << "-";
+    if(trainer_topic == "trainer_log_status")
+        ss << "log-";
+    ss << id++ << GV;
     filename = ss.str();
     string filenamefull = pathname + "/" + filename;
     

@@ -44,6 +44,7 @@ private:
     string music_dir;
     string samplename;
     string filename;
+    string trainer_topic;
     bool output;
     int id;
     

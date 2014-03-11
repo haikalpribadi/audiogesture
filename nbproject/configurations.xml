@@ -141,6 +141,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/SamplePlayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/WekaSink.h"
             ex="false"
             tool="3"
@@ -255,17 +260,15 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/WekaSink.cpp"
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/SamplePlayer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="include/audiogesture/SamplePlayer.h"
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/WekaSink.cpp"
             ex="false"
-            tool="3"
+            tool="1"
             flavor2="0">
-      </item>
-      <item path="src/SamplePlayer.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>
