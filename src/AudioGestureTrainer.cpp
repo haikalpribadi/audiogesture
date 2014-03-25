@@ -97,16 +97,7 @@ bool AudioGestureTrainer::trainSample(string sample) {
 void AudioGestureTrainer::deleteLastGestureFile(string sample) {
     audiogesture::GetFile srv;
     srv.request.name = sample;
-    
-    if(getLastGestureFile_cl.call(srv)) {
-        string file = srv.response.file;
-        string pathfile = music_dir + "/" + file;
-        remove(pathfile.c_str());
-        
-        audiogesture::GetFile srv2;
-        srv2.request.name = sample;
-        deleteLastGestureFile_cl.call(srv);
-    }
+    deleteLastGestureFile_cl.call(srv);
 }
 
 void AudioGestureTrainer::publishToPlay(string sample, string file) {

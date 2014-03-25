@@ -10,14 +10,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioInput.h</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureServer.cpp</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/GestureReceiver.h</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureTrainer.h</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/SamplePlayer.h</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioInput.cpp</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureServer.h</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/SamplePlayer.cpp</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/GestureReceiver.cpp</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureTrainer.cpp</file>
         </group>
     </open-files>
 </project-private>

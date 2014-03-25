@@ -162,6 +162,7 @@
         <df name="audiogesture">
           <in>AudioGestureServer.h</in>
           <in>AudioGestureTrainer.h</in>
+          <in>AudioInput.h</in>
           <in>Bextract.h</in>
           <in>CollectionGenerator.h</in>
           <in>CompareNatural.h</in>
@@ -211,6 +212,7 @@
         </df>
         <in>AudioGestureServer.cpp</in>
         <in>AudioGestureTrainer.cpp</in>
+        <in>AudioInput.cpp</in>
         <in>Bextract.cpp</in>
         <in>CollectionGenerator.cpp</in>
         <in>FeatureNormalizer.cpp</in>
