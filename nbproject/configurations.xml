@@ -6,7 +6,6 @@
         <df name="audiogesture">
           <in>AudioGestureServer.h</in>
           <in>AudioGestureTrainer.h</in>
-          <in>AudioInput.h</in>
           <in>CollectionGenerator.h</in>
           <in>CompareNatural.h</in>
           <in>FeatureNormalizer.h</in>
@@ -25,7 +24,6 @@
       <df name="src">
         <in>AudioGestureServer.cpp</in>
         <in>AudioGestureTrainer.cpp</in>
-        <in>AudioInput.cpp</in>
         <in>Bextract.cpp</in>
         <in>CollectionGenerator.cpp</in>
         <in>FeatureNormalizer.cpp</in>
@@ -84,11 +82,6 @@
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureTrainer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioInput.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -164,11 +157,6 @@
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureTrainer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioInput.cpp"
             ex="false"
             tool="1"
             flavor2="0">
