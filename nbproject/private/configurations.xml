@@ -30,6 +30,10 @@
             <df name="src">
             </df>
           </df>
+          <df name="audio_input.dir">
+            <df name="src">
+            </df>
+          </df>
           <df name="audiogesture_trainer.dir">
             <df name="src">
             </df>

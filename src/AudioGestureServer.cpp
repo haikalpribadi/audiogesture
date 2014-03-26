@@ -163,4 +163,6 @@ int main(int argc, char** argv) {
     AudioGestureServer server;
     
     ros::spin();
+    
+    return 0;
 }
