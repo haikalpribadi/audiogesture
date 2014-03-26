@@ -1,9 +1,9 @@
-/* 
+/*
  * File:   AudioGestureServer.cpp
- * Author: haikalpribadi
- * 
- * Created on 09 March 2014, 14:26
- */
+* Author: haikalpribadi
+*
+* Created on 09 March 2014, 14:26
+*/
 
 #include "AudioGestureServer.h"
 
@@ -17,6 +17,7 @@ AudioGestureServer::AudioGestureServer() {
     }
     
     deleteLastGestureFile_srv = node.advertiseService("delete_last_gesture_file", &AudioGestureServer::deleteLastGestureFile, this);
+    deleteSample_srv = node.advertiseService("delete_sample", &AudioGestureServer::deleteSample, this);
     getLastGestureFile_srv = node.advertiseService("get_last_gesture_file", &AudioGestureServer::getLastGestureFile, this);
     getSampleFile_srv = node.advertiseService("get_sample_file", &AudioGestureServer::getSampleFile, this);
     getSamples_srv = node.advertiseService("get_samples", &AudioGestureServer::getSamples, this);
@@ -37,9 +38,34 @@ bool AudioGestureServer::deleteLastGestureFile(audiogesture::GetFile::Request& r
     if(samples.find(name)->second.gestureFiles.empty())
         return false;
     
+    string file = samples.find(name)->second.gestureFiles.back();
+    string pathfile = music_dir + "/" + file;
+    remove(pathfile.c_str());
+    
     samples.find(name)->second.gestureFiles.pop_back();
     return true;
 }
+
+bool AudioGestureServer::deleteSample(audiogesture::GetFile::Request& req, audiogesture::GetFile::Response& res) {
+    string name = req.name;
+    
+    if(samples.find(name) == samples.end())
+        return false;
+    
+    Sample sample = samples.at(name);
+    remove((music_dir + "/" + sample.collectionFile).c_str());
+    remove((music_dir + "/" + sample.featureFile).c_str());
+    remove((music_dir + "/" + sample.featureNormFile).c_str());
+    remove((music_dir + "/" + sample.sampleFile).c_str());
+    for(int i=0; i<sample.gestureFiles.size(); i++) {
+        remove((music_dir + "/" + sample.gestureFiles[i]).c_str());
+    }
+    
+    samples.erase(name);
+    return true;
+}
+
+
 bool AudioGestureServer::getLastGestureFile(audiogesture::GetFile::Request& req, audiogesture::GetFile::Response& res) {
     string name = req.name;
     

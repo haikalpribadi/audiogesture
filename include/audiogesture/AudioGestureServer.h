@@ -1,12 +1,12 @@
-/* 
- * File:   AudioGestureServer.h
- * Author: haikalpribadi
- *
- * Created on 09 March 2014, 14:26
- */
+/*
+* File: AudioGestureServer.h
+* Author: haikalpribadi
+*
+* Created on 09 March 2014, 14:26
+*/
 
 #ifndef AUDIOGESTURESERVER_H
-#define	AUDIOGESTURESERVER_H
+#define AUDIOGESTURESERVER_H
 
 #include <iostream>
 #include <map>
@@ -29,6 +29,7 @@ public:
 private:
     ros::NodeHandle node;
     ros::ServiceServer deleteLastGestureFile_srv;
+    ros::ServiceServer deleteSample_srv;
     ros::ServiceServer getLastGestureFile_srv;
     ros::ServiceServer getSampleFile_srv;
     ros::ServiceServer getSamples_srv;
@@ -41,12 +42,14 @@ private:
     
     bool deleteLastGestureFile(audiogesture::GetFile::Request &req,
                                   audiogesture::GetFile::Response &res);
+    bool deleteSample(audiogesture::GetFile::Request &req,
+                        audiogesture::GetFile::Response &res);
     bool getLastGestureFile(audiogesture::GetFile::Request &req,
                                audiogesture::GetFile::Response &res);
     bool getSampleFile(audiogesture::GetFile::Request &req,
-                       audiogesture::GetFile::Response &res);
+                        audiogesture::GetFile::Response &res);
     bool getSamples(audiogesture::GetSamples::Request &req,
-                    audiogesture::GetSamples::Response &res);
+                     audiogesture::GetSamples::Response &res);
     void extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg);
     void processedOutputCallback(const audiogesture::ProcessedOutput::ConstPtr& msg);
     void trainerStatusCallback(const audiogesture::TrainerStatus::ConstPtr& msg);
@@ -54,5 +57,4 @@ private:
     void print();
 };
 
-#endif	/* AUDIOGESTURESERVER_H */
-
+#endif /* AUDIOGESTURESERVER_H */

@@ -1,9 +1,9 @@
-/* 
+/*
  * File:   AudioGestureTrainer.cpp
- * Author: haikalpribadi
- * 
- * Created on 06 March 2014, 16:21
- */
+* Author: haikalpribadi
+*
+* Created on 06 March 2014, 16:21
+*/
 
 #include <cmath>
 
@@ -97,16 +97,7 @@ bool AudioGestureTrainer::trainSample(string sample) {
 void AudioGestureTrainer::deleteLastGestureFile(string sample) {
     audiogesture::GetFile srv;
     srv.request.name = sample;
-    
-    if(getLastGestureFile_cl.call(srv)) {
-        string file = srv.response.file;
-        string pathfile = music_dir + "/" + file;
-        remove(pathfile.c_str());
-        
-        audiogesture::GetFile srv2;
-        srv2.request.name = sample;
-        deleteLastGestureFile_cl.call(srv);
-    }
+    deleteLastGestureFile_cl.call(srv);
 }
 
 void AudioGestureTrainer::publishToPlay(string sample, string file) {
@@ -181,21 +172,21 @@ int main(int argc, char** argv) {
     trainer.run();
     
     /*
-    audiogesture::GetSampleFile srv;
-    srv.request.name = "water1";
-    trainer.getSampleFile_cl.call(srv);
-    string file = srv.response.file;
-    string cmd = "mplayer " + file;
+audiogesture::GetSampleFile srv;
+srv.request.name = "water1";
+trainer.getSampleFile_cl.call(srv);
+string file = srv.response.file;
+string cmd = "mplayer " + file;
     
-    audiogesture::TrainerStatus msg;
-    msg.name = "water1";
-    msg.status = "start";
-    usleep(1000000);
-    trainer.trainerStatus_pub.publish(msg);
-    system(cmd.c_str());
-    msg.status = "end";
-    trainer.trainerStatus_pub.publish(msg);
-     */
+audiogesture::TrainerStatus msg;
+msg.name = "water1";
+msg.status = "start";
+usleep(1000000);
+trainer.trainerStatus_pub.publish(msg);
+system(cmd.c_str());
+msg.status = "end";
+trainer.trainerStatus_pub.publish(msg);
+*/
     
     //ros::spin();
     
