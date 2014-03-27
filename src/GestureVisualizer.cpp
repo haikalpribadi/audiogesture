@@ -71,9 +71,9 @@ visualization_msgs::Marker GestureVisualizer::createMarker(int id, int x, int y,
     marker.scale.z = 1.0;
 
     // Set the color -- be sure to set alpha to something non-zero!
-    marker.color.r = float(x/(rows));
-    marker.color.g = float(y/(columns));
-    marker.color.b = 1 - float(x/(rows) + y/(columns));
+    marker.color.r = (float)x/(rows-1);
+    marker.color.b = (float)y/(columns-1);
+    marker.color.g = 0.75 - (((float)x/(rows) + (float)y/(columns))/3);
     marker.color.a = 1.0;
 
     marker.lifetime = ros::Duration();
