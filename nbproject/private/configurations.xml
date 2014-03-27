@@ -30,6 +30,10 @@
             <df name="src">
             </df>
           </df>
+          <df name="audio_input.dir">
+            <df name="src">
+            </df>
+          </df>
           <df name="clean_test_results.dir">
           </df>
           <df name="CMakeTmp">
@@ -163,6 +167,7 @@
           <in>GesturePublisher.h</in>
           <in>GestureReceiver.h</in>
           <in>GestureTest.h</in>
+          <in>GestureVisualizer.h</in>
           <in>MusicExtractor.h</in>
           <in>MusicExtractorBuffer.h</in>
           <in>Sample.h</in>
@@ -212,6 +217,7 @@
         <in>GesturePublisher.cpp</in>
         <in>GestureReceiver.cpp</in>
         <in>GestureTest.cpp</in>
+        <in>GestureVisualizer.cpp</in>
         <in>MusicExtractor.cpp</in>
         <in>MusicExtractorBuffer.cpp</in>
         <in>Sample.cpp</in>

@@ -14,6 +14,7 @@
           <in>GesturePublisher.h</in>
           <in>GestureReceiver.h</in>
           <in>GestureTest.h</in>
+          <in>GestureVisualizer.h</in>
           <in>MusicExtractor.h</in>
           <in>MusicExtractorBuffer.h</in>
           <in>Sample.h</in>
@@ -33,6 +34,7 @@
         <in>GesturePublisher.cpp</in>
         <in>GestureReceiver.cpp</in>
         <in>GestureTest.cpp</in>
+        <in>GestureVisualizer.cpp</in>
         <in>MusicExtractor.cpp</in>
         <in>MusicExtractorBuffer.cpp</in>
         <in>Sample.cpp</in>
@@ -84,6 +86,11 @@
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureTrainer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioInput.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -159,6 +166,11 @@
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureTrainer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioInput.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -272,9 +284,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="include/audiogesture/AudioInput.h" ex="false" tool="3" flavor2="0">
+      <item path="include/audiogesture/GestureVisualizer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="src/AudioInput.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/GestureVisualizer.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

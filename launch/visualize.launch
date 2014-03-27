@@ -23,12 +23,20 @@
   
   <node pkg="audiogesture" type="gesture_visualizer" name="GestureVisualizer" output="screen"/>
   
-  <node pkg="audiogesture" type="audio_input" name="AudioInput" output="screen"/>
+  
+  
+  <node pkg="audiogesture" type="gesture_test" name="GestureTest" output="screen"/>
+
+  <node pkg="oscpack" type="osc_receiver" name="OscReceiver" output="screen"/>
+
+  <node pkg="oscpack" type="osc_sender" name="OscSender" output="screen"/>
+  
+  <node pkg="rviz" type="rviz" name="RViz" output="screen" />
   
 </launch>
 <!--%EndTag(FULL)%-->
 
 <!--
-  
+  <node pkg="audiogesture" type="audio_input" name="AudioInput" output="screen"/>
   
 -->
