@@ -26,6 +26,8 @@
 #define FV      ".fv"
 #define HTML    ".html"
 #define MF      ".mf"
+#define LIVE    "live"
+#define FOLDER  "folder"
 
 using namespace std;
 
@@ -38,6 +40,7 @@ public:
     
 private:
     bool run;
+    string input;
     string music_dir;
     string args;
     

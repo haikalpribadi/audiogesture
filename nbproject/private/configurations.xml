@@ -30,14 +30,6 @@
             <df name="src">
             </df>
           </df>
-          <df name="audio_input.dir">
-            <df name="src">
-            </df>
-          </df>
-          <df name="audiogesture_trainer.dir">
-            <df name="src">
-            </df>
-          </df>
           <df name="clean_test_results.dir">
           </df>
           <df name="CMakeTmp">
@@ -124,10 +116,6 @@
             <df name="src">
             </df>
           </df>
-          <df name="serial_port_reader.dir">
-            <df name="src">
-            </df>
-          </df>
           <df name="test-future.dir">
           </df>
           <df name="test-results-run.dir">
@@ -166,6 +154,7 @@
         <df name="audiogesture">
           <in>AudioGestureServer.h</in>
           <in>AudioGestureTrainer.h</in>
+          <in>AudioInput.h</in>
           <in>Bextract.h</in>
           <in>CollectionGenerator.h</in>
           <in>CompareNatural.h</in>
@@ -215,6 +204,7 @@
         </df>
         <in>AudioGestureServer.cpp</in>
         <in>AudioGestureTrainer.cpp</in>
+        <in>AudioInput.cpp</in>
         <in>Bextract.cpp</in>
         <in>CollectionGenerator.cpp</in>
         <in>FeatureNormalizer.cpp</in>
@@ -236,7 +226,6 @@
           <df name="include">
             <df name="audiogesture">
               <in>GetFile.h</in>
-              <in>GetSampleFile.h</in>
               <in>GetSamples.h</in>
             </df>
           </df>

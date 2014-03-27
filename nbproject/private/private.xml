@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <code-assistance-data xmlns="http://www.netbeans.org/ns/make-project-private/1">
-        <code-model-enabled>true</code-model-enabled>
-    </code-assistance-data>
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>0</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
@@ -11,18 +8,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureServer.cpp</file>
-<<<<<<< HEAD
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureTrainer.h</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureServer.h</file>
-=======
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/GestureReceiver.h</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureTrainer.h</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/SamplePlayer.h</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureServer.h</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/SamplePlayer.cpp</file>
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/GestureReceiver.cpp</file>
->>>>>>> parent of cdc56db... completed AudioInput
-            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureTrainer.cpp</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/GesturePublisher.cpp</file>
         </group>
     </open-files>
 </project-private>

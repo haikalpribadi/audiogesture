@@ -10,6 +10,7 @@
 
 #include <ros/ros.h>
 #include <signal.h>
+#include <std_msgs/String.h>
 #include <sstream>
 
 #include "audiogesture/GetFile.h"
@@ -31,10 +32,11 @@ public:
     
 private:
     ros::NodeHandle node;
+    ros::Publisher collectionGenerator_pub;
     ros::ServiceClient deleteSample_cl;
     ros::ServiceClient getSampleFile_cl;
     
-
+    void publishToCollectionGenerator(string filename);
 };
 
 void signalCallback(int signal);

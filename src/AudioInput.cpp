@@ -30,10 +30,21 @@ AudioInput::AudioInput() {
         ros::requestShutdown();
     }
     
+    node.setParam("input_mode", "live");
+    collectionGenerator_pub = node.advertise<std_msgs::String>("collection_generator", 1000);
     deleteSample_cl = node.serviceClient<audiogesture::GetFile>("delete_sample");
     getSampleFile_cl = node.serviceClient<audiogesture::GetFile>("get_sample_file");
     
     counter = 0;
+}
+
+void AudioInput::publishToCollectionGenerator(string filename) {
+    std_msgs::String msg;
+    msg.data = filename;
+
+    collectionGenerator_pub.publish(msg);
+    ROS_INFO("Collection Generator called for: %s", msg.data.c_str());
+    return;
 }
 
 void AudioInput::process() {
@@ -55,6 +66,8 @@ void AudioInput::process() {
     
     if (status!=0) {
         run = false;
+    } else {
+        publishToCollectionGenerator(output+".wav");
     }
 }
 

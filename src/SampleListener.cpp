@@ -14,11 +14,16 @@ SampleListener::SampleListener() {
         ROS_ERROR("Please set the music_directory (file) parameter for extractor");
         ros::requestShutdown();
     }
-
+    
     if (!node.getParam("bextract_args", args)) {
         args = "";
     }
-
+    
+    if (!node.getParam("input_mode", input)) {
+        input = FOLDER;
+    }
+    ROS_INFO("MusicSampleListener input set to: %s", input.c_str());
+    
     featureExtractor_pub = node.advertise<std_msgs::String>("music_extractor_buffer", 1000);
     collectionGenerator_pub = node.advertise<std_msgs::String>("collection_generator", 1000);
     processedOutput_pub = node.advertise<audiogesture::ProcessedOutput>("processed_output", 1000);
@@ -62,13 +67,12 @@ void SampleListener::monitorDirectory() {
 
                     } else if (name.find(' ') != -1) {
                         renameFile(name);
-                    } else {
+                    } else if (input==FOLDER) {
                         publishToCollectionGenerator(name);
                     }
                     
                     publishToProcessedOutput(name);
                 }
-                
             }
         }
     }

@@ -108,7 +108,7 @@ vector<float> FeatureNormalizer::normalize_m(vector<float> vector) {
 }
 
 float FeatureNormalizer::normalize_v(float val) {
-    return (val-fv_min)/(fv_max-fv_min);
+    return (fv_max-fv_min)==0 ? 0 : (val-fv_min)/(fv_max-fv_min);
 }
 
 vector<float> FeatureNormalizer::output_m(vector<float> vector) {
