@@ -1,9 +1,13 @@
 <!--%Tag(FULL)%-->
 <launch>
 	
-	<param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music"/>
 	<param name="bextract_args" value="-mfcc" />
-	<param name="feature_subs" value="1" />
+  <param name="feature_subs" value="1" />
+  <param name="input_mode" value="live" />
+  <param name="gesture_topic" value="gesture_vector" />
+  <param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music" />
+  <param name="sample_duration" value="2" />
+  <param name="sample_log" value="100" />
 	
 	<node pkg="audiogesture" type="audio_gesture_server" name="AudioGestureServer" output="screen"/>
 	

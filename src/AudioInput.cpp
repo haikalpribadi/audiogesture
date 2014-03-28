@@ -12,7 +12,7 @@ AudioInput::AudioInput() {
         ROS_INFO("AudioInput using music_dir: %s", music_dir.c_str());
         chdir(music_dir.c_str());
     } else {
-        ROS_ERROR("Please set the music_directory (file) parameter for AudioInput");
+        ROS_ERROR("Please set the music_dir parameter for AudioInput");
         ros::requestShutdown();
     }
 

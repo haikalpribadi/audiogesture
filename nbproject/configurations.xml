@@ -17,6 +17,7 @@
           <in>GestureVisualizer.h</in>
           <in>MusicExtractor.h</in>
           <in>MusicExtractorBuffer.h</in>
+          <in>PCAExtractor.h</in>
           <in>Sample.h</in>
           <in>SampleListener.h</in>
           <in>SamplePlayer.h</in>
@@ -37,6 +38,7 @@
         <in>GestureVisualizer.cpp</in>
         <in>MusicExtractor.cpp</in>
         <in>MusicExtractorBuffer.cpp</in>
+        <in>PCAExtractor.cpp</in>
         <in>Sample.cpp</in>
         <in>SampleListener.cpp</in>
         <in>SamplePlayer.cpp</in>
@@ -130,12 +132,22 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/GestureVisualizer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/MusicExtractor.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/MusicExtractorBuffer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/PCAExtractor.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -218,6 +230,11 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/GestureVisualizer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/MusicExtractor.cpp"
             ex="false"
             tool="1"
@@ -264,6 +281,11 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/PCAExtractor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/Sample.cpp"
             ex="false"
             tool="1"
@@ -283,13 +305,6 @@
             ex="false"
             tool="1"
             flavor2="0">
-      </item>
-      <item path="include/audiogesture/GestureVisualizer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/GestureVisualizer.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

@@ -74,11 +74,19 @@
             <df name="src">
             </df>
           </df>
+          <df name="gesture_visualizer.dir">
+            <df name="src">
+            </df>
+          </df>
           <df name="music_extractor.dir">
             <df name="src">
             </df>
           </df>
           <df name="music_extractor_buffer.dir">
+            <df name="src">
+            </df>
+          </df>
+          <df name="pca_extractor.dir">
             <df name="src">
             </df>
           </df>
@@ -170,6 +178,7 @@
           <in>GestureVisualizer.h</in>
           <in>MusicExtractor.h</in>
           <in>MusicExtractorBuffer.h</in>
+          <in>PCAExtractor.h</in>
           <in>Sample.h</in>
           <in>SampleListener.h</in>
           <in>SamplePlayer.h</in>
@@ -220,6 +229,7 @@
         <in>GestureVisualizer.cpp</in>
         <in>MusicExtractor.cpp</in>
         <in>MusicExtractorBuffer.cpp</in>
+        <in>PCAExtractor.cpp</in>
         <in>Sample.cpp</in>
         <in>SampleListener.cpp</in>
         <in>SamplePlayer.cpp</in>

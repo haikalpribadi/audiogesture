@@ -11,7 +11,7 @@ SampleListener::SampleListener() {
     if (node.getParam("music_dir", music_dir)) {
         ROS_INFO("MusicSampleListener using music_dir: %s", music_dir.c_str());
     } else {
-        ROS_ERROR("Please set the music_directory (file) parameter for extractor");
+        ROS_ERROR("Please set the music_dir (file) parameter for extractor");
         ros::requestShutdown();
     }
     

@@ -6,6 +6,7 @@
   <param name="input_mode" value="live" />
   <param name="gesture_topic" value="gesture_vector" />
   <param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music" />
+  <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
   <param name="sample_duration" value="2" />
   <param name="sample_log" value="100" />
 

@@ -14,7 +14,7 @@ AudioGestureTrainer::AudioGestureTrainer() {
         ROS_INFO("AudioGestureTrainer using music_dir: %s", music_dir.c_str());
         chdir(music_dir.c_str());
     } else {
-        ROS_ERROR("Please set the music_directory (file) parameter for AudioGestureTrainer");
+        ROS_ERROR("Please set the music_dir parameter for AudioGestureTrainer");
         ros::requestShutdown();
     }
     
