@@ -10,8 +10,11 @@
 
 #include <algorithm>
 #include <dirent.h>
+#include <fstream>
+#include <iostream>
 #include <pca.h>
 #include <ros/ros.h>
+#include <sstream>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <vector>
@@ -37,6 +40,7 @@ private:
     
     vector<string> readDirectory(const string& path);
     vector<vector<double> > loadData(const string& path);
+    vector<vector<double> > filterPeaks(vector<vector<double> > data);
 };
 
 #endif	/* PCAEXTRACTOR_H */

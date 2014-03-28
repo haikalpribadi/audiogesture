@@ -29,13 +29,23 @@ PCAExtractor::PCAExtractor() {
     vector<string> featureFiles = readDirectory(feature_dir);
     
     cout << "====== Gesture Files ======" << endl;
-    for(int i=0; i<gestureFiles.size(); i++)
+    for(int i=0; i<gestureFiles.size(); i++) {
         cout << gestureFiles[i] << endl;
+        gestures.push_back(filterPeaks(loadData(gesture_dir + "/" + gestureFiles[i])));
+    }
+    for(int i=0; i<gestures[2].size(); i++) {
+        for(int j=0; j<gestures[2][0].size(); j++) {
+            cout << gestures[2][i][j] << ", ";
+        }
+        cout << endl;
+    }
     
     cout << endl;
     cout << "====== Feature Files ======" << endl;
-    for(int i=0; i<featureFiles.size(); i++)
+    for(int i=0; i<featureFiles.size(); i++){
         cout << featureFiles[i] << endl;
+        gestures.push_back(loadData(feature_dir + "/" + featureFiles[i]));
+    }
     
 }
 
@@ -60,8 +70,63 @@ vector<string> PCAExtractor::readDirectory(const string& path) {
 
 vector<vector<double> > PCAExtractor::loadData(const string& path) {
     vector<vector<double> > data;
+    ifstream file(path.c_str());
+    string line;
     
+    if(file.is_open()) {
+        while(getline(file,line)) {
+            vector<double> values;
+            string val;
+            istringstream stream(line);
+            while(getline(stream, val, ',')) {
+                values.push_back(atoi(val.c_str()));
+            }
+            data.push_back(values);
+        }
+        file.close();
+    }
     
+    return data;
+}
+
+vector<vector<double > > PCAExtractor::filterPeaks(vector<vector<double> > data) {
+    int max = 1440;
+    for(int i=0; i<data.size(); i++) {
+        for(int j=0; j<data[0].size(); j++) {
+            if(data[i][j]==max) {
+                vector<double> values;
+                for(int a=1; a<=j; a++) {
+                    if(data[i][j-a]!=max) {
+                        values.push_back(data[i][j-a]);
+                        break;
+                    }
+                }
+                for(int a=1; a<data[i].size()-j; a++) {
+                    if(data[i][j+a]!=max) {
+                        values.push_back(data[i][j+a]);
+                        break;
+                    }
+                }
+                for(int a=1; a<=i; a++) {
+                    if(data[i-a][j]!=max) {
+                        values.push_back(data[i-a][j]);
+                        break;
+                    }
+                }
+                for(int a=1; a<data.size()-i; a++) {
+                    if(data[i+a][j]!=max) {
+                        values.push_back(data[i+a][j]);
+                        break;
+                    }
+                }
+                double average = 0;
+                for(int a=0; a<values.size(); a++) {
+                    average += values[a];
+                }
+                data[i][j] = values.size()>0 ? average/values.size() : average;
+            }
+        }
+    }
     return data;
 }
 
