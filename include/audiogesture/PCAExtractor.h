@@ -28,6 +28,7 @@ struct stat sb;
 class PCAExtractor {
 public:
     PCAExtractor();
+    void setupNode();
     void loadDirectory();
     void process();
     

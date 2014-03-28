@@ -49,7 +49,7 @@ void PCAExtractor::loadPCA() {
     ROS_INFO("LOADING PCA records for gesture data ... (%d x %d dimension)", gestures[0].size(), gestures[0][0].size());
     int dimension = gestures[0].size()*gestures[0][0].size();
     gesture_pca = stats::pca(dimension);
-    
+    gesture_pca.set_do_bootstrap(true, 100);
     for(int i=0; i<gestures.size(); i++) {
         vector<double> gesture;
         for(int j=0; j<gestures[i].size(); j++) {
@@ -68,7 +68,7 @@ void PCAExtractor::loadPCA() {
     ROS_INFO("LOADING PCA records for feature data ... (%d dimension)", features[0][0].size());
     dimension = features[0][0].size();
     feature_pca = stats::pca(dimension);
-    
+    feature_pca.set_do_bootstrap(true, 100);
     for(int i=0; i<features.size(); i++) {
         bool validFile = true;
         for(int j=0; validFile && j<features[i].size(); j++) {
@@ -152,10 +152,10 @@ void PCAExtractor::loadDirectory() {
     featureFiles = readDirectory(feature_dir);
     
     int count = 0;
-    cout << "====== Gesture Files ======" << endl;
+    //ROS_INFO("====== Gesture Files ======");
     for(int i=0; i<gestureFiles.size(); i++) {
         string path = gesture_dir + "/" + gestureFiles[i];
-        cout << gestureFiles[i] << endl;
+        //ROS_INFO(gestureFiles[i].c_str());
         vector<vector<double> > data;
         if(filter) {
             data = filterPeaks(loadData(gesture_dir + "/" + gestureFiles[i]));
@@ -171,17 +171,15 @@ void PCAExtractor::loadDirectory() {
         }
         gestures.push_back(data);
     }
-    cout << "Gesture sample size: " << gestures.size() << endl;
-    cout << "===========================" << endl << endl;
+    ROS_INFO("Gesture sample size: %d", gestures.size());
     
     count = 0;
-    cout << "====== Feature Files ======" << endl;
+    //ROS_INFO("====== Feature Files ======");
     for(int i=0; i<featureFiles.size(); i++){
-        cout << featureFiles[i] << endl;
+        //ROS_INFO(featureFiles[i].c_str());
         features.push_back(loadData(feature_dir + "/" + featureFiles[i]));
     }
-    cout << "Feature sample size: " << features.size() << endl;
-    cout << "===========================" << endl << endl;
+    ROS_INFO("Feature sample size: %d", features.size());
 }
 
 vector<vector<double > > PCAExtractor::filterPeaks(vector<vector<double> > data) {
