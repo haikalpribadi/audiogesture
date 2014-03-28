@@ -24,13 +24,11 @@ void CollectionGenerator::collectionGeneratorCallback(const std_msgs::String::Co
     string name = sample.substr(0, sample.find(".")) + MF;
 
     name = music_dir + "/" + name;
-
-    FILE * file;
-    file = fopen(name.c_str(), "w");
-    if (file != NULL) {
-        fputs(sample.c_str(), file);
-        fclose(file);
-    }
+    
+    ofstream file;
+    file.open(name.c_str());
+    file << sample;
+    file.close();
 
     return;
 }

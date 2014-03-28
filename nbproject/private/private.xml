@@ -9,6 +9,8 @@
         <group>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/PCAExtractor.cpp</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/AudioGestureServer.cpp</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/PCAExtractor.h</file>
+            <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/src/CollectionGenerator.cpp</file>
             <file>file:/home/haikalpribadi/Workspace/ROS/radiophonic/audiogesture/include/audiogesture/AudioGestureServer.h</file>
         </group>
     </open-files>

@@ -28,19 +28,33 @@ struct stat sb;
 class PCAExtractor {
 public:
     PCAExtractor();
+    void loadDirectory();
+    void process();
     
 private:
     ros::NodeHandle node;
+    
+    stats::pca gesture_pca;
+    stats::pca feature_pca;
+    
     string pca_dir;
     string train_dir;
     string gesture_dir;
     string feature_dir;
+    bool filter;
+    vector<string> gestureFiles;
+    vector<string> featureFiles;
     vector<vector<vector<double > > > gestures;
     vector<vector<vector<double > > > features;
     
     vector<string> readDirectory(const string& path);
-    vector<vector<double> > loadData(const string& path);
     vector<vector<double> > filterPeaks(vector<vector<double> > data);
+    vector<vector<double> > loadData(const string& path);
+    
+    void loadPCA();
+    void solvePCA();
+    void savePCA();
+    void outputToFile(const vector<vector<double> >& data, const string& path);
 };
 
 #endif	/* PCAEXTRACTOR_H */

@@ -8,7 +8,7 @@
 #ifndef COLLECTIONGENERATOR_H
 #define	COLLECTIONGENERATOR_H
 
-#include <cstdlib>
+#include <fstream>
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 
