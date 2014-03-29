@@ -21,7 +21,7 @@ GestureOutput::GestureOutput() {
     max = 0;
 }
 
-void GestureOutput::gestureOutputCallback(const std_msgs::Float32MultiArray::ConstPtr& msg) {
+void GestureOutput::gestureOutputCallback(const std_msgs::Float64MultiArray::ConstPtr& msg) {
     vector<int> gesture(msg->data.size());
     double new_max = *max_element(msg->data.begin(), msg->data.end());
     double new_min = *min_element(msg->data.begin(), msg->data.end());

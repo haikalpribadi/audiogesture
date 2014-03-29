@@ -10,7 +10,7 @@
 
 #include <algorithm>
 #include <ros/ros.h>
-#include <std_msgs/Float32MultiArray.h>
+#include <std_msgs/Float64MultiArray.h>
 #include <std_msgs/Int32MultiArray.h>
 #include <vector>
 
@@ -28,7 +28,7 @@ private:
     double max;
     double min;
     
-    void gestureOutputCallback(const std_msgs::Float32MultiArray::ConstPtr& msg);
+    void gestureOutputCallback(const std_msgs::Float64MultiArray::ConstPtr& msg);
 
 };
 
