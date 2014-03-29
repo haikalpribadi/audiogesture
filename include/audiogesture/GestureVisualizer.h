@@ -9,7 +9,7 @@
 #define	GESTUREVISUALIZER_H
 
 #include <ros/ros.h>
-#include <std_msgs/Int32MultiArray.h>
+#include <std_msgs/Float64MultiArray.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 
@@ -32,8 +32,8 @@ private:
     
     int shape;
     
-    void gestureCallback(const std_msgs::Int32MultiArray::ConstPtr& msg);
-    visualization_msgs::Marker createMarker(int id, int x, int y, int z);
+    void gestureCallback(const std_msgs::Float64MultiArray::ConstPtr& msg);
+    visualization_msgs::Marker createMarker(int id, int x, int y, double z);
 };
 
 #endif	/* GESTUREVISUALIZER_H */

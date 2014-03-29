@@ -26,7 +26,7 @@ GestureVisualizer::GestureVisualizer() {
 }
 
 
-void GestureVisualizer::gestureCallback(const std_msgs::Int32MultiArray::ConstPtr& msg) {
+void GestureVisualizer::gestureCallback(const std_msgs::Float64MultiArray::ConstPtr& msg) {
     visualization_msgs::MarkerArray markerarray;
     int id;
     for(int i=0; i<rows; i++) {
@@ -39,7 +39,7 @@ void GestureVisualizer::gestureCallback(const std_msgs::Int32MultiArray::ConstPt
     markerarray_pub.publish(markerarray);
 }
 
-visualization_msgs::Marker GestureVisualizer::createMarker(int id, int x, int y, int z) {
+visualization_msgs::Marker GestureVisualizer::createMarker(int id, int x, int y, double z) {
     visualization_msgs::Marker marker;
     // Set the frame ID and timestamp.  See the TF tutorials for information on these.
     marker.header.frame_id = "/gesture";

@@ -115,8 +115,8 @@ void WekaSink::putHeader(mrs_string inObsNames) {
         mos_->open(filename_.c_str());
 
         // General header stuff.
-        (*mos_) << "% Created by Marsyas" << endl;
-        (*mos_) << "@relation " << filename_ << endl;
+        //(*mos_) << "% Created by Marsyas" << endl;
+        //(*mos_) << "@relation " << filename_ << endl;
 
         // The number of attributes is one less than the number of input
         // observations because we assume the last observation is for the label?
@@ -156,7 +156,7 @@ void WekaSink::putHeader(mrs_string inObsNames) {
             // TODO: what's the point of using an extra ostringstream here?
             ostringstream oss;
             // oss << "attribute" << i;
-            (*mos_) << "@attribute " << inObsName << " real" << endl;
+            //(*mos_) << "@attribute " << inObsName << " real" << endl;
 
             /* 
              * This block allows publishing each feature on individual channel
@@ -172,7 +172,7 @@ void WekaSink::putHeader(mrs_string inObsNames) {
             }*/
         }
 
-
+        /*
         // The attribute for the label.
         if (!ctrl_regression_->isTrue()) {
             (*mos_) << "@attribute output {";
@@ -196,6 +196,7 @@ void WekaSink::putHeader(mrs_string inObsNames) {
 
         // End of header, now we are ready for outputting the data.
         (*mos_) << "\n\n@data" << endl;
+        */
     }
 }
 
@@ -238,14 +239,14 @@ void WekaSink::myUpdate(MarControlPtr sender) {
     // from WekaSink::myProcess().
     if (!ctrl_mute_->isTrue()) {
         if (ctrl_inject_->isTrue()) {
-            (* mos_) << ctrl_injectComment_->to<mrs_string>() << endl;
-            (* mos_) << "% srate " << israte_ << endl;
+            //(* mos_) << ctrl_injectComment_->to<mrs_string>() << endl;
+            //(* mos_) << "% srate " << israte_ << endl;
             ctrl_inject_->setValue(false, NOUPDATE);
             MarControlAccessor acc_injectVector(ctrl_injectVector_);
             realvec& injectVector = acc_injectVector.to<mrs_realvec>();
 
             for (mrs_natural j = 0; j < injectVector.getSize() - 1; j++) {
-                (*mos_) << fixed << setprecision(precision_) << injectVector(j) << ",";
+                //(*mos_) << fixed << setprecision(precision_) << injectVector(j) << ",";
             }
             // TODO: the following assumes that the last item is a label, which is
             // not always true, see ctrl_regression.
@@ -253,8 +254,8 @@ void WekaSink::myUpdate(MarControlPtr sender) {
             // TODO: what's the point of all those ostringstreams?
             ostringstream oss;
             oss << labelNames_[label];
-            (*mos_) << oss.str();
-            (*mos_) << endl;
+            //(*mos_) << oss.str();
+            //(*mos_) << endl;
         }
     }
     precision_ = ctrl_precision_->to<mrs_natural>();
@@ -306,8 +307,8 @@ void WekaSink::myProcess(realvec& in, realvec& out) {
     for (t = 0; t < inSamples_; t++) {
         // Add a comment about the current input file.
         if (ctrl_currentlyPlaying_->to<mrs_string>() != prev_playing_) {
-            (*mos_) << "% filename " << ctrl_currentlyPlaying_->to<mrs_string>() << endl;
-            (*mos_) << "% srate " << israte_ << endl;
+            //(*mos_) << "% filename " << ctrl_currentlyPlaying_->to<mrs_string>() << endl;
+            //(*mos_) << "% srate " << israte_ << endl;
             prev_playing_ = ctrl_currentlyPlaying_->to<mrs_string>();
 
             //std_msgs::Float32 msg;

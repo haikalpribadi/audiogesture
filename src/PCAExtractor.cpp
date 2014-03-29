@@ -31,7 +31,71 @@ PCAExtractor::PCAExtractor() {
             ROS_INFO("PCAExtractor is set to filter peaks (errors) in data");
         }
     }
+    dimension = 3;
+    node.getParam("pca_dimension", dimension);
+    ROS_INFO("PCAExtractor is set to use %d highest dimension", dimension);
+}
+
+void PCAExtractor::setupNode() {
+    outputVector_pub = node.advertise<std_msgs::Float64MultiArray>("gesture_output", 1000);
     
+    featureVector_sub = node.subscribe("feature_vector", 1000,
+            &PCAExtractor::featureVectorCallback, this);
+    extractorStatus_sub = node.subscribe("extractor_status", 1000,
+            &PCAExtractor::extractorStatusCallback, this);
+}
+
+void PCAExtractor::featureVectorCallback(const audiogesture::FeatureVector::ConstPtr& msg) {
+    vector<double> feature(msg->data.begin(), msg->data.end());
+    featureVectors.push_back(feature);
+}
+
+void PCAExtractor::extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg) {
+    if (msg->status == "end") {
+        mapFeatureToGesture();
+    }
+}
+
+void PCAExtractor::mapFeatureToGesture() {
+    if(featureVectors.size()<1)
+        return;
+    
+    stats::pca input_pca(featureVectors[0].size());
+    input_pca.set_do_bootstrap(true, 100);
+    
+    for(int i=0; i<featureVectors.size(); i++) {
+        input_pca.add_record(featureVectors[i]);
+    }
+    featureVectors.clear();
+    
+    input_pca.solve();
+    
+    vector<double> input_ev = input_pca.get_eigenvector(0);
+    vector<double> scalars;
+    
+    for(int i=0; i<dimension; i++) {
+        double scalar = inner_product(input_ev.begin(), input_ev.end(), 
+                                      feature_eigenvectors[i].begin(), 0.0) * 5;
+        scalars.push_back(scalar);
+    }
+    cout << endl;
+    int size = gesture_eigenvectors[0].size();
+    vector<double> gesture_output(size);
+    for(int i=0; i<size; i++)
+        gesture_output[i] = 0.0;
+    
+    for(int i=0; i<dimension; i++) {
+        for(int j=0; j<size; j++) {
+            gesture_output[j] = gesture_output[j] + 
+                                (gesture_eigenvectors[i][j] * scalars[i]);
+        }
+    }
+    
+    std_msgs::Float64MultiArray msg;
+    for(int i=0; i<gesture_output.size(); i++) {
+        msg.data.push_back(gesture_output[i]);
+    }
+    outputVector_pub.publish(msg);
 }
 
 void PCAExtractor::process() {
@@ -90,8 +154,14 @@ void PCAExtractor::loadPCA() {
 void PCAExtractor::solvePCA() {
     ROS_INFO("SOLVING PCA for gesture data ...");
     gesture_pca.solve();
+    for(int i=0; i<dimension; i++)
+        gesture_eigenvectors.push_back(gesture_pca.get_eigenvector(i));
+    
     ROS_INFO("SOLVING PCA for feature data ...");
     feature_pca.solve();
+    for(int i=0; i<dimension; i++)
+        feature_eigenvectors.push_back(feature_pca.get_eigenvector(i));
+    
 }
 
 void PCAExtractor::savePCA() {
@@ -247,6 +317,9 @@ int main(int argc, char** argv) {
     PCAExtractor pca;
     pca.loadDirectory();
     pca.process();
+    pca.setupNode();
 
     ros::spin();
+    
+    return 0;
 }
