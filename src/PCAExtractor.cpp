@@ -120,19 +120,15 @@ void PCAExtractor::mapFeatureToGesture() {
         vector<double> v;
         for(int j=0; j<8; j++) {
             double sum = 0.0;
-            cout << "neighbours: ";
             for(int x=max(0,i-1); x<=min(3,i+1); x++) {
                 for(int y=max(0,j-1); y<=min(7,j+1); y++) {
                     if(x!=i || y!=j) {
                         sum += gesture_output[x][y];
-                        cout << "[" << x << "]" << "[" << y << "] " << gesture_output[x][y] << ", ";
                     }
                 }
             }
             double average = sum / 8;
-            cout << endl << "sum: " << sum << ", average: " << average << endl;
             v.push_back(gesture_output[i][j] + average);
-            cout << "[" << i << "]" << "[" << j << "] " << gesture_output[i][j] << "-->" << gesture_output[i][j] + average << endl;
         }
         output.push_back(v);
     }

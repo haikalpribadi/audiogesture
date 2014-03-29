@@ -6,7 +6,10 @@
   <param name="filter_peaks" value="false"/>
   <param name="input_mode" value="live" />
   <param name="gesture_topic" value="gesture_output" />
+  <param name="gesture_range" value="1024" />
   <param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music" />
+  <param name="osc_address" value="192.168.1.177" />
+  <param name="osc_port" value="8888" />
   <param name="pca_dimension" value="10" />
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
   <param name="sample_duration" value="1" />
@@ -25,14 +28,18 @@
 
   <node pkg="audiogesture" type="feature_normalizer" name="FeatureNormalizer" output="screen"/>
   
+  <node pkg="audiogesture" type="gesture_output" name="GestureOutput" output="screen"/>
+  
   <node pkg="audiogesture" type="gesture_visualizer" name="GestureVisualizer" output="screen"/>
     
   <node pkg="audiogesture" type="audio_input" name="AudioInput" output="screen"/>
   
-  <node pkg="rviz" type="rviz" name="RViz" output="screen" />
-	
 	<node pkg="audiogesture" type="pca_extractor" name="PCAExtractor" output="screen"/>
   
+  <node pkg="oscpack" type="osc_sender" name="OscSender" output="screen"/>
+  
+  <node pkg="rviz" type="rviz" name="RViz" output="screen" />
+	
 </launch>
   
 <!--%EndTag(FULL)%-->
