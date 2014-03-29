@@ -38,6 +38,18 @@ AudioInput::AudioInput() {
     counter = 0;
 }
 
+void AudioInput::waitForPCA() {
+    bool wait = false, complete = false;
+    if(node.getParam("wait_for_pca", wait) && wait) {
+        ROS_INFO("AudioInput waiting, giving time for other nodes to set up ...");
+        while(!node.getParam("pca_complete", complete) || !complete) {
+            usleep(100000);
+            if(!ros::ok()) break;
+        }
+    }
+}
+
+
 void AudioInput::publishToCollectionGenerator(string filename) {
     std_msgs::String msg;
     msg.data = filename;
@@ -84,8 +96,9 @@ int main(int argc, char** argv) {
     ros::Rate rate(1000);
     signal(SIGKILL, signalCallback);
     
-    ROS_INFO("AudioInput waiting, giving time for other nodes to set up ...");
-    usleep(5000000);
+    usleep(2000000);
+    input.waitForPCA();
+    
     while (ros::ok() && run) {
         input.process();
         ros::spinOnce();

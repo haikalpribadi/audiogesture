@@ -10,13 +10,17 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <dirent.h>
 #include <ros/ros.h>
 #include <signal.h>
 #include <stdio.h>
 #include <std_msgs/String.h>
 #include <sys/inotify.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include "audiogesture/ProcessedOutput.h"
+#include "CompareNatural.h"
 
 #define EVENT_SIZE      ( sizeof ( struct inotify_event ))
 #define BUF_LEN         ( 1024 * ( EVENT_SIZE + NAME_MAX + 1 ))
@@ -31,12 +35,14 @@
 
 using namespace std;
 
+struct stat sb;
 static bool run = true;
 
 class SampleListener {
 public:
     SampleListener();
     void monitorDirectory();
+    void cleanDirectory();
     
 private:
     bool run;
@@ -54,6 +60,8 @@ private:
     void publishToProcessedOutput(string filename);
     bool hasFormat(string filename, string format);
     void renameFile(string filename);
+    
+    vector<string> readDirectory(const string& path);
 };
 
 void signalCallback(int signal);

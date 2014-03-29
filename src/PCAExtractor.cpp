@@ -79,6 +79,8 @@ void PCAExtractor::mapFeatureToGesture() {
         scalars.push_back(scalar);
     }
     cout << endl;
+    
+    /*
     int size = gesture_eigenvectors[0].size();
     vector<double> gesture_output(size);
     for(int i=0; i<size; i++)
@@ -86,8 +88,7 @@ void PCAExtractor::mapFeatureToGesture() {
     
     for(int i=0; i<dimension; i++) {
         for(int j=0; j<size; j++) {
-            gesture_output[j] = gesture_output[j] + 
-                                (gesture_eigenvectors[i][j] * scalars[i]);
+            gesture_output[j] += (gesture_eigenvectors[i][j] * scalars[i]);
         }
     }
     
@@ -96,17 +97,67 @@ void PCAExtractor::mapFeatureToGesture() {
         msg.data.push_back(gesture_output[i]);
     }
     outputVector_pub.publish(msg);
+    */
+    
+    vector<vector<double> > gesture_output;
+    for(int i=0; i<4; i++) {
+        vector<double> v;
+        for(int j=0; j<8; j++) {
+            v.push_back(0.0);
+        }
+        gesture_output.push_back(v);
+    }
+    int size = gesture_eigenvectors[0].size();
+    for(int i=0; i<dimension; i++) {
+        for(int j=0; j<size; j++) {
+            int x = j/8;
+            int y = j - (x*8);
+            gesture_output[x][y] += (gesture_eigenvectors[i][j] * scalars[i]);
+        }
+    }
+    vector<vector<double> > output;
+    for(int i=0; i<4; i++) {
+        vector<double> v;
+        for(int j=0; j<8; j++) {
+            double sum = 0.0;
+            cout << "neighbours: ";
+            for(int x=max(0,i-1); x<=min(3,i+1); x++) {
+                for(int y=max(0,j-1); y<=min(7,j+1); y++) {
+                    if(x!=i || y!=j) {
+                        sum += gesture_output[x][y];
+                        cout << "[" << x << "]" << "[" << y << "] " << gesture_output[x][y] << ", ";
+                    }
+                }
+            }
+            double average = sum / 8;
+            cout << endl << "sum: " << sum << ", average: " << average << endl;
+            v.push_back(gesture_output[i][j] + average);
+            cout << "[" << i << "]" << "[" << j << "] " << gesture_output[i][j] << "-->" << gesture_output[i][j] + average << endl;
+        }
+        output.push_back(v);
+    }
+    
+    std_msgs::Float64MultiArray msg;
+    for(int i=0; i<4; i++) {
+        for(int j=0; j<8; j++) {
+            msg.data.push_back(output[i][j]);
+        }
+    }
+    outputVector_pub.publish(msg);
 }
 
 void PCAExtractor::process() {
+    node.setParam("pca_complete", false);
     loadPCA();
     solvePCA();
+    node.setParam("pca_complete", true);
 
     ROS_INFO("=====================================");
     ROS_INFO("Completed processing PCA extractions!");
     ROS_INFO("=====================================");
     
     savePCA();
+    
 }
 
 void PCAExtractor::loadPCA() {

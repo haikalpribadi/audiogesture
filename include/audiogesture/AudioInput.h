@@ -23,6 +23,8 @@ class AudioInput {
 public:
     AudioInput();
     void process();
+    void waitForPCA();
+    
     string music_dir;
     string command;
     string output;

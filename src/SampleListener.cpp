@@ -29,6 +29,36 @@ SampleListener::SampleListener() {
     processedOutput_pub = node.advertise<audiogesture::ProcessedOutput>("processed_output", 1000);
 }
 
+void SampleListener::cleanDirectory() {
+    vector<string> files = readDirectory(music_dir);
+    
+    for(int i=0; i<files.size(); i++) {
+        string file = music_dir + "/" + files[i];
+        remove(file.c_str());
+    }
+}
+
+vector<string> SampleListener::readDirectory(const string& path) {
+    vector<string> result;
+    dirent* de;
+    DIR* dp;
+    errno = 0;
+    dp = opendir(path.c_str());
+    if (dp) {
+        while (true) {
+            errno = 0;
+            de = readdir(dp);
+            if (de == NULL) break;
+            string name = path + "/" + string(de->d_name);
+            if(stat(name.c_str(), &sb) == 0 && !S_ISDIR(sb.st_mode))
+                result.push_back(string(de->d_name));
+        }
+        closedir(dp);
+        sort(result.begin(), result.end(), comparenat);
+    }
+    return result;
+}
+
 void SampleListener::monitorDirectory() {
     int descriptor = inotify_init();
     int watched_dir;
@@ -153,6 +183,7 @@ int main(int argc, char** argv) {
     ros::init(argc, argv, "MusicSampleListener");
 
     SampleListener listener;
+    listener.cleanDirectory();
     listener.monitorDirectory();
 
     return 0;

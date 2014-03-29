@@ -11,6 +11,7 @@
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
   <param name="sample_duration" value="2" />
   <param name="sample_log" value="100" />
+  <param name="wait_for_pca" value="true" />
 	
 	<node pkg="audiogesture" type="audio_gesture_server" name="AudioGestureServer" output="screen"/>
 	
