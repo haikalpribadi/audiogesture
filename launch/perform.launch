@@ -6,11 +6,12 @@
   <param name="filter_peaks" value="false"/>
   <param name="input_mode" value="live" />
   <param name="gesture_topic" value="gesture_output" />
-  <param name="gesture_range" value="1024" />
+  <param name="gesture_range" value="70" />
   <param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music" />
   <param name="osc_address" value="192.168.1.177" />
   <param name="osc_port" value="8888" />
-  <param name="pca_dimension" value="10" />
+  <param name="osc_offset" value="40" />
+  <param name="pca_dimension" value="3" />
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
   <param name="sample_duration" value="1" />
   <param name="sample_log" value="100" />

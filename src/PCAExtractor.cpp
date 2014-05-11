@@ -37,7 +37,7 @@ PCAExtractor::PCAExtractor() {
 }
 
 void PCAExtractor::setupNode() {
-    outputVector_pub = node.advertise<std_msgs::Float64MultiArray>("gesture_output", 1000);
+    outputVector_pub = node.advertise<audiogesture::GestureVector>("gesture_output", 1000);
     
     featureVector_sub = node.subscribe("feature_vector", 1000,
             &PCAExtractor::featureVectorCallback, this);
@@ -133,7 +133,7 @@ void PCAExtractor::mapFeatureToGesture() {
         output.push_back(v);
     }
     
-    std_msgs::Float64MultiArray msg;
+    audiogesture::GestureVector msg;
     for(int i=0; i<4; i++) {
         for(int j=0; j<8; j++) {
             msg.data.push_back(output[i][j]);

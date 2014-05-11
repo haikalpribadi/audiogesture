@@ -23,6 +23,7 @@
 
 #include "audiogesture/ExtractorStatus.h"
 #include "audiogesture/FeatureVector.h"
+#include "audiogesture/GestureVector.h"
 #include "CompareNatural.h"
 
 using namespace std;

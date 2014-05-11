@@ -6,7 +6,6 @@
 */
 
 #include "AudioGestureServer.h"
-#include "audiogesture/PCAExtractor.h"
 
 AudioGestureServer::AudioGestureServer() {
     if (node.getParam("music_dir", music_dir)) {
@@ -28,10 +27,6 @@ AudioGestureServer::AudioGestureServer() {
                                          &AudioGestureServer::processedOutputCallback, this);
     trainerStatus_sub = node.subscribe("trainer_status", 1000,
                                        &AudioGestureServer::trainerStatusCallback, this);
-}
-
-void PCAExtractor::setupNode() {
-    
 }
 
 bool AudioGestureServer::deleteLastGestureFile(audiogesture::GetFile::Request& req, audiogesture::GetFile::Response& res) {

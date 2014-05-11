@@ -14,6 +14,8 @@
 #include <std_msgs/Int32MultiArray.h>
 #include <vector>
 
+#include "audiogesture/GestureVector.h"
+
 using namespace std;
 
 class GestureOutput {
@@ -28,7 +30,7 @@ private:
     double max;
     double min;
     
-    void gestureOutputCallback(const std_msgs::Float64MultiArray::ConstPtr& msg);
+    void gestureOutputCallback(const audiogesture::GestureVector::ConstPtr& msg);
 
 };
 

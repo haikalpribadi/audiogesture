@@ -10,23 +10,32 @@
 GestureVisualizer::GestureVisualizer() {
     if(node.getParam("gesture_topic", gestureTopic)) {
         gesture_sub = node.subscribe(gestureTopic, 1000, &GestureVisualizer::gestureCallback, this);
-        ROS_INFO("GestureVisualizer started listening to /gesture_vector and publishing markers");
+        ROS_INFO("GestureVisualizer started listening to /%s and publishing markers", gestureTopic.c_str());
     } else {
         ROS_ERROR("Please set the gesture_topic parameter for GestureVisualizer");
         ros::requestShutdown();
     }
     
-    marker_pub = node.advertise<visualization_msgs::Marker>("visualization_marker", 0);
-    markerarray_pub = node.advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 0);
+    if(node.getParam("visualizer_scale", scale)) {
+        ROS_INFO("GestureVisualizer set scale: ", scale);
+    } else {
+        scale = 2;
+    }
+    
+    
+    marker_pub = node.advertise<visualization_msgs::Marker>("visualization_marker", 1000);
+    markerarray_pub = node.advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 1000);
     
     shape = visualization_msgs::Marker::CUBE;
-    columns = 8;
-    rows = 4; 
-    scale = 2;
 }
 
-
-void GestureVisualizer::gestureCallback(const std_msgs::Float64MultiArray::ConstPtr& msg) {
+void GestureVisualizer::gestureCallback(const audiogesture::GestureVector::ConstPtr& msg) {
+    rows = msg->height;
+    columns = msg->width;
+    if(rows*columns != msg->data.size()) {
+        ROS_ERROR("GestureVisualizer not receiving data in correct size of %d x %d", rows, columns);
+        return;
+    }
     visualization_msgs::MarkerArray markerarray;
     int id;
     for(int i=0; i<rows; i++) {
