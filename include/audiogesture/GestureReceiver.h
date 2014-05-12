@@ -19,6 +19,7 @@
 #include <sys/types.h>
 #include <vector>
 
+#include "audiogesture/GestureVector.h"
 #include "audiogesture/TrainerStatus.h"
 #include "audiogesture/ProcessedOutput.h"
 
@@ -44,6 +45,7 @@ private:
     string music_dir;
     string samplename;
     string filename;
+    string gesture_topic;
     string trainer_topic;
     bool output;
     int id;
@@ -51,10 +53,10 @@ private:
     ofstream file;
     
     //void gestureMessageCallback(const std_msgs::String::ConstPtr& msg);
-    void gestureVectorCallback(const std_msgs::Int32MultiArray::ConstPtr& msg);
+    void gestureVectorCallback(const audiogesture::GestureVector::ConstPtr& msg);
     void trainerStatusCallback(const audiogesture::TrainerStatus::ConstPtr& msg);
     
-    void outputToFile(const std_msgs::Int32MultiArray::ConstPtr& msg);
+    void outputToFile(const audiogesture::GestureVector::ConstPtr& msg);
     void publishToProcessedOutput();
     void startOutputTofile();
     void stopOutputToFile();

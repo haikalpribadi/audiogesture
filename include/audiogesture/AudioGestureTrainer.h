@@ -13,6 +13,7 @@
 #include <math.h>
 #include <ros/ros.h>
 #include <stdio.h>
+#include <std_msgs/Empty.h>
 #include <vector>
 
 #include "audiogesture/ExtractorStatus.h"
@@ -33,6 +34,7 @@ public:
     
 private:
     ros::NodeHandle node;
+    ros::Publisher kinectCalibrate_pub;
     ros::Publisher playerCommand_pub;
     ros::Publisher trainerStatus_pub;
     ros::Publisher trainerLogStatus_pub;

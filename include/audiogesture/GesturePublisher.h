@@ -13,6 +13,8 @@
 #include <queue>
 #include <vector>
 
+#include "audiogesture/GestureVector.h"
+
 using namespace std;
 
 class GesturePublisher {

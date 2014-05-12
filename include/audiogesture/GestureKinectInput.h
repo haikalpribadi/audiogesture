@@ -19,6 +19,8 @@
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 
+#include "audiogesture/GestureVector.h"
+
 using namespace std;
 
 class GestureKinectInput {

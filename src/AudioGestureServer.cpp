@@ -25,8 +25,8 @@ AudioGestureServer::AudioGestureServer() {
                                          &AudioGestureServer::extractorStatusCallback, this);
     processedOutput_sub = node.subscribe("processed_output", 1000,
                                          &AudioGestureServer::processedOutputCallback, this);
-    trainerStatus_sub = node.subscribe("trainer_status", 1000,
-                                       &AudioGestureServer::trainerStatusCallback, this);
+    //trainerStatus_sub = node.subscribe("trainer_status", 1000,
+    //                                   &AudioGestureServer::trainerStatusCallback, this);
 }
 
 bool AudioGestureServer::deleteLastGestureFile(audiogesture::GetFile::Request& req, audiogesture::GetFile::Response& res) {
@@ -135,7 +135,7 @@ void AudioGestureServer::trainerStatusCallback(const audiogesture::TrainerStatus
     if(status == "start") {
         
     } else if(status == "end") {
-        print();
+        //print();
     }
 }
 

@@ -7,7 +7,6 @@
 
 
 #include "GestureKinectInput.h"
-#include "audiogesture/GestureVector.h"
 
 GestureKinectInput::GestureKinectInput() {
     ROS_INFO("GestureKinectInput has started");
@@ -16,7 +15,7 @@ GestureKinectInput::GestureKinectInput() {
         ;
 
     }
-    gesture_pub = node.advertise<audiogesture::GestureVector>("gesture_input", 1000);
+    gesture_pub = node.advertise<audiogesture::GestureVector>("gesture_kinect_input", 1000);
     depth_sub = node.subscribe("/camera/depth/points", 1000,
             &GestureKinectInput::depthCallback, this);
     calibrate_sub = node.subscribe("kinect_calibrate", 1000, 
@@ -171,7 +170,9 @@ void GestureKinectInput::depthCallback(const sensor_msgs::PointCloud2::ConstPtr&
     
     if(calibrated){
         for(int i=0; i<gesture.data.size(); i++) {
-            gesture.data[i] = (gesture.data[i]-offsetPoints[i]) * -1;
+            float z = (gesture.data[i]-offsetPoints[i]) * -1;
+            z = min(0.0, floor(z * 100 + 0.5) / 100);
+            gesture.data[i] = z;
         }
     }
     
@@ -183,7 +184,7 @@ void GestureKinectInput::depthCallback(const sensor_msgs::PointCloud2::ConstPtr&
             calibrateOffset();
         }
     }
-
+    
 }
 
 int main(int argc, char** argv) {

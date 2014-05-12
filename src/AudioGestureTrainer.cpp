@@ -18,6 +18,7 @@ AudioGestureTrainer::AudioGestureTrainer() {
         ros::requestShutdown();
     }
     
+    kinectCalibrate_pub = node.advertise<std_msgs::Empty>("kinect_calibrate", 1000);
     playerCommand_pub = node.advertise<audiogesture::PlayerCommand>("player_command", 1000);
     trainerStatus_pub = node.advertise<audiogesture::TrainerStatus>("trainer_status", 1000);
     trainerLogStatus_pub = node.advertise<audiogesture::TrainerLogStatus>("trainer_log_status", 1000);
@@ -40,13 +41,21 @@ void AudioGestureTrainer::run() {
         sort(samples.begin(), samples.end(), comparenat);
         printSamples(samples);
         
-        cout << "Enter sample ID to start training (q to quit): ";
+        cout << "Enter sample ID to start training (q to quit, c to calibrate): ";
         cin >> command;
+        
+        if(command == "c") {
+            std_msgs::Empty msg;
+            kinectCalibrate_pub.publish(msg);
+        }
         
         if(command == "q" || !isNumber(command))
             continue;
         
         stringstream(command) >> id;
+        if(id>samples.size())
+            continue;
+        
         string sample = samples[id-1];
         next = trainSample(sample);
         

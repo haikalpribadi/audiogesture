@@ -27,8 +27,15 @@ GestureReceiver::GestureReceiver() {
         ROS_ERROR("Please set trainer_topic for %s", nh.getNamespace().c_str());
         ros::requestShutdown();
     }
+    if(node.getParam("gesture_topic", gesture_topic)) {
+        ROS_INFO("GestureReceiver has subscribed to %s", gesture_topic.c_str());
+    }
+    else {
+        ROS_ERROR("Please set gesture_topic for GestureReceiver");
+        ros::requestShutdown();
+    }
     processedOutput_pub = node.advertise<audiogesture::ProcessedOutput>("processed_output", 1000);
-    gestureVector_sub = node.subscribe("gesture_vector", 1000,
+    gestureVector_sub = node.subscribe(gesture_topic, 1000,
                                        &GestureReceiver::gestureVectorCallback, this);
     trainerStatus_sub = node.subscribe(trainer_topic, 1000,
                                        &GestureReceiver::trainerStatusCallback, this);
@@ -36,7 +43,7 @@ GestureReceiver::GestureReceiver() {
     ROS_INFO("GestureReciever has started listening to gesture control data");
 }
 
-void GestureReceiver::gestureVectorCallback(const std_msgs::Int32MultiArray::ConstPtr& msg) {
+void GestureReceiver::gestureVectorCallback(const audiogesture::GestureVector::ConstPtr& msg) {
     if(output) {
         outputToFile(msg);
     }
@@ -54,7 +61,7 @@ void GestureReceiver::trainerStatusCallback(const audiogesture::TrainerStatus::C
     }
 }
 
-void GestureReceiver::outputToFile(const std_msgs::Int32MultiArray::ConstPtr& msg) {
+void GestureReceiver::outputToFile(const audiogesture::GestureVector::ConstPtr& msg) {
     for(int i=0; i<msg->data.size(); i++) {
         file << msg->data[i] << ",";
     }
