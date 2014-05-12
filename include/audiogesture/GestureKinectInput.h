@@ -12,7 +12,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/PointCloud2.h>
-#include <std_msgs/Float64MultiArray.h>
+#include <std_msgs/Empty.h>
 
 #include <pcl_ros/point_cloud.h>
 #include <pcl/conversions.h>
@@ -29,6 +29,7 @@ private:
     ros::NodeHandle node;
     ros::Publisher gesture_pub;
     ros::Subscriber depth_sub;
+    ros::Subscriber calibrate_sub;
     ros::Publisher image_pub;
     
     int counter;
@@ -43,10 +44,17 @@ private:
     int z_max;
     float sigma;
     bool smoothing;
+    bool calibrate;
+    bool calibrated;
+    int calibrationSampleSize;
+    vector<vector<float> > calibrationPoints;
+    vector<float> offsetPoints;
     vector<float> gaussianFilter;
     
     //void imageCb(const sensor_msgs::ImageConstPtr& msg);
     void depthCallback(const sensor_msgs::PointCloud2::ConstPtr& msg);
+    void calibrateCallback(const std_msgs::Empty::ConstPtr& msg);
+    void calibrateOffset();
     
 };
 

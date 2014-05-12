@@ -19,6 +19,8 @@ GestureKinectInput::GestureKinectInput() {
     gesture_pub = node.advertise<audiogesture::GestureVector>("gesture_input", 1000);
     depth_sub = node.subscribe("/camera/depth/points", 1000,
             &GestureKinectInput::depthCallback, this);
+    calibrate_sub = node.subscribe("kinect_calibrate", 1000, 
+            &GestureKinectInput::calibrateCallback, this);
 
     x_min = 0;
     x_max = 640;
@@ -32,6 +34,11 @@ GestureKinectInput::GestureKinectInput() {
     node.param("kinect_y_max", y_max, y_max);
     node.param("kinect_z_min", z_min, z_min);
     node.param("kinect_z_max", z_max, z_max);
+    
+    calibrate = false;
+    calibrated = false;
+    calibrationSampleSize = 10;
+    node.param("kinect_calibration_sample_size", calibrationSampleSize, calibrationSampleSize);
     
     smoothing = false;
     node.param("kinect_smoothing", smoothing, smoothing);
@@ -63,6 +70,31 @@ GestureKinectInput::GestureKinectInput() {
 
 }
 
+void GestureKinectInput::calibrateCallback(const std_msgs::Empty::ConstPtr& msg) {
+    ROS_INFO("GestureKinectInput will start calibration with current visible plane");
+    
+    calibrate = true;
+    calibrated = false;
+}
+
+void GestureKinectInput::calibrateOffset() {
+    offsetPoints.clear();
+    
+    for(int j=0; j<calibrationPoints[0].size(); j++) {
+        float z = 0;
+        for(int i=0; i<calibrationPoints.size(); i++) {
+            z += calibrationPoints[i][j];
+        }
+        z = z / calibrationPoints.size();
+        offsetPoints.push_back(z);
+    }
+    calibrationPoints.clear();
+    
+    calibrate = false;
+    calibrated = true;
+    ROS_INFO("GestureKinectInput has completed calibrating the current visible plane");
+}
+
 void GestureKinectInput::depthCallback(const sensor_msgs::PointCloud2::ConstPtr& msg) {
     counter = counter % 100;
     if (counter > 0) {
@@ -87,7 +119,7 @@ void GestureKinectInput::depthCallback(const sensor_msgs::PointCloud2::ConstPtr&
             for (int j = x_min; j < x_max; j++) {
                 float s = 0;
                 float coef = 0.0;
-                for (int u = max(-1 * filterSizeN, y_min - i); u <= min(filterSizeN, y_max - i); u++) {
+                for (int u = max(-1 * filterSizeN, y_min - i); u <= min(filterSizeN, y_max-1 - i); u++) {
                     x = (i + u) * input.width + j + x_min;
                     float z = isnan(input.points[x].z) ? -1000 : input.points[x].z * 100;
                     if(z<z_min || z>z_max)
@@ -105,7 +137,7 @@ void GestureKinectInput::depthCallback(const sensor_msgs::PointCloud2::ConstPtr&
             for (int j = 0; j < width; j++) {
                 float s = 0;
                 float coef = 0.0;
-                for (int u = max(-1 * filterSizeN, 0 - i); u <= min(filterSizeN, width - j); u++) {
+                for (int u = max(-1 * filterSizeN, 0 - i); u <= min(filterSizeN, width-1 - j); u++) {
                     float z = step1[i * width + j + u];
                     if(!(z<z_min || z>z_max)) {
                         s += z * gaussianFilter[u + filterSizeN];
@@ -137,7 +169,20 @@ void GestureKinectInput::depthCallback(const sensor_msgs::PointCloud2::ConstPtr&
     gesture.height = floor(((float)height / sampleSize) + 0.5);
     gesture.width = floor(((float)width / sampleSize) + 0.5);
     
+    if(calibrated){
+        for(int i=0; i<gesture.data.size(); i++) {
+            gesture.data[i] = (gesture.data[i]-offsetPoints[i]) * -1;
+        }
+    }
+    
     gesture_pub.publish(gesture);
+    
+    if(calibrate) {
+        calibrationPoints.push_back(gesture.data);
+        if(calibrationPoints.size() == calibrationSampleSize) {
+            calibrateOffset();
+        }
+    }
 
 }
 
