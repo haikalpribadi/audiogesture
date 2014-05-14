@@ -28,7 +28,7 @@ public:
     string music_dir;
     string command;
     string output;
-    int duration;
+    double duration;
     int counter;
     int log;
     

@@ -31,6 +31,7 @@ private:
     int columns;
     int rows;
     int scale;
+    double duration;
     
     int shape;
     

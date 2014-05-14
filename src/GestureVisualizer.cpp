@@ -22,6 +22,8 @@ GestureVisualizer::GestureVisualizer() {
         scale = 2;
     }
     
+    node.param("sample_duration", duration, 0.2);
+    duration = duration * 2;
     
     marker_pub = node.advertise<visualization_msgs::Marker>("visualization_marker", 1000);
     markerarray_pub = node.advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 1000);
@@ -85,7 +87,7 @@ visualization_msgs::Marker GestureVisualizer::createMarker(int id, int x, int y,
     marker.color.g = 1 - ((marker.color.r + marker.color.b)/3);
     marker.color.a = 1.0;
 
-    marker.lifetime = ros::Duration(0.2);
+    marker.lifetime = ros::Duration(duration);
     
     return marker;
 }

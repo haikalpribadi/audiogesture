@@ -139,6 +139,8 @@ void PCAExtractor::mapFeatureToGesture() {
             msg.data.push_back(output[i][j]);
         }
     }
+    msg.height = 4;
+    msg.width = 8;
     outputVector_pub.publish(msg);
 }
 

@@ -13,7 +13,7 @@
   <param name="osc_offset" value="40" />
   <param name="pca_dimension" value="3" />
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
-  <param name="sample_duration" value="1" />
+  <param name="sample_duration" value="0.2" />
   <param name="sample_log" value="100" />
   <param name="wait_for_pca" value="true" />
 
