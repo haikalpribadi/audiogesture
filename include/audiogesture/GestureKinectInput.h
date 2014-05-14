@@ -20,6 +20,7 @@
 #include <pcl/point_types.h>
 
 #include "audiogesture/GestureVector.h"
+#include "audiogesture/SetMargin.h"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ private:
     ros::Publisher gesture_pub;
     ros::Subscriber depth_sub;
     ros::Subscriber calibrate_sub;
+    ros::Subscriber margin_sub;
     ros::Publisher image_pub;
     
     int counter;
@@ -57,7 +59,7 @@ private:
     void depthCallback(const sensor_msgs::PointCloud2::ConstPtr& msg);
     void calibrateCallback(const std_msgs::Empty::ConstPtr& msg);
     void calibrateOffset();
-    
+    void marginCallback(const audiogesture::SetMargin::ConstPtr& msg);
 };
 
 #endif	/* GESTUREKINECTINPUT_H */

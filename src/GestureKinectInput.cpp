@@ -20,6 +20,8 @@ GestureKinectInput::GestureKinectInput() {
             &GestureKinectInput::depthCallback, this);
     calibrate_sub = node.subscribe("kinect_calibrate", 1000, 
             &GestureKinectInput::calibrateCallback, this);
+    margin_sub = node.subscribe("kinect_margin", 1000,
+            &GestureKinectInput::marginCallback, this);
 
     x_min = 0;
     x_max = 640;
@@ -67,6 +69,27 @@ GestureKinectInput::GestureKinectInput() {
     ROS_INFO("GestureKinectInput using margin fiters of x_min: %d, x_max: %d, y_min: %d, y_max: %d, z_min: %d, z_max: %d",
             x_min, x_max, y_min, y_max, z_min, z_max);
 
+}
+
+void GestureKinectInput::marginCallback(const audiogesture::SetMargin::ConstPtr& msg) {
+    if(msg->name == "left") {
+        x_min = msg->value;
+    } else if(msg->name == "right") {
+        x_max = msg->value;
+    } else if(msg->name == "bottom") {
+        y_min = msg->value;
+    } else if(msg->name == "top") {
+        y_max = msg->value;
+    } else if(msg->name == "depth") {
+        z_max = msg->value;
+    }
+    
+    ROS_INFO("GestureKinectInput new margin: %s = %d", msg->name.c_str(), msg->value);
+    
+    ROS_INFO("GestureKinectInput will start calibration with current visible plane");
+    
+    calibrate = true;
+    calibrated = false;
 }
 
 void GestureKinectInput::calibrateCallback(const std_msgs::Empty::ConstPtr& msg) {
@@ -171,7 +194,7 @@ void GestureKinectInput::depthCallback(const sensor_msgs::PointCloud2::ConstPtr&
     if(calibrated){
         for(int i=0; i<gesture.data.size(); i++) {
             float z = (gesture.data[i]-offsetPoints[i]) * -1;
-            z = min(0.0, floor(z * 100 + 0.5) / 100);
+            z = max(0.0,(floor(z * 100 + 0.5) / 100));
             gesture.data[i] = z;
         }
     }

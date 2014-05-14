@@ -85,7 +85,7 @@ visualization_msgs::Marker GestureVisualizer::createMarker(int id, int x, int y,
     marker.color.g = 1 - ((marker.color.r + marker.color.b)/3);
     marker.color.a = 1.0;
 
-    marker.lifetime = ros::Duration();
+    marker.lifetime = ros::Duration(0.2);
     
     return marker;
 }

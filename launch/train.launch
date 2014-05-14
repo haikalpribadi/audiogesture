@@ -21,10 +21,10 @@
   <param name="visualizer_width" value="64" />
   <param name="wait_for_pca" value="true" />
   
-  <param name="kinect_x_min" value="100"/>
-	<param name="kinect_x_max" value="540"/>
-  <param name="kinect_y_min" value="60"/>
-  <param name="kinect_y_max" value="300"/>
+  <param name="kinect_x_min" value="50"/>
+	<param name="kinect_x_max" value="520"/>
+  <param name="kinect_y_min" value="50"/>
+  <param name="kinect_y_max" value="380"/>
   <param name="kinect_z_min" value="0"/>
   <param name="kinect_z_max" value="200"/>
   <param name="kinect_filter_size_n" value="5"/>
