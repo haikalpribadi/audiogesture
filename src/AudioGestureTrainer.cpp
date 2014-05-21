@@ -146,7 +146,7 @@ void AudioGestureTrainer::publishToStop(string sample, string file) {
 void AudioGestureTrainer::printSamples(const vector<string>& samples) {
     int size = samples.size();
     int j=0;
-    int columns = 4; //min(4,(int)ceil(size/2.0));
+    int columns = 4;
     int rows = ceil((float)size/columns);
     cout << endl << "=============================================";
     cout << "=============================================" << endl;
