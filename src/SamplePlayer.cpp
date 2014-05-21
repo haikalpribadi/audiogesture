@@ -35,14 +35,15 @@ void SamplePlayer::playSample() {
 
         string cmd = "mplayer " + file;
         system(cmd.c_str());
-
+        
         if(record) {
             audiogesture::TrainerStatus msg;
             msg.name = sample;
             msg.status = "end";
             trainerStatus_pub.publish(msg);
         }
-
+        
+        play = false;
         usleep(2000000);
     }
 }

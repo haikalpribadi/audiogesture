@@ -146,20 +146,20 @@ void AudioGestureTrainer::publishToStop(string sample, string file) {
 void AudioGestureTrainer::printSamples(const vector<string>& samples) {
     int size = samples.size();
     int j=0;
-    int column = 4;
-    int row = ceil((float)size/column);
+    int columns = 4; //min(4,(int)ceil(size/2.0));
+    int rows = ceil((float)size/columns);
     cout << endl << "=============================================";
     cout << "=============================================" << endl;
-    for(int i=0; i<(column*row); i++) {
-        int x = (((i%column)*row)%size)+(floor((float)i/column));
-        if(x>=size) {
+    for(int i=0; i<(columns*rows); i++) {
+        int x = (((i%columns)*rows)%size)+(floor((float)i/columns));
+        if(x>=size || ((i%columns)*rows)>=size) {
             cout << endl;
             j = 0;
             continue;
         }
         cout << (x+1) << " - " << samples[x] << "\t\t";
         j++;
-        if(j==4) {
+        if(j==columns) {
             cout << endl;
             j = 0;
         }
