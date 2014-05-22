@@ -11,6 +11,7 @@
   <param name="osc_address" value="192.168.1.177" />
   <param name="osc_port" value="8888" />
   <param name="osc_offset" value="40" />
+  <param name="output_to_file" value="false" />
   <param name="parameter_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/parameters" />
   <param name="pca_dimension" value="10" />
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />

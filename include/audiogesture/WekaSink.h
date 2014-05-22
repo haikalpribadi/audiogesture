@@ -102,7 +102,7 @@ private:
 	mrs_natural count_;
     
     int subscribers;
-    
+    bool output;
     
 public:
 	/// WekaSink constructor.

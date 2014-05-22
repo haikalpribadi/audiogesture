@@ -97,7 +97,7 @@ void SampleListener::monitorDirectory() {
 
                     } else if (name.find(' ') != -1) {
                         renameFile(name);
-                    } else if (hasFormat(name, WAV) && input==FOLDER) {
+                    } else if ((hasFormat(name, WAV) || hasFormat(name, MP3)) && input==FOLDER) {
                         publishToCollectionGenerator(name);
                     }
                     
@@ -144,7 +144,7 @@ void SampleListener::publishToProcessedOutput(string filename) {
         msg.type = "featurenorm";
     } else if (hasFormat(filename, HTML)) {
         
-    } else if (hasFormat(filename, WAV)) {
+    } else if (hasFormat(filename, WAV) || hasFormat(filename, MP3)) {
         msg.type = "sample";
     } else {
         return;

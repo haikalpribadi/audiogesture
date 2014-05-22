@@ -107,12 +107,37 @@ void WekaSink::putHeader(mrs_string inObsNames) {
             }
         }
 
+        
+        
+        if (iter == 0) {
+            ros::NodeHandle node;
+            
+            usleep(1000);
+            
+            node.setParam("sample_rate", israte_);
+            node.setParam("feature_names", inObsNames);
+            
+            subscribers = 0;
+            node.getParam("feature_subs", subscribers);
+            
+            output = true;
+            node.getParam("output_to_file", output);
+            
+            publisher = node.advertise<audiogesture::FeatureVector>("feature_vector_raw", 10000);
+            for (int j = 0; publisher.getNumSubscribers() < subscribers && j < 200000; j++) {
+                usleep(100);
+            }
+            iter++;
+        }
+        
         // Set the current filename to the new value.
         filename_ = ctrl_filename_->to<mrs_string>();
-
+        
         // Open a new output stream.
-        mos_ = new ofstream;
-        mos_->open(filename_.c_str());
+        if(output) {
+            mos_ = new ofstream;
+            mos_->open(filename_.c_str());
+        }
 
         // General header stuff.
         //(*mos_) << "% Created by Marsyas" << endl;
@@ -131,22 +156,7 @@ void WekaSink::putHeader(mrs_string inObsNames) {
         // (e.g. using a 'split()' or 'explode()' function).
         mrs_natural i;
 
-        ros::NodeHandle node;
-
-        if (iter == 0) {
-            node.setParam("sample_rate", israte_);
-            node.setParam("feature_names", inObsNames);
-            
-            subscribers = 0;
-            node.getParam("feature_subs", subscribers); 
-
-            publisher = node.advertise<audiogesture::FeatureVector>("feature_vector", 10000);
-            for (int j = 0; publisher.getNumSubscribers() < subscribers && j < 200000; j++) {
-                usleep(100);
-            }
-            iter++;
-        }
-
+        
         for (i = 0; i < nAttributes; ++i) {
             mrs_string inObsName;
             mrs_string temp;
@@ -337,9 +347,13 @@ void WekaSink::myProcess(realvec& in, realvec& out) {
                                 // DO NOT OUTPUT FEATURES
                                 // (*mos_) << fixed << setprecision(precision_) << 0. << ",";
                                 //notPrint = true;
-                                (*mos_) << "?" << ",";
+                                if(output) {
+                                    (*mos_) << "?" << ",";
+                                }
                             } else {
-                                (*mos_) << fixed << setprecision(precision_) << out(o, t) << ",";
+                                if(output) {
+                                    (*mos_) << fixed << setprecision(precision_) << out(o, t) << ",";
+                                }
                                 
                                 vector.push_back(floor(out(o, t) * 1000000 + 0.5) / 1000000);
                                 
@@ -357,7 +371,9 @@ void WekaSink::myProcess(realvec& in, realvec& out) {
                 }
             }
         }
-        (*mos_) << endl;
+        if(output) {
+            (*mos_) << endl;
+        }
 
         msg.data = vector;
         publisher.publish(msg);

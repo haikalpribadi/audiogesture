@@ -31,6 +31,7 @@
 #define HTML    ".html"
 #define MF      ".mf"
 #define WAV     ".wav"
+#define MP3     ".mp3"
 #define LIVE    "live"
 #define FOLDER  "folder"
 

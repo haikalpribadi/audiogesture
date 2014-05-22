@@ -26,8 +26,11 @@ FeatureNormalizer::FeatureNormalizer() {
     }
     parameter_file = "ranges" + args + ".txt";
     
-    featureVector_pub = node.advertise<audiogesture::FeatureVector>("feature_vector_norm", 1000);
-    featureVector_sub = node.subscribe("feature_vector", 1000,
+    output = true;
+    node.getParam("output_to_file", output);
+    
+    featureVector_pub = node.advertise<audiogesture::FeatureVector>("feature_vector", 1000);
+    featureVector_sub = node.subscribe("feature_vector_raw", 1000,
             &FeatureNormalizer::featureVectorCallback, this);
     extractorStatus_sub = node.subscribe("extractor_status", 1000,
             &FeatureNormalizer::extractorStatusCallback, this);
@@ -80,7 +83,7 @@ void FeatureNormalizer::storeParameters() {
 
 void FeatureNormalizer::featureVectorCallback(const audiogesture::FeatureVector::ConstPtr& msg) {
     vector<float> vector;
-    
+    audiogesture::FeatureVector msg2;
     
     if(initialize) {
         for(int i=0; i<msg->data.size(); i++) {
@@ -106,7 +109,9 @@ void FeatureNormalizer::featureVectorCallback(const audiogesture::FeatureVector:
             vector.push_back((msg->data[i]-feature_min[i])/(feature_max[i]-feature_min[i]));
     }
     
+    msg2.data = vector;
     featureVectors.push_back(vector);
+    featureVector_pub.publish(msg2);
 }
 /*
 void FeatureNormalizer::featureVectorCallback(const audiogesture::FeatureVector::ConstPtr& msg) {
@@ -122,12 +127,16 @@ void FeatureNormalizer::featureVectorCallback(const audiogesture::FeatureVector:
 
 void FeatureNormalizer::extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg) {
     if(msg->status == "end") {
-        outputToFile(msg->name);
+        if(output) {
+            outputToFile(msg->name);
+        }
         
         if(update) {
             storeParameters();
             update = false;
         }
+        
+        featureVectors.clear();
     }
     ROS_INFO("%s has %s", msg->name.c_str(), msg->status.c_str());
 }
@@ -169,7 +178,6 @@ void FeatureNormalizer::outputToFile(string name) {
     
     file.close();
     
-    featureVectors.clear();
     //fv_min = 0.0;
     //fv_max = 0.0;
     

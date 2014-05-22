@@ -52,6 +52,7 @@ private:
     
     bool initialize;
     bool update;
+    bool output;
     string music_dir;
     string parameter_dir;
     string parameter_file;
