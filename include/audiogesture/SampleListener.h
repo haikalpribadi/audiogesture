@@ -30,6 +30,7 @@
 #define FV      ".fv"
 #define HTML    ".html"
 #define MF      ".mf"
+#define WAV     ".wav"
 #define LIVE    "live"
 #define FOLDER  "folder"
 

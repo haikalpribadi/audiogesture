@@ -10,7 +10,6 @@
 float FeatureNormalizer::fv_max = 0.0;
 float FeatureNormalizer::fv_min = 0.0;
 ofstream FeatureNormalizer::file;
-string FeatureNormalizer::filename = "";
 
 FeatureNormalizer::FeatureNormalizer() {
     if (node.getParam("music_dir", music_dir)) {
@@ -19,14 +18,97 @@ FeatureNormalizer::FeatureNormalizer() {
         ROS_ERROR("Please set the music_directory (file) parameter for FeatureNormalizer");
         ros::requestShutdown();
     }
+    if (node.getParam("parameter_dir", parameter_dir)) {
+        ROS_INFO("FeatureNormalizer using parameter_dir: %s", parameter_dir.c_str());
+    } 
+    if (!node.getParam("bextract_args", args)) {
+        args = "";
+    }
+    parameter_file = "ranges" + args + ".txt";
     
+    featureVector_pub = node.advertise<audiogesture::FeatureVector>("feature_vector_norm", 1000);
     featureVector_sub = node.subscribe("feature_vector", 1000,
             &FeatureNormalizer::featureVectorCallback, this);
     extractorStatus_sub = node.subscribe("extractor_status", 1000,
             &FeatureNormalizer::extractorStatusCallback, this);
-
+    
+    update = false;
+    loadParameters();
 }
 
+void FeatureNormalizer::loadParameters() {
+    feature_min.clear();
+    feature_max.clear();
+    
+    string path = parameter_dir + "/" + parameter_file;
+    string line1, line2, val;
+    ifstream file(path.c_str());
+    if(file.good() && file.is_open()) {
+        if(getline(file,line1) && getline(file,line2)) {
+            istringstream stream1(line1);
+            while(getline(stream1, val, ',')) {
+                feature_min.push_back(atof(val.c_str()));
+            }
+            istringstream stream2(line2);
+            while(getline(stream2, val, ',')) {
+                feature_max.push_back(atof(val.c_str()));
+            }
+            initialize = false;
+        }
+        file.close();
+    }
+}
+
+void FeatureNormalizer::storeParameters() {
+    string path = parameter_dir + "/" + parameter_file;
+    remove(path.c_str());
+    
+    file.open(path.c_str());
+    
+    for(int i=0; i<feature_min.size(); i++) {
+        file << feature_min[i] << ",";
+    }
+    file << endl;
+    
+    for(int i=0; i<feature_max.size(); i++) {
+        file << feature_max[i] << ",";
+    }
+    file << endl;
+    
+    file.close();
+}
+
+void FeatureNormalizer::featureVectorCallback(const audiogesture::FeatureVector::ConstPtr& msg) {
+    vector<float> vector;
+    
+    
+    if(initialize) {
+        for(int i=0; i<msg->data.size(); i++) {
+            feature_min.push_back(0);
+            feature_max.push_back(0);
+        }
+        initialize = false;
+    }
+    
+    for(int i=0; i<msg->data.size(); i++) {
+        if(msg->data[i] < feature_min[i]) {
+            feature_min[i] = msg->data[i];
+            update = true;
+        }
+        if(msg->data[i] > feature_max[i]) {
+            feature_max[i] = msg->data[i];
+            update = true;
+        }
+        
+        if(feature_max[i]-feature_min[i] == 0)
+            vector.push_back(0);
+        else
+            vector.push_back((msg->data[i]-feature_min[i])/(feature_max[i]-feature_min[i]));
+    }
+    
+    featureVectors.push_back(vector);
+}
+/*
 void FeatureNormalizer::featureVectorCallback(const audiogesture::FeatureVector::ConstPtr& msg) {
     vector<float> vector = msg->data;
     featureVectors.push_back(vector);
@@ -36,8 +118,21 @@ void FeatureNormalizer::featureVectorCallback(const audiogesture::FeatureVector:
     
     float current_max = *max_element(vector.begin(), vector.end());
     fv_max = current_max > fv_max ? current_max : fv_max;
+}*/
+
+void FeatureNormalizer::extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg) {
+    if(msg->status == "end") {
+        outputToFile(msg->name);
+        
+        if(update) {
+            storeParameters();
+            update = false;
+        }
+    }
+    ROS_INFO("%s has %s", msg->name.c_str(), msg->status.c_str());
 }
 
+/*
 void FeatureNormalizer::extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg) {
     if (msg->status == "end") {
         normalizeFeatureVectors();
@@ -46,7 +141,8 @@ void FeatureNormalizer::extractorStatusCallback(const audiogesture::ExtractorSta
 
     ROS_INFO("%s has %s", msg->name.c_str(), msg->status.c_str());
 }
-
+ */
+ 
 void FeatureNormalizer::normalizeFeatureVectors() {
     if(featureVectors.size()<1)
         return;
@@ -66,16 +162,16 @@ void FeatureNormalizer::outputToFile(string name) {
     if(featureVectors.size()<1)
         return;
     
-    filename = music_dir + "/" + name + FV;
-    file.open(filename.c_str());
+    string path = music_dir + "/" + name + FV;
+    file.open(path.c_str());
     
     transform(featureVectors.begin(), featureVectors.end(), featureVectors.begin(), output_m);
     
     file.close();
     
     featureVectors.clear();
-    fv_min = 0.0;
-    fv_max = 0.0;
+    //fv_min = 0.0;
+    //fv_max = 0.0;
     
     /*
     string filename = music_dir + "/" + name + FV;

@@ -9,17 +9,22 @@
 #define	FEATURENORMALIZER_H
 
 #include <algorithm>
+#include <dirent.h>
 #include <fstream>
 #include <iostream>
 #include <ros/ros.h>
 #include <sstream>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <vector>
 
 #include "audiogesture/ExtractorStatus.h"
 #include "audiogesture/FeatureVector.h"
+#include "CompareNatural.h"
 
 #define FV ".fv"
 
+struct stat sb;
 using namespace std;
 
 class FeatureNormalizer {
@@ -29,7 +34,6 @@ public:
     static float fv_min;
     static float fv_max;
     static ofstream file;
-    static string filename;
     
     static vector<float> normalize_m(vector<float> vector);
     static float normalize_v(float val);
@@ -39,11 +43,19 @@ public:
     
 private:
     ros::NodeHandle node;
+    ros::Publisher featureVector_pub;
     ros::Subscriber featureVector_sub;
     ros::Subscriber extractorStatus_sub;
     
+    vector<float> feature_min;
+    vector<float> feature_max;
     
+    bool initialize;
+    bool update;
     string music_dir;
+    string parameter_dir;
+    string parameter_file;
+    string args;
     
     vector<vector<float> > featureVectors;
     
@@ -52,6 +64,8 @@ private:
     void normalizeFeatureVectors();
     void outputToFile(string name);
     
+    void loadParameters();
+    void storeParameters();
 };
 
 

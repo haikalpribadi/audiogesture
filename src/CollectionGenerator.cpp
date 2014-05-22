@@ -24,6 +24,7 @@ void CollectionGenerator::collectionGeneratorCallback(const std_msgs::String::Co
     string name = sample.substr(0, sample.find(".")) + MF;
 
     name = music_dir + "/" + name;
+    remove(name.c_str());
     
     ofstream file;
     file.open(name.c_str());
