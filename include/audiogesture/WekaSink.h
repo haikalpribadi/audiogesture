@@ -26,11 +26,15 @@
 #include <ros/ros.h>
 #include <vector>
 
+#include "audiogesture/FeatureVector.h"
+
 using namespace std;
+using namespace Marsyas;
 
 //vector<ros::Publisher> publishers;
 ros::Publisher publisher;
 int iter = 0;
+bool output;
 
 namespace Marsyas
 {
@@ -102,7 +106,7 @@ private:
 	mrs_natural count_;
     
     int subscribers;
-    bool output;
+    
     
 public:
 	/// WekaSink constructor.

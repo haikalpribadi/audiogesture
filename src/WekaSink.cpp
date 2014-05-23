@@ -17,10 +17,7 @@
  */
 
 #include "WekaSink.h"
-#include "audiogesture/FeatureVector.h"
 
-using namespace std;
-using namespace Marsyas;
 
 WekaSink::WekaSink(mrs_string name) : MarSystem("WekaSink", name) {
     mos_ = NULL;
