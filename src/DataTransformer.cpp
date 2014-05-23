@@ -7,7 +7,7 @@
 
 #include "DataTransformer.h"
 
-DataTransformer::DataTransformer() {
+DataTransformer::DataTransformer() : rate(30) {
     ROS_INFO("DataTransformer will listen to transform_file");
     
     data_dir = "";
@@ -32,14 +32,18 @@ DataTransformer::DataTransformer() {
 
 
 void DataTransformer::fileCallback(const std_msgs::String::ConstPtr& msg) {
-    ros::Rate rate(30);
-    vector<vector<double> > data;
     string filename = msg->data;
-    string line;
     
     if(data_dir != "") {
         filename = data_dir + "/" + filename;
     }
+    
+    transformFile(filename);
+}
+
+void DataTransformer::transformFile(string filename) {
+    vector<vector<double> > data;
+    string line;
     
     ifstream infile(filename.c_str());
     
@@ -50,7 +54,8 @@ void DataTransformer::fileCallback(const std_msgs::String::ConstPtr& msg) {
             istringstream stream(line);
             while(getline(stream, val, ',')) {
                 float f = atof(val.c_str());
-                values.push_back(pow(f, scale));
+                f = floor(pow(f, scale) * 100 + 0.5) / 100;
+                values.push_back(f);
             }
             data.push_back(values);
         }
@@ -62,7 +67,7 @@ void DataTransformer::fileCallback(const std_msgs::String::ConstPtr& msg) {
     
     ROS_INFO("DataTransformer start transforming: %s", filename.c_str());
     
-    string name = filename.substr(0, filename.find("."));
+    string name = filename.substr(0, filename.rfind("."));
     string path = name + "-2.gv";
     ofstream outfile;
     outfile.open(path.c_str());

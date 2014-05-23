@@ -21,7 +21,7 @@ CollectionGenerator::CollectionGenerator() {
 
 void CollectionGenerator::collectionGeneratorCallback(const std_msgs::String::ConstPtr& msg) {
     string sample = msg->data;
-    string name = sample.substr(0, sample.find(".")) + MF;
+    string name = sample.substr(0, sample.rfind(".")) + MF;
 
     name = music_dir + "/" + name;
     remove(name.c_str());

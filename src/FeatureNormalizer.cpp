@@ -69,12 +69,12 @@ void FeatureNormalizer::storeParameters() {
     file.open(path.c_str());
     
     for(int i=0; i<feature_min.size(); i++) {
-        file << feature_min[i] << ",";
+        file << (floor(feature_min[i] * 100 + 0.5) / 100) << ",";
     }
     file << endl;
     
     for(int i=0; i<feature_max.size(); i++) {
-        file << feature_max[i] << ",";
+        file << (floor(feature_max[i] * 100 + 0.5) / 100) << ",";
     }
     file << endl;
     
@@ -138,7 +138,6 @@ void FeatureNormalizer::extractorStatusCallback(const audiogesture::ExtractorSta
         
         featureVectors.clear();
     }
-    ROS_INFO("%s has %s", msg->name.c_str(), msg->status.c_str());
 }
 
 /*

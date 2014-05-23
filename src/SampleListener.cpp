@@ -121,7 +121,7 @@ void SampleListener::publishToCollectionGenerator(string filename) {
 }
 
 void SampleListener::publishToFeatureExtraction(string filename) {
-    string outname = filename.substr(0, filename.find(".")) + ARFF;
+    string outname = filename.substr(0, filename.rfind(".")) + ARFF;
     std_msgs::String msg;
     msg.data = filename + " -w " + outname;
     if (args != "")
@@ -133,7 +133,7 @@ void SampleListener::publishToFeatureExtraction(string filename) {
 
 void SampleListener::publishToProcessedOutput(string filename) {
     audiogesture::ProcessedOutput msg;
-    msg.name = filename.substr(0, filename.find("."));
+    msg.name = filename.substr(0, filename.rfind("."));
     msg.file = filename;
     
     if (hasFormat(filename, ARFF)) {

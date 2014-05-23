@@ -28,16 +28,19 @@ void MusicExtractor::extractorCallback(const std_msgs::String::ConstPtr& msg) {
             back_inserter<vector<string> >(tokens));
 
     audiogesture::ExtractorStatus status;
-    status.name = tokens[0].substr(0, tokens[0].find("."));
+    status.name = tokens[0].substr(0, tokens[0].rfind("."));
     status.status = "start";
     extractorStatus_pub.publish(status);
-
+    ROS_INFO("Bextractor called for %s has STARTED", status.name.c_str());
+    
     bextractor(tokens);
 
     status.status = "end";
     extractorStatus_pub.publish(status);
-
-    ROS_INFO("BEXTRACTOR CALLED");
+    ROS_INFO("Bextractor called for %s has ENDED", status.name.c_str());
+    cout << endl;
+    ROS_INFO("BEXTRACTOR FINISHED");
+    cout << endl << endl;
 }
 
 int main(int argc, char** argv) {

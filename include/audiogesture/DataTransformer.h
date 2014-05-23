@@ -24,12 +24,15 @@ private:
     ros::NodeHandle node;
     ros::Publisher data_pub;
     ros::Subscriber file_sub;
+    ros::Rate rate;
     
     string data_dir;
     string filename;
     double scale;
     
+    
     void fileCallback(const std_msgs::String::ConstPtr& msg);
+    void transformFile(string filename);
 };
 
 #endif	/* DATATRANSFORMER_H */
