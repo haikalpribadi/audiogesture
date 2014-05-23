@@ -4,38 +4,36 @@
 	<param name="bextract_args" value=""/>
   <param name="feature_subs" value="1" />
   <param name="filter_peaks" value="false"/>
-  <param name="input_mode" value="live" />
-  <param name="gesture_topic" value="gesture_output" />
+  <param name="input_mode" value="folder"/>
+  <param name="gesture_topic" value="visualize_data" />
+  <param name="gesture_range" value="70" />
   <param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music" />
   <param name="osc_address" value="192.168.1.177" />
   <param name="osc_port" value="8888" />
+  <param name="osc_offset" value="40" />
+  <param name="output_to_file" value="false" />
+  <param name="parameter_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/parameters" />
   <param name="pca_dimension" value="10" />
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
   <param name="sample_duration" value="1" />
   <param name="sample_log" value="100" />
+  <param name="experiment_data_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/experiment" />
+  <param name="visualizer_height" value="48" />
+  <param name="visualizer_width" value="64" />
   <param name="wait_for_pca" value="true" />
+  
+  <param name="kinect_x_min" value="45"/>
+	<param name="kinect_x_max" value="525"/>
+  <param name="kinect_y_min" value="40"/>
+  <param name="kinect_y_max" value="360"/>
+  <param name="kinect_z_min" value="0"/>
+  <param name="kinect_z_max" value="200"/>
+  <param name="kinect_filter_size_n" value="5"/>
+  <param name="kinect_smoothing" value="true"/>
 
-  <node pkg="audiogesture" type="audio_gesture_server" name="AudioGestureServer" output="screen"/>
-
-  <node pkg="audiogesture" type="music_extractor" name="MusicFeatureExtractor" output="screen"/>
-
-  <node pkg="audiogesture" type="music_extractor_buffer" name="MusicFeatureExtractorBuffer" output="screen"/>
-
-  <node pkg="audiogesture" type="sample_listener" name="SampleListener" output="screen"/>
-
-  <node pkg="audiogesture" type="collection_generator" name="CollectionGenerator" output="screen"/>
-
-  <node pkg="audiogesture" type="feature_normalizer" name="FeatureNormalizer" output="screen"/>
+  <node pkg="audiogesture" type="data_visualizer" name="DataVisualizer" output="screen" />
   
   <node pkg="audiogesture" type="gesture_visualizer" name="GestureVisualizer" output="screen"/>
-  
-  
-  
-  <node pkg="audiogesture" type="gesture_test" name="GestureTest" output="screen"/>
-
-  <node pkg="oscpack" type="osc_receiver" name="OscReceiver" output="screen"/>
-
-  <node pkg="oscpack" type="osc_sender" name="OscSender" output="screen"/>
   
   <node pkg="rviz" type="rviz" name="RViz" output="screen" />
   

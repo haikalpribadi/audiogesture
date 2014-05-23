@@ -13,10 +13,13 @@
   <param name="osc_address" value="192.168.1.177" />
   <param name="osc_port" value="8888" />
   <param name="osc_offset" value="40" />
+  <param name="output_to_file" value="true" />
+  <param name="parameter_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/parameters" />
   <param name="pca_dimension" value="10" />
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
   <param name="sample_duration" value="1" />
   <param name="sample_log" value="100" />
+  <param name="experiment_data_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/experiment" />
   <param name="visualizer_height" value="48" />
   <param name="visualizer_width" value="64" />
   <param name="wait_for_pca" value="true" />
