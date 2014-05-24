@@ -14,6 +14,18 @@ DataVisualizer::DataVisualizer() {
     if(node.getParam("experiment_data_dir", data_dir)) {
         ROS_INFO("VisualizerData using experiment_data_dir: %s", data_dir.c_str());
     }
+    scale = 1.0;
+    if(node.getParam("transform_scale", scale)) {
+        ROS_INFO("DataVisualizer using scale: %f", scale);
+    }
+    amp = 1.0;
+    if(node.getParam("transform_mult", amp)) {
+        ROS_INFO("DataVisualizer using amp: %f", amp);
+    }
+    rate = 30;
+    if(node.getParam("visualizer_data_rate", rate)) {
+        ROS_INFO("DataVisualizer using rate: %d", rate);
+    }
     /*
     if(node.getParam("visualize_file", filename)) {
         ROS_INFO("VisualizeData will visualize data from: %s", filename.c_str());
@@ -55,9 +67,10 @@ void DataVisualizer::fileCallback(const audiogesture::DataFile::ConstPtr& msg) {
 }
 
 void DataVisualizer::visualizeFile(string filename, int height, int width) {
-    ros::Rate rate(30);
+    ros::Rate ros_rate(rate);
     vector<vector<double> > data;
     string line;
+    float f;
     
     ifstream file(filename.c_str());
     
@@ -67,7 +80,10 @@ void DataVisualizer::visualizeFile(string filename, int height, int width) {
             string val;
             istringstream stream(line);
             while(getline(stream, val, ',')) {
-                values.push_back(atof(val.c_str()));
+                f = atof(val.c_str());
+                f = floor(pow(f, scale) * 100 + 0.5) / 100;
+                f = f*amp;
+                values.push_back(f);
             }
             data.push_back(values);
         }
@@ -86,7 +102,7 @@ void DataVisualizer::visualizeFile(string filename, int height, int width) {
         msg.width = width;
         data_pub.publish(msg);
         
-        rate.sleep();
+        ros_rate.sleep();
     }
 }
 

@@ -35,7 +35,7 @@ void GestureVisualizer::gestureCallback(const audiogesture::GestureVector::Const
     rows = msg->height;
     columns = msg->width;
     if(rows*columns != msg->data.size()) {
-        ROS_ERROR("GestureVisualizer not receiving data in correct size of %d x %d", rows, columns);
+        ROS_ERROR("GestureVisualizer not receiving data in correct size of %d x %d. Receiving legnth: %d", rows, columns, msg->data.size());
         return;
     }
     visualization_msgs::MarkerArray markerarray;

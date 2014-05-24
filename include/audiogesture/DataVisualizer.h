@@ -30,6 +30,9 @@ private:
     ros::Publisher data_pub;
     ros::Subscriber file_sub;
     
+    double scale;
+    double amp;
+    int rate;
     string data_dir;
     string filename;
     

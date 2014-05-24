@@ -60,6 +60,7 @@ void DataTransformer::fileCallback(const std_msgs::String::ConstPtr& msg) {
 void DataTransformer::transformFile(string filename) {
     vector<vector<double> > data;
     string line;
+    float f;
     
     ifstream infile(filename.c_str());
     
@@ -69,7 +70,7 @@ void DataTransformer::transformFile(string filename) {
             string val;
             istringstream stream(line);
             while(getline(stream, val, ',')) {
-                float f = atof(val.c_str());
+                f = atof(val.c_str());
                 f = floor(pow(f, scale) * 100 + 0.5) / 100;
                 values.push_back(f);
             }

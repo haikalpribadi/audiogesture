@@ -112,10 +112,13 @@ void FeatureNormalizer::featureVectorCallback(const audiogesture::FeatureVector:
             }
         }
         
-        if(feature_max[i]-feature_min[i] == 0)
+        if(feature_max[i]-feature_min[i] == 0) {
             vector.push_back(0);
-        else
+        } else if (!updateRange) {
+            vector.push_back(min(1.0f,max(0.0f,(msg->data[i]-feature_min[i])/(feature_max[i]-feature_min[i]))));
+        } else {
             vector.push_back((msg->data[i]-feature_min[i])/(feature_max[i]-feature_min[i]));
+        }
     }
     
     msg2.data = vector;
