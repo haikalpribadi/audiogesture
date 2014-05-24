@@ -8,13 +8,18 @@
 #ifndef DATAVISUALIZER_H
 #define	DATAVISUALIZER_H
 
+#include <dirent.h>
 #include <fstream>
 #include <ros/ros.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include "audiogesture/DataFile.h"
 #include "audiogesture/GestureVector.h"
 
 using namespace std;
+
+struct stat sb;
 
 class DataVisualizer {
 public:
@@ -29,6 +34,7 @@ private:
     string filename;
     
     void fileCallback(const audiogesture::DataFile::ConstPtr& msg);
+    void visualizeFile(string filename, int height, int width);
 };
 
 

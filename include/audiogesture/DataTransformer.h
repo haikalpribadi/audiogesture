@@ -8,13 +8,18 @@
 #ifndef DATATRANSFORMER_H
 #define	DATATRANSFORMER_H
 
+#include <dirent.h>
 #include <fstream>
 #include <ros/ros.h>
 #include <std_msgs/String.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include "audiogesture/GestureVector.h"
 
 using namespace std;
+
+struct stat sb;
 
 class DataTransformer {
 public:
@@ -27,7 +32,6 @@ private:
     ros::Rate rate;
     
     string data_dir;
-    string filename;
     double scale;
     
     

@@ -32,13 +32,29 @@ DataTransformer::DataTransformer() : rate(30) {
 
 
 void DataTransformer::fileCallback(const std_msgs::String::ConstPtr& msg) {
-    string filename = msg->data;
+    string path = msg->data;
     
     if(data_dir != "") {
-        filename = data_dir + "/" + filename;
+        path = data_dir + "/" + path;
     }
     
-    transformFile(filename);
+    dirent* de;
+    DIR* dp;
+    errno = 0;
+    dp = opendir(path.c_str());
+    if (dp) {
+        while (true) {
+            errno = 0;
+            de = readdir(dp);
+            if (de == NULL) break;
+            string name = path + "/" + string(de->d_name);
+            if(stat(name.c_str(), &sb) == 0 && !S_ISDIR(sb.st_mode))
+                transformFile(path + "/" + string(de->d_name));
+        }
+        closedir(dp);
+    } else {
+        transformFile(path);
+    }
 }
 
 void DataTransformer::transformFile(string filename) {

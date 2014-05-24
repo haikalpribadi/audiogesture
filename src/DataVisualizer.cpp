@@ -29,14 +29,35 @@ DataVisualizer::DataVisualizer() {
 
 
 void DataVisualizer::fileCallback(const audiogesture::DataFile::ConstPtr& msg) {
-    ros::Rate rate(30);
-    vector<vector<double> > data;
-    string filename = msg->name;
-    string line;
+    string path = msg->name;
     
     if(data_dir != "") {
-        filename = data_dir + "/" + filename;
+        path = data_dir + "/" + path;
     }
+    
+    dirent* de;
+    DIR* dp;
+    errno = 0;
+    dp = opendir(path.c_str());
+    if (dp) {
+        while (true) {
+            errno = 0;
+            de = readdir(dp);
+            if (de == NULL) break;
+            string name = path + "/" + string(de->d_name);
+            if(stat(name.c_str(), &sb) == 0 && !S_ISDIR(sb.st_mode))
+                visualizeFile(path + "/" + string(de->d_name), msg->height, msg->width);
+        }
+        closedir(dp);
+    } else {
+        visualizeFile(path, msg->height, msg->width);
+    }
+}
+
+void DataVisualizer::visualizeFile(string filename, int height, int width) {
+    ros::Rate rate(30);
+    vector<vector<double> > data;
+    string line;
     
     ifstream file(filename.c_str());
     
@@ -59,11 +80,11 @@ void DataVisualizer::fileCallback(const audiogesture::DataFile::ConstPtr& msg) {
     ROS_INFO("DataVisualizer start visualizing: %s", filename.c_str());
     
     for(int i=0; i<data.size() && ros::ok(); i++) {
-        audiogesture::GestureVector msg2;
-        msg2.data.insert(msg2.data.begin(), data[i].begin(), data[i].end());
-        msg2.height = msg->height;
-        msg2.width = msg->width;
-        data_pub.publish(msg2);
+        audiogesture::GestureVector msg;
+        msg.data.insert(msg.data.begin(), data[i].begin(), data[i].end());
+        msg.height = height;
+        msg.width = width;
+        data_pub.publish(msg);
         
         rate.sleep();
     }
