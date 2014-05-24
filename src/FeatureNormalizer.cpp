@@ -20,7 +20,13 @@ FeatureNormalizer::FeatureNormalizer() {
     }
     if (node.getParam("parameter_dir", parameter_dir)) {
         ROS_INFO("FeatureNormalizer using parameter_dir: %s", parameter_dir.c_str());
-    } 
+    }
+
+    features = 1000;
+    if (node.getParam("feature_set", features)) {
+        ROS_INFO("FeatureNormalizer will process and produce %d number of features", features);
+    }
+    
     if (!node.getParam("bextract_args", args)) {
         args = "";
     }
@@ -94,14 +100,16 @@ void FeatureNormalizer::featureVectorCallback(const audiogesture::FeatureVector:
         initialize = false;
     }
     
-    for(int i=0; i<msg->data.size(); i++) {
-        if(msg->data[i] < feature_min[i]) {
-            feature_min[i] = msg->data[i];
-            update = true;
-        }
-        if(msg->data[i] > feature_max[i]) {
-            feature_max[i] = msg->data[i];
-            update = true;
+    for(int i=0; i<msg->data.size() && i<features; i++) {
+        if(updateRange) {
+            if(msg->data[i] < feature_min[i]) {
+                feature_min[i] = msg->data[i];
+                update = true;
+            }
+            if(msg->data[i] > feature_max[i]) {
+                feature_max[i] = msg->data[i];
+                update = true;
+            }
         }
         
         if(feature_max[i]-feature_min[i] == 0)

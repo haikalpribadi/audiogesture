@@ -50,6 +50,7 @@ private:
     vector<float> feature_min;
     vector<float> feature_max;
     
+    int features;
     bool initialize;
     bool output;
     bool update;

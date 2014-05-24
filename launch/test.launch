@@ -3,6 +3,7 @@
 	
 	<param name="bextract_args" value=""/>
 	<param name="experiment_data_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/experiment" />
+	<param name="feature_set" value="31"/>
   <param name="feature_subs" value="1" />
   <param name="filter_peaks" value="false"/>
   <param name="input_mode" value="folder"/>
