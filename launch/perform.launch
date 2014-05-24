@@ -1,20 +1,37 @@
 <!--%Tag(FULL)%-->
 <launch>
   
-	<param name="bextract_args" value=""/>
+  <param name="bextract_args" value=""/>
+	<param name="experiment_data_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/experiment" />
+	<param name="feature_set" value="31"/>
   <param name="feature_subs" value="1" />
   <param name="filter_peaks" value="false"/>
   <param name="input_mode" value="live" />
   <param name="gesture_topic" value="gesture_output" />
   <param name="gesture_range" value="70" />
+  <param name="gesture_rows" value="4"/>
+  <param name="gesture_cols" value="8"/>
   <param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music" />
+  <param name="normalizer_update_range" value="false" />
   <param name="osc_address" value="192.168.1.177" />
   <param name="osc_port" value="8888" />
   <param name="osc_offset" value="40" />
-  <param name="pca_dimension" value="3" />
+  <param name="output_to_file" value="false" />
+  <param name="parameter_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/parameters" />
+  <param name="pca_dimension" value="10" />
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
   <param name="sample_duration" value="0.2" />
   <param name="sample_log" value="100" />
+  <param name="transform_rows" value="32" />
+  <param name="transform_columns" value="48"/>
+  <param name="transform_reduction_x" value="6" />
+  <param name="transform_reduction_y" value="8" />
+  <param name="transform_scale" value="1" />
+  <param name="transform_mult" value="10" />
+  <param name="visualizer_height" value="48" />
+  <param name="visualizer_width" value="64" />
+  <param name="visualizer_scale" value="2" />
+  <param name="visualizer_data_rate" value="30" />
   <param name="wait_for_pca" value="true" />
 
   <node pkg="audiogesture" type="audio_gesture_server" name="AudioGestureServer" output="screen"/>
@@ -46,9 +63,5 @@
 <!--%EndTag(FULL)%-->
 
 <!--
-  <node pkg="rviz" type="rviz" name="RViz" output="screen" />
-	
-	<node pkg="audiogesture" type="pca_extractor" name="PCAExtractor" output="screen"/>
-
-
+  
 -->

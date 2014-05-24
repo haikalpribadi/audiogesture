@@ -33,6 +33,10 @@ private:
     
     string data_dir;
     double scale;
+    int reduction_x;
+    int reduction_y;
+    int rows;
+    int cols;
     
     
     void fileCallback(const std_msgs::String::ConstPtr& msg);

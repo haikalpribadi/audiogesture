@@ -20,7 +20,7 @@
   <param name="parameter_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/parameters" />
   <param name="pca_dimension" value="10" />
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
-  <param name="sample_duration" value="1" />
+  <param name="sample_duration" value="0.2" />
   <param name="sample_log" value="100" />
   <param name="transform_scale" value="1" />
   <param name="transform_mult" value="10" />

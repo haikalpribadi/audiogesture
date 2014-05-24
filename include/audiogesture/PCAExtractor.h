@@ -9,6 +9,7 @@
 #define	PCAEXTRACTOR_H
 
 #include <algorithm>
+#include <ctime>
 #include <dirent.h>
 #include <fstream>
 #include <iostream>

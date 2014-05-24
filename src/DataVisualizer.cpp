@@ -26,6 +26,9 @@ DataVisualizer::DataVisualizer() {
     if(node.getParam("visualizer_data_rate", rate)) {
         ROS_INFO("DataVisualizer using rate: %d", rate);
     }
+    normalize = false;
+    node.getParam("visualizer_normalize", normalize);
+    
     /*
     if(node.getParam("visualize_file", filename)) {
         ROS_INFO("VisualizeData will visualize data from: %s", filename.c_str());
@@ -73,7 +76,7 @@ void DataVisualizer::visualizeFile(string filename, int height, int width) {
     float f;
     
     ifstream file(filename.c_str());
-    
+    float min=0, max=0;
     if(file.is_open()) {
         while(getline(file,line)) {
             vector<double> values;
@@ -84,6 +87,10 @@ void DataVisualizer::visualizeFile(string filename, int height, int width) {
                 f = floor(pow(f, scale) * 100 + 0.5) / 100;
                 f = f*amp;
                 values.push_back(f);
+                if(normalize) {
+                    min = f<min ? f : min;
+                    max = f>max ? f : max;
+                }
             }
             data.push_back(values);
         }
@@ -93,6 +100,17 @@ void DataVisualizer::visualizeFile(string filename, int height, int width) {
         return;
     }
     
+    if(normalize) {
+        for(int i=0; i<data.size(); i++) {
+            for(int j=0; j<data.size(); j++) {
+                if(max-min==0){
+                    data[i][j] = 0;
+                } else {
+                    data[i][j] = (data[i][j]-min)/(max-min)*10;
+                }
+            }
+        }
+    }
     ROS_INFO("DataVisualizer start visualizing: %s", filename.c_str());
     
     for(int i=0; i<data.size() && ros::ok(); i++) {

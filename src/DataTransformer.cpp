@@ -16,7 +16,29 @@ DataTransformer::DataTransformer() : rate(30) {
     }
     scale = 1.4;
     if(node.getParam("transform_scale", scale)) {
-        ROS_INFO("DataTransformer using scale: %f", scale);
+        ROS_INFO("DataTransformer using transform_scale: %f", scale);
+    }
+    reduction_x = 1;
+    if(node.getParam("transform_reduction_x", reduction_x)) {
+        ROS_INFO("DataTransformer using transform_reduction_x scale: %d", reduction_x);
+    }
+    reduction_y = 1;
+    if(node.getParam("transform_reduction_y", reduction_y)) {
+        ROS_INFO("DataTransformer using transform_reduction_y scale: %d", reduction_y);
+    }
+    cols = 48;
+    if(node.getParam("transform_columns", cols)) {
+        ROS_INFO("DataTransformer using transform_columns: %d", cols);
+    } else {
+        ROS_ERROR("DataTransofrmer requires transform_columns to be defined");
+        ros::requestShutdown();
+    }
+    rows = 48;
+    if(node.getParam("transform_rows", rows)) {
+        ROS_INFO("DataTransformer using transform_rows: %d", rows);
+    } else {
+        ROS_ERROR("DataTransofrmer requires transform_rows to be defined");
+        ros::requestShutdown();
     }
     /*
     if(node.getParam("visualize_file", filename)) {
@@ -71,7 +93,7 @@ void DataTransformer::transformFile(string filename) {
             istringstream stream(line);
             while(getline(stream, val, ',')) {
                 f = atof(val.c_str());
-                f = floor(pow(f, scale) * 100 + 0.5) / 100;
+                f = pow(f, scale);
                 values.push_back(f);
             }
             data.push_back(values);
@@ -89,9 +111,22 @@ void DataTransformer::transformFile(string filename) {
     ofstream outfile;
     outfile.open(path.c_str());
     
+    int j;
+    float val;
     for(int i=0; i<data.size(); i++) {
-        for(int j=0; j<data[i].size(); j++) {
-            outfile << data[i][j] << ",";
+        for(int y=0; y<rows; y+=reduction_y) {
+            for(int x=0; x<cols; x+=reduction_x) {
+                val = 0;
+                for(int a=0; a<reduction_y; a++) {
+                    for(int b=0; b<reduction_x; b++) {
+                        j = (y+a)*cols + (x+b);
+                        val += data[i][j];
+                    }
+                }
+                val = val / (reduction_x*reduction_y);
+                val = floor(val * 100 + 0.5) / 100;
+                outfile << val << ",";
+            }
         }
         outfile << endl;
     }

@@ -145,13 +145,19 @@ void PCAExtractor::mapFeatureToGesture() {
 }
 
 void PCAExtractor::process() {
+    std::clock_t start;
+    double duration;
+    start = std::clock();
+    
     node.setParam("pca_complete", false);
     loadPCA();
     solvePCA();
     node.setParam("pca_complete", true);
 
+    duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+    
     ROS_INFO("=====================================");
-    ROS_INFO("Completed processing PCA extractions!");
+    ROS_INFO("Completed processing PCA extractions! Duration: %f", duration);
     ROS_INFO("=====================================");
     
     savePCA();
@@ -159,36 +165,40 @@ void PCAExtractor::process() {
 }
 
 void PCAExtractor::loadPCA() {
-    ROS_INFO("LOADING PCA records for gesture data ... (%d x %d dimension)", gestures[0].size(), gestures[0][0].size());
-    int dimension = gestures[0].size()*gestures[0][0].size();
+    ROS_INFO("LOADING PCA records for gesture data ... (%d dimension)", gestures[0][0].size());
+    bool validFile = true;
+    int dimension = gestures[0][0].size();
     gesture_pca = stats::pca(dimension);
     gesture_pca.set_do_bootstrap(true, 100);
     for(int i=0; i<gestures.size(); i++) {
-        vector<double> gesture;
+        validFile = true;
         for(int j=0; j<gestures[i].size(); j++) {
+            vector<double> gesture;
             for(int k=0; k<gestures[i][j].size(); k++) {
                 gesture.push_back(gestures[i][j][k]);
             }
-        }
-        if(gesture.size()==dimension) {
-            gesture_pca.add_record(gesture);
-        } else {
-            ROS_ERROR("%s has invalid data size", gestureFiles[i].c_str());
+            
+            if(gesture.size()==dimension) {
+                gesture_pca.add_record(gesture);
+            } else {
+                validFile = false;
+                ROS_ERROR("%s has invalid data size", gestureFiles[i].c_str());
+            }
         }
     }
-    
     
     ROS_INFO("LOADING PCA records for feature data ... (%d dimension)", features[0][0].size());
     dimension = features[0][0].size();
     feature_pca = stats::pca(dimension);
     feature_pca.set_do_bootstrap(true, 100);
     for(int i=0; i<features.size(); i++) {
-        bool validFile = true;
+        validFile = true;
         for(int j=0; validFile && j<features[i].size(); j++) {
             vector<double> feature;
             for(int k=0; k<features[i][j].size(); k++) {
                 feature.push_back(features[i][j][k]);
             }
+            
             if(feature.size()==dimension) {
                 feature_pca.add_record(feature);
             } else {
@@ -270,6 +280,18 @@ void PCAExtractor::loadDirectory() {
     gestureFiles = readDirectory(gesture_dir);
     featureFiles = readDirectory(feature_dir);
     
+    for(int i=0; i<gestureFiles.size(); i++) {
+        string path = gesture_dir + "/" + gestureFiles[i];
+        gestures.push_back(loadData(gesture_dir + "/" + gestureFiles[i]));
+    }
+    ROS_INFO("Gesture sample size: %d", gestures.size());
+    
+    for(int i=0; i<featureFiles.size(); i++){
+        features.push_back(loadData(feature_dir + "/" + featureFiles[i]));
+    }
+    ROS_INFO("Feature sample size: %d", features.size());
+    
+    /*
     int count = 0;
     //ROS_INFO("====== Gesture Files ======");
     for(int i=0; i<gestureFiles.size(); i++) {
@@ -299,6 +321,7 @@ void PCAExtractor::loadDirectory() {
         features.push_back(loadData(feature_dir + "/" + featureFiles[i]));
     }
     ROS_INFO("Feature sample size: %d", features.size());
+     */
 }
 
 vector<vector<double > > PCAExtractor::filterPeaks(vector<vector<double> > data) {
