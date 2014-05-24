@@ -51,8 +51,9 @@ private:
     vector<float> feature_max;
     
     bool initialize;
-    bool update;
     bool output;
+    bool update;
+    bool updateRange;
     string music_dir;
     string parameter_dir;
     string parameter_file;

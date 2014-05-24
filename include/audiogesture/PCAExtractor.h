@@ -57,6 +57,7 @@ private:
     vector<vector<double> > featureVectors;
     vector<vector<double> > feature_eigenvectors;
     vector<vector<double> > gesture_eigenvectors;
+    vector<vector<double> > correlation;
     vector<vector<vector<double> > > gestures;
     vector<vector<vector<double> > > features;
     

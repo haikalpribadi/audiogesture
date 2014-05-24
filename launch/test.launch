@@ -9,10 +9,11 @@
   <param name="gesture_topic" value="visualize_data" />
   <param name="gesture_range" value="70" />
   <param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music" />
+  <param name="normalizer_update_range" value="false" />
   <param name="osc_address" value="192.168.1.177" />
   <param name="osc_port" value="8888" />
   <param name="osc_offset" value="40" />
-  <param name="output_to_file" value="false" />
+  <param name="output_to_file" value="true" />
   <param name="parameter_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/parameters" />
   <param name="pca_dimension" value="10" />
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
