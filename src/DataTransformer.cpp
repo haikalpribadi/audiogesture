@@ -33,7 +33,7 @@ DataTransformer::DataTransformer() : rate(30) {
         ROS_ERROR("DataTransofrmer requires transform_columns to be defined");
         ros::requestShutdown();
     }
-    rows = 48;
+    rows = 32;
     if(node.getParam("transform_rows", rows)) {
         ROS_INFO("DataTransformer using transform_rows: %d", rows);
     } else {
@@ -109,11 +109,12 @@ void DataTransformer::transformFile(string filename) {
     
     string name = filename.substr(filename.rfind("/"));
     string path = filename.substr(0, filename.rfind("/"));
-    path += "/transformed";
-    if (!(stat(path.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode))) {
-        mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-    }
-    path += name;
+    stringstream folder;
+    folder << path << "/transformed_" << (int)(rows/reduction_y) << "x" << (int)(cols/reduction_x);
+    remove(folder.str().c_str());
+    mkdir(folder.str().c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    
+    path = folder.str() + name;
     ofstream outfile;
     outfile.open(path.c_str());
     
