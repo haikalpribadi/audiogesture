@@ -86,25 +86,6 @@ void PCARegression::mapFeatureToGesture() {
     }
     cout << endl;
     
-    /*
-    int size = gesture_eigenvectors[0].size();
-    vector<double> gesture_output(size);
-    for(int i=0; i<size; i++)
-        gesture_output[i] = 0.0;
-    
-    for(int i=0; i<dimension; i++) {
-        for(int j=0; j<size; j++) {
-            gesture_output[j] += (gesture_eigenvectors[i][j] * scalars[i]);
-        }
-    }
-    
-    std_msgs::Float64MultiArray msg;
-    for(int i=0; i<gesture_output.size(); i++) {
-        msg.data.push_back(gesture_output[i]);
-    }
-    outputVector_pub.publish(msg);
-    */
-    
     vector<vector<double> > gesture_output;
     for(int i=0; i<gestureRows; i++) {
         vector<double> v;
@@ -296,38 +277,6 @@ void PCARegression::loadDirectory() {
         features.push_back(loadData(feature_dir + "/" + featureFiles[i]));
     }
     ROS_INFO("Feature sample size: %d", features.size());
-    
-    /*
-    int count = 0;
-    //ROS_INFO("====== Gesture Files ======");
-    for(int i=0; i<gestureFiles.size(); i++) {
-        string path = gesture_dir + "/" + gestureFiles[i];
-        //ROS_INFO(gestureFiles[i].c_str());
-        vector<vector<double> > data;
-        if(filter) {
-            data = filterPeaks(loadData(gesture_dir + "/" + gestureFiles[i]));
-            stringstream ss;
-            ss << "gesture" << count << ".gv";
-            gestureFiles[i] = ss.str();
-            ss.str("");
-            ss.clear();
-            ss << gesture_dir << "/gesture" << count++ << ".gv";
-            outputToFile(data, ss.str());
-        } else {
-            data = loadData(gesture_dir + "/" + gestureFiles[i]);
-        }
-        gestures.push_back(data);
-    }
-    ROS_INFO("Gesture sample size: %d", gestures.size());
-    
-    count = 0;
-    //ROS_INFO("====== Feature Files ======");
-    for(int i=0; i<featureFiles.size(); i++){
-        //ROS_INFO(featureFiles[i].c_str());
-        features.push_back(loadData(feature_dir + "/" + featureFiles[i]));
-    }
-    ROS_INFO("Feature sample size: %d", features.size());
-     */
 }
 
 vector<vector<double > > PCARegression::filterPeaks(vector<vector<double> > data) {
