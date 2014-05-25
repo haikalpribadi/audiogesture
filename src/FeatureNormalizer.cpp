@@ -23,7 +23,7 @@ FeatureNormalizer::FeatureNormalizer() {
     }
 
     features = 1000;
-    if (node.getParam("feature_set", features)) {
+    if (node.getParam("feature_size", features)) {
         ROS_INFO("FeatureNormalizer will process and produce %d number of features", features);
     }
     

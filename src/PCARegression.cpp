@@ -41,9 +41,9 @@ PCARegression::PCARegression() {
     node.getParam("gesture_cols", gestureCols);
     ROS_INFO("PCAExtractor is set to use gesture of the size: %d by %d", gestureRows, gestureCols);
     
-    featureDimension = 62;
-    node.getParam("feature_set", featureDimension);
-    ROS_INFO("PCAExtractor is set to use feature_set of size: %d", featureDimension);
+    featureSize = 62;
+    node.getParam("feature_size", featureSize);
+    ROS_INFO("PCAExtractor is set to use feature_size of size: %d", featureSize);
 }
 
 void PCARegression::setupNode() {
@@ -163,8 +163,8 @@ void PCARegression::loadPCA() {
         ros::requestShutdown();
     }
     bool validFile = true;
-    int dimension = gestures[0][0].size();
-    gesture_pca = stats::pca(dimension);
+    int gestureSize = gestures[0][0].size();
+    gesture_pca = stats::pca(gestureSize);
     gesture_pca.set_do_bootstrap(true, 100);
     for(int i=0; i<gestures.size(); i++) {
         validFile = true;
@@ -174,7 +174,7 @@ void PCARegression::loadPCA() {
                 gesture.push_back(gestures[i][j][k]);
             }
             
-            if(gesture.size()==dimension) {
+            if(gesture.size()==gestureSize) {
                 gesture_pca.add_record(gesture);
             } else {
                 validFile = false;
@@ -183,24 +183,23 @@ void PCARegression::loadPCA() {
         }
     }
     
-    ROS_INFO("LOADING PCA records for feature data ... (%d dimension)", featureDimension);
-    if(featureDimension > features[0][0].size()){
-        ROS_ERROR("Dimension of PCA records for feature data (%d) is less than intended feature_set (%d)", 
-                features[0][0].size(), featureDimension);
+    ROS_INFO("LOADING PCA records for feature data ... (%d dimension)", featureSize);
+    if(featureSize > features[0][0].size()){
+        ROS_ERROR("Dimension of PCA records for feature data (%d) is less than intended feature_size (%d)", 
+                features[0][0].size(), featureSize);
         ros::requestShutdown();
     }
-    dimension = featureDimension;
-    feature_pca = stats::pca(dimension);
+    feature_pca = stats::pca(featureSize);
     feature_pca.set_do_bootstrap(true, 100);
     for(int i=0; i<features.size(); i++) {
         validFile = true;
         for(int j=0; validFile && j<features[i].size(); j++) {
             vector<double> feature;
-            for(int k=0; k<min((int)features[i][j].size(), dimension); k++) {
+            for(int k=0; k<min((int)features[i][j].size(), featureSize); k++) {
                 feature.push_back(features[i][j][k]);
             }
             
-            if(feature.size()==dimension) {
+            if(feature.size()==featureSize) {
                 feature_pca.add_record(feature);
             } else {
                 validFile = false;
