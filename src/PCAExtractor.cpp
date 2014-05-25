@@ -34,6 +34,12 @@ PCAExtractor::PCAExtractor() {
     dimension = 3;
     node.getParam("pca_dimension", dimension);
     ROS_INFO("PCAExtractor is set to use %d highest dimension", dimension);
+    
+    gestureRows = 4;
+    gestureCols = 8;
+    node.getParam("gesture_rows", gestureRows);
+    node.getParam("gesture_cols", gestureCols);
+    ROS_INFO("PCAExtractor is set to use gesture of the size: %d by %d", gestureRows, gestureCols);
 }
 
 void PCAExtractor::setupNode() {
@@ -100,9 +106,9 @@ void PCAExtractor::mapFeatureToGesture() {
     */
     
     vector<vector<double> > gesture_output;
-    for(int i=0; i<4; i++) {
+    for(int i=0; i<gestureRows; i++) {
         vector<double> v;
-        for(int j=0; j<8; j++) {
+        for(int j=0; j<gestureCols; j++) {
             v.push_back(0.0);
         }
         gesture_output.push_back(v);
@@ -110,15 +116,15 @@ void PCAExtractor::mapFeatureToGesture() {
     int size = gesture_eigenvectors[0].size();
     for(int i=0; i<dimension; i++) {
         for(int j=0; j<size; j++) {
-            int x = j/8;
-            int y = j - (x*8);
+            int x = j/gestureCols;
+            int y = j - (x*gestureCols);
             gesture_output[x][y] += (gesture_eigenvectors[i][j] * scalars[i]);
         }
     }
     vector<vector<double> > output;
-    for(int i=0; i<4; i++) {
+    for(int i=0; i<gestureRows; i++) {
         vector<double> v;
-        for(int j=0; j<8; j++) {
+        for(int j=0; j<gestureCols; j++) {
             double sum = 0.0;
             for(int x=max(0,i-1); x<=min(3,i+1); x++) {
                 for(int y=max(0,j-1); y<=min(7,j+1); y++) {
@@ -127,20 +133,20 @@ void PCAExtractor::mapFeatureToGesture() {
                     }
                 }
             }
-            double average = sum / 8;
+            double average = sum / gestureCols;
             v.push_back(gesture_output[i][j] + average);
         }
         output.push_back(v);
     }
     
     audiogesture::GestureVector msg;
-    for(int i=0; i<4; i++) {
-        for(int j=0; j<8; j++) {
+    for(int i=0; i<gestureRows; i++) {
+        for(int j=0; j<gestureCols; j++) {
             msg.data.push_back(output[i][j]);
         }
     }
-    msg.height = 4;
-    msg.width = 8;
+    msg.height = gestureRows;
+    msg.width = gestureCols;
     outputVector_pub.publish(msg);
 }
 

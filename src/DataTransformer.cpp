@@ -106,8 +106,14 @@ void DataTransformer::transformFile(string filename) {
     
     ROS_INFO("DataTransformer start transforming: %s", filename.c_str());
     
-    string name = filename.substr(0, filename.rfind("."));
-    string path = name + "-2.gv";
+    
+    string name = filename.substr(filename.rfind("/"));
+    string path = filename.substr(0, filename.rfind("/"));
+    path += "/transformed";
+    if (!(stat(path.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode))) {
+        mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    }
+    path += name;
     ofstream outfile;
     outfile.open(path.c_str());
     

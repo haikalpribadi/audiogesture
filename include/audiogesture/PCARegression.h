@@ -53,6 +53,8 @@ private:
     string feature_dir;
     bool filter;
     int dimension;
+    int gestureRows;
+    int gestureCols;
     vector<string> gestureFiles;
     vector<string> featureFiles;
     vector<vector<double> > featureVectors;
