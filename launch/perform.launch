@@ -18,7 +18,7 @@
   <param name="osc_offset" value="40" />
   <param name="output_to_file" value="false" />
   <param name="parameter_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/parameters" />
-  <param name="pca_dimension" value="10" />
+  <param name="pca_dimension" value="5" />
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
   <param name="sample_duration" value="0.2" />
   <param name="sample_log" value="100" />
