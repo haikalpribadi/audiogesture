@@ -9,6 +9,8 @@
   <param name="input_mode" value="folder"/>
   <param name="gesture_topic" value="visualize_data" />
   <param name="gesture_range" value="70" />
+  <param name="gesture_rows" value="4"/>
+  <param name="gesture_cols" value="8"/>
   <param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music" />
   <param name="normalizer_update_range" value="false" />
   <param name="osc_address" value="192.168.1.177" />
@@ -20,6 +22,10 @@
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
   <param name="sample_duration" value="0.2" />
   <param name="sample_log" value="100" />
+  <param name="transform_rows" value="32" />
+  <param name="transform_columns" value="48"/>
+  <param name="transform_reduction_x" value="6" />
+  <param name="transform_reduction_y" value="8" />
   <param name="transform_scale" value="1" />
   <param name="transform_mult" value="10" />
   <param name="visualizer_height" value="48" />

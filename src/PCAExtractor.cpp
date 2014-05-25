@@ -40,6 +40,10 @@ PCAExtractor::PCAExtractor() {
     node.getParam("gesture_rows", gestureRows);
     node.getParam("gesture_cols", gestureCols);
     ROS_INFO("PCAExtractor is set to use gesture of the size: %d by %d", gestureRows, gestureCols);
+    
+    featureDimension = 62;
+    node.getParam("feature_set", featureDimension);
+    ROS_INFO("PCAExtractor is set to use feature_set of size: %d", featureDimension);
 }
 
 void PCAExtractor::setupNode() {
@@ -172,6 +176,11 @@ void PCAExtractor::process() {
 
 void PCAExtractor::loadPCA() {
     ROS_INFO("LOADING PCA records for gesture data ... (%d dimension)", gestures[0][0].size());
+    if(gestureRows*gestureCols != gestures[0][0].size()){
+        ROS_ERROR("Dimension of PCA records for gesture data (%d) does not match intended gesture_rows (%d) x gesture_cols (%d)", 
+                gestures[0][0].size(), gestureRows, gestureCols);
+        ros::requestShutdown();
+    }
     bool validFile = true;
     int dimension = gestures[0][0].size();
     gesture_pca = stats::pca(dimension);
@@ -193,15 +202,20 @@ void PCAExtractor::loadPCA() {
         }
     }
     
-    ROS_INFO("LOADING PCA records for feature data ... (%d dimension)", features[0][0].size());
-    dimension = features[0][0].size();
+    ROS_INFO("LOADING PCA records for feature data ... (%d dimension)", featureDimension);
+    if(featureDimension > features[0][0].size()){
+        ROS_ERROR("Dimension of PCA records for feature data (%d) is less than intended feature_set (%d)", 
+                features[0][0].size(), featureDimension);
+        ros::requestShutdown();
+    }
+    dimension = featureDimension;
     feature_pca = stats::pca(dimension);
     feature_pca.set_do_bootstrap(true, 100);
     for(int i=0; i<features.size(); i++) {
         validFile = true;
         for(int j=0; validFile && j<features[i].size(); j++) {
             vector<double> feature;
-            for(int k=0; k<features[i][j].size(); k++) {
+            for(int k=0; k<min((int)features[i][j].size(), dimension); k++) {
                 feature.push_back(features[i][j][k]);
             }
             
