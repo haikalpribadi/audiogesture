@@ -39,11 +39,23 @@ PCARegression::PCARegression() {
     gestureCols = 8;
     node.getParam("gesture_rows", gestureRows);
     node.getParam("gesture_cols", gestureCols);
-    ROS_INFO("PCAExtractor is set to use gesture of the size: %d by %d", gestureRows, gestureCols);
+    ROS_INFO("PCARegression is set to use gesture of the size: %d by %d", gestureRows, gestureCols);
     
     featureSize = 62;
     node.getParam("feature_size", featureSize);
-    ROS_INFO("PCAExtractor is set to use feature_size of size: %d", featureSize);
+    ROS_INFO("PCARegression is set to use feature_size of size: %d", featureSize);
+    
+    featureRate = 86.1328;
+    node.getParam("feature_sample_rate", featureRate);
+    ROS_INFO("PCARegression is set to use feature_sample_rate of: %f", featureRate);
+    
+    gestureRate = 30.0;
+    node.getParam("gesture_sample_rate", gestureRate);
+    ROS_INFO("PCARegression is set to use gesture_sample_rate of: %f", gestureRate);
+    
+    gestureDelay = 0.0;
+    node.getParam("gesture_delay", gestureDelay);
+    ROS_INFO("PCARegression is set to use gesture_delay of: %f", gestureDelay);
 }
 
 void PCARegression::setupNode() {
@@ -62,7 +74,7 @@ void PCARegression::featureVectorCallback(const audiogesture::FeatureVector::Con
 
 void PCARegression::extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg) {
     if (msg->status == "end") {
-        mapFeatureToGesture();
+        //mapFeatureToGesture();
     }
 }
 
@@ -111,14 +123,14 @@ void PCARegression::mapFeatureToGesture() {
         vector<double> v;
         for(int j=0; j<gestureCols; j++) {
             double sum = 0.0;
-            for(int x=max(0,i-1); x<=min(3,i+1); x++) {
-                for(int y=max(0,j-1); y<=min(7,j+1); y++) {
+            for(int x=max(0,i-1); x<min(gestureCols,i+2); x++) {
+                for(int y=max(0,j-1); y<min(gestureRows,j+2); y++) {
                     if(x!=i || y!=j) {
                         sum += gesture_output[x][y];
                     }
                 }
             }
-            double average = sum / gestureCols;
+            double average = sum / 8;
             v.push_back(gesture_output[i][j] + average);
         }
         output.push_back(v);
@@ -147,9 +159,19 @@ void PCARegression::process() {
 
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
     
-    ROS_INFO("=====================================");
-    ROS_INFO("Completed processing PCA extractions! Duration: %f", duration);
-    ROS_INFO("=====================================");
+    ROS_INFO("================================================================================");
+    ROS_INFO("Completed processing PCA extractions! Duration: %d seconds", (int)duration);
+    ROS_INFO("================================================================================");
+    
+    solveScalarVectors();
+    
+    start = std::clock();
+    solveCorrelationMatrix();
+    duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+    
+    ROS_INFO("================================================================================");
+    ROS_INFO("Completed regression to compute correlation Matrix! Duration: %d seconds", (int)duration);
+    ROS_INFO("================================================================================");
     
     savePCA();
     
@@ -220,6 +242,79 @@ void PCARegression::solvePCA() {
     feature_pca.solve();
     for(int i=0; i<dimension; i++)
         feature_eigenvectors.push_back(feature_pca.get_eigenvector(i));
+    
+}
+
+void PCARegression::solveScalarVectors() {
+    ROS_INFO("SOLVING scalar vectors ...");
+    
+    double fstep = featureRate / min(featureRate, gestureRate);
+    double gstep = gestureRate / min(featureRate, gestureRate);
+    double scalar;
+    int findex, gindex, counter;
+    int delay = (int)(gestureDelay * gestureRate);
+    
+    cout << "gesture delay (seconds and samples): " << gestureDelay << ", " << delay << endl;
+    cout << "feature rate: " << featureRate << endl;
+    cout << "feature step: " << fstep << endl;
+    cout << "gesture rate: " << gestureRate << endl;
+    cout << "gesture step: " << gstep << endl;
+    
+    string path = pca_dir + "/result/scalar";
+    remove(path.c_str());
+    ofstream file;
+    file.open(path.c_str());
+    
+    for(int f=0; f<features.size(); f++) {
+        for(int g=0; g<gestures.size(); g++) {
+            counter = 0;
+            file << "================================================================================================================" << endl;
+            file << "Feature file " << f+1 << " correlating with Gesture file " << g+1 << endl;
+            file << "================================================================================================================" << endl;
+            for(int i=0; 
+                    (i*fstep)<features[f].size() && 
+                    (i*gstep + delay)<gestures[g].size(); 
+                    i++) {
+                file << "[";
+                vector<double> fscalars;
+                findex = (int)(i*fstep);
+                for(int j=0; j<dimension; j++) {
+                    scalar = inner_product(features[f][findex].begin(), features[f][findex].begin()+featureSize,
+                                                  feature_eigenvectors[j].begin(), 0.0);
+                    scalar = scalar / inner_product(feature_eigenvectors[j].begin(), feature_eigenvectors[j].end(),
+                                                    feature_eigenvectors[j].begin(), 0.0);
+                    fscalars.push_back(scalar);
+                    file << fixed << setprecision(5) << scalar << ", ";
+                }
+                featureScalars.push_back(fscalars);
+                
+                file << "] <----> [";
+                
+                vector<double> gscalars;
+                gindex = (int)(i*gstep) + delay;
+                for(int j=0; j<dimension; j++) {
+                    scalar = inner_product(gestures[g][gindex].begin(), gestures[g][gindex].end(),
+                                                  gesture_eigenvectors[j].begin(), 0.0);
+                    scalar = scalar / inner_product(gesture_eigenvectors[j].begin(), gesture_eigenvectors[j].end(),
+                                                    gesture_eigenvectors[j].begin(), 0.0);
+                    gscalars.push_back(scalar);
+                    file << fixed << setprecision(5) << scalar << ", ";
+                }
+                gestureScalars.push_back(gscalars);
+                
+                file << "]" << endl;
+                counter++;
+            }
+            file << "----------------------------------------------------------------------------------------------------------------" << endl;
+            file << "Total number of correlation samples: " << counter << endl;
+            file << endl << endl << endl;;
+        }
+    }
+}
+
+void PCARegression::solveCorrelationMatrix() {
+    ROS_INFO("SOLVING correlation matrix ...");
+    
     
 }
 

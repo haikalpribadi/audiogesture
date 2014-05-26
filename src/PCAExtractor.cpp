@@ -130,14 +130,14 @@ void PCAExtractor::mapFeatureToGesture() {
         vector<double> v;
         for(int j=0; j<gestureCols; j++) {
             double sum = 0.0;
-            for(int x=max(0,i-1); x<=min(3,i+1); x++) {
-                for(int y=max(0,j-1); y<=min(7,j+1); y++) {
+            for(int x=max(0,i-1); x<min(gestureCols,i+2); x++) {
+                for(int y=max(0,j-1); y<min(gestureRows,j+2); y++) {
                     if(x!=i || y!=j) {
                         sum += gesture_output[x][y];
                     }
                 }
             }
-            double average = sum / gestureCols;
+            double average = sum / 8;
             v.push_back(gesture_output[i][j] + average);
         }
         output.push_back(v);
@@ -166,9 +166,9 @@ void PCAExtractor::process() {
 
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
     
-    ROS_INFO("=====================================");
-    ROS_INFO("Completed processing PCA extractions! Duration: %f", duration);
-    ROS_INFO("=====================================");
+    ROS_INFO("=================================================================");
+    ROS_INFO("Completed processing PCA extractions! Duration: %d seconds", (int)duration);
+    ROS_INFO("=================================================================");
     
     savePCA();
     

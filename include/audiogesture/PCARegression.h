@@ -9,10 +9,13 @@
 #define	PCAREGRESSION_H
 
 #include <algorithm>
+#include <armadillo>
 #include <ctime>
 #include <dirent.h>
 #include <fstream>
 #include <iostream>
+#include <mlpack/core.hpp>
+#include <mlpack/methods/linear_regression/linear_regression.hpp>
 #include <numeric>
 #include <pca.h>
 #include <ros/ros.h>
@@ -28,6 +31,8 @@
 #include "CompareNatural.h"
 
 using namespace std;
+using namespace mlpack;
+using namespace mlpack::regression;
 
 struct stat sb;
 
@@ -56,9 +61,17 @@ private:
     int gestureRows;
     int gestureCols;
     int featureSize;
-    vector<string> gestureFiles;
+    double featureRate;
+    double gestureRate;
+    double gestureDelay;
+    arma::mat featureScals;
+    arma::mat gestureScals;
+    vector<LinearRegression> linear;
     vector<string> featureFiles;
+    vector<string> gestureFiles;
     vector<vector<double> > featureVectors;
+    vector<vector<double> > featureScalars;
+    vector<vector<double> > gestureScalars;
     vector<vector<double> > feature_eigenvectors;
     vector<vector<double> > gesture_eigenvectors;
     vector<vector<double> > correlation;
@@ -76,6 +89,8 @@ private:
     void featureVectorCallback(const audiogesture::FeatureVector::ConstPtr& msg);
     void extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg);
     void mapFeatureToGesture();
+    void solveScalarVectors();
+    void solveCorrelationMatrix();
 };
 
 #endif	/* PCAREGRESSION_H */

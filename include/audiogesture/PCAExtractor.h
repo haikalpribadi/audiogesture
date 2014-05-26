@@ -56,8 +56,8 @@ private:
     int gestureRows;
     int gestureCols;
     int featureSize;
-    vector<string> gestureFiles;
     vector<string> featureFiles;
+    vector<string> gestureFiles;
     vector<vector<double> > featureVectors;
     vector<vector<double> > feature_eigenvectors;
     vector<vector<double> > gesture_eigenvectors;

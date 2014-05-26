@@ -3,14 +3,17 @@
   
   <param name="bextract_args" value=""/>
 	<param name="experiment_data_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/experiment" />
-	<param name="feature_size" value="31"/>
+	<param name="feature_size" value="62"/>
   <param name="feature_subs" value="1" />
+  <param name="feature_sample_rate" value="86.1328"/>
   <param name="filter_peaks" value="false"/>
-  <param name="input_mode" value="live" />
+  <param name="input_mode" value="folder" />
   <param name="gesture_topic" value="gesture_output" />
   <param name="gesture_range" value="70" />
   <param name="gesture_rows" value="4"/>
   <param name="gesture_cols" value="8"/>
+  <param name="gesture_sample_rate" value="30.0"/>
+  <param name="gesture_delay" value="0.3" />
   <param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music" />
   <param name="normalizer_update_range" value="false" />
   <param name="osc_address" value="192.168.1.177" />
@@ -50,11 +53,9 @@
   
   <node pkg="audiogesture" type="gesture_visualizer" name="GestureVisualizer" output="screen"/>
     
-  <node pkg="audiogesture" type="audio_input" name="AudioInput" output="screen"/>
-  
-	<node pkg="audiogesture" type="pca_extractor" name="PCAExtractor" output="screen"/>
   
   
+	<node pkg="audiogesture" type="pca_regression" name="PCARegression" output="screen"/>
   
   <node pkg="rviz" type="rviz" name="RViz" output="screen" />
 	
@@ -63,7 +64,8 @@
 <!--%EndTag(FULL)%-->
 
 <!--
-  <node pkg="oscpack" type="osc_sender" name="OscSender" output="screen"/>
+  <node pkg="audiogesture" type="audio_input" name="AudioInput" output="screen"/>
 
-  
+  <node pkg="audiogesture" type="pca_extractor" name="PCAExtractor" output="screen"/>
+  <node pkg="oscpack" type="osc_sender" name="OscSender" output="screen"/>  
 -->
