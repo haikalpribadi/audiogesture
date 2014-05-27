@@ -31,7 +31,6 @@
 #include "CompareNatural.h"
 
 using namespace std;
-using namespace mlpack;
 using namespace mlpack::regression;
 
 struct stat sb;
@@ -61,14 +60,17 @@ private:
     int gestureRows;
     int gestureCols;
     int featureSize;
+    int gestureScale;
     double featureRate;
     double gestureRate;
     double gestureDelay;
-    arma::mat featureScals;
-    arma::mat gestureScals;
-    vector<LinearRegression> linear;
+    arma::mat correlationMatrix;
+    arma::mat featureScalarMatrix;
+    arma::mat gestureScalarMatrix;
+    vector<LinearRegression> regressionModel;
     vector<string> featureFiles;
     vector<string> gestureFiles;
+    vector<double> featureVector;
     vector<vector<double> > featureVectors;
     vector<vector<double> > featureScalars;
     vector<vector<double> > gestureScalars;

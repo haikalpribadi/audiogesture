@@ -130,8 +130,8 @@ void PCAExtractor::mapFeatureToGesture() {
         vector<double> v;
         for(int j=0; j<gestureCols; j++) {
             double sum = 0.0;
-            for(int x=max(0,i-1); x<min(gestureCols,i+2); x++) {
-                for(int y=max(0,j-1); y<min(gestureRows,j+2); y++) {
+            for(int x=max(0,i-1); x<min(gestureRows,i+2); x++) {
+                for(int y=max(0,j-1); y<min(gestureCols,j+2); y++) {
                     if(x!=i || y!=j) {
                         sum += gesture_output[x][y];
                     }

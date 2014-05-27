@@ -7,13 +7,14 @@
   <param name="feature_subs" value="1" />
   <param name="feature_sample_rate" value="86.1328"/>
   <param name="filter_peaks" value="false"/>
-  <param name="input_mode" value="folder" />
+  <param name="input_mode" value="live" />
   <param name="gesture_topic" value="gesture_output" />
   <param name="gesture_range" value="70" />
   <param name="gesture_rows" value="4"/>
   <param name="gesture_cols" value="8"/>
   <param name="gesture_sample_rate" value="30.0"/>
   <param name="gesture_delay" value="0.3" />
+  <param name="gesture_output_scale" value="700" />
   <param name="music_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/music" />
   <param name="normalizer_update_range" value="false" />
   <param name="osc_address" value="192.168.1.177" />
@@ -21,8 +22,8 @@
   <param name="osc_offset" value="40" />
   <param name="output_to_file" value="false" />
   <param name="parameter_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/parameters" />
-  <param name="pca_dimension" value="5" />
-  <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
+  <param name="pca_dimension" value="3" />
+  <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca/giverny/choral" />
   <param name="sample_duration" value="0.2" />
   <param name="sample_log" value="100" />
   <param name="transform_rows" value="32" />
@@ -30,7 +31,7 @@
   <param name="transform_reduction_x" value="6" />
   <param name="transform_reduction_y" value="8" />
   <param name="transform_scale" value="1" />
-  <param name="transform_mult" value="10" />
+  <param name="transform_mult" value="1" />
   <param name="visualizer_height" value="48" />
   <param name="visualizer_width" value="64" />
   <param name="visualizer_scale" value="2" />
@@ -39,11 +40,11 @@
 
   <node pkg="audiogesture" type="audio_gesture_server" name="AudioGestureServer" output="screen"/>
 
-  <node pkg="audiogesture" type="music_extractor" name="MusicFeatureExtractor" output="screen"/>
+  <node pkg="audiogesture" type="music_extractor" name="MusicFeatureExtractor" output="log"/>
 
   <node pkg="audiogesture" type="music_extractor_buffer" name="MusicFeatureExtractorBuffer" output="screen"/>
 
-  <node pkg="audiogesture" type="sample_listener" name="SampleListener" output="screen"/>
+  <node pkg="audiogesture" type="sample_listener" name="SampleListener" output="log"/>
 
   <node pkg="audiogesture" type="collection_generator" name="CollectionGenerator" output="screen"/>
 
@@ -55,7 +56,7 @@
     
   
   
-	<node pkg="audiogesture" type="pca_regression" name="PCARegression" output="screen"/>
+  <node pkg="audiogesture" type="pca_regression" name="PCARegression" output="screen"/>
   
   <node pkg="rviz" type="rviz" name="RViz" output="screen" />
 	
@@ -66,6 +67,7 @@
 <!--
   <node pkg="audiogesture" type="audio_input" name="AudioInput" output="screen"/>
 
-  <node pkg="audiogesture" type="pca_extractor" name="PCAExtractor" output="screen"/>
+	<node pkg="audiogesture" type="pca_extractor" name="PCAExtractor" output="screen"/>
+  
   <node pkg="oscpack" type="osc_sender" name="OscSender" output="screen"/>  
 -->

@@ -11,9 +11,17 @@ GestureVisualizer::GestureVisualizer() {
     if(node.getParam("gesture_topic", gestureTopic)) {
         gesture_sub = node.subscribe(gestureTopic, 1000, &GestureVisualizer::gestureCallback, this);
         ROS_INFO("GestureVisualizer started listening to /%s and publishing markers", gestureTopic.c_str());
+    } else if(node.getParam("feature_topic", featureTopic)) {
+        feature_sub = node.subscribe(featureTopic, 1000, &GestureVisualizer::featureCallback, this);
+        ROS_INFO("GestureVisualizer started listening to /%s and publishing markers", featureTopic.c_str());
     } else {
         ROS_ERROR("Please set the gesture_topic parameter for GestureVisualizer");
         ros::requestShutdown();
+    }
+    
+    amp = 1.0;
+    if(node.getParam("transform_mult", amp)) {
+        ROS_INFO("DataVisualizer using amp: %f", amp);
     }
     
     if(node.getParam("visualizer_scale", scale)) {
@@ -23,13 +31,30 @@ GestureVisualizer::GestureVisualizer() {
     }
     
     node.param("sample_duration", duration, 0.2);
-    duration = duration * 2;
+    duration = duration * 10;
     
     marker_pub = node.advertise<visualization_msgs::Marker>("visualization_marker", 1000);
     markerarray_pub = node.advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 1000);
     
     shape = visualization_msgs::Marker::CUBE;
 }
+
+void GestureVisualizer::featureCallback(const audiogesture::FeatureVector::ConstPtr& msg) {
+    rows = 1;
+    columns = msg->data.size();
+    
+    visualization_msgs::MarkerArray markerarray;
+    int id;
+    for(int i=0; i<rows; i++) {
+        for(int j=0; j<columns; j++) {
+            id = j + i*columns;
+            markerarray.markers.push_back(createMarker(id, i*scale, j*scale, msg->data[id]*amp));
+        }
+    }
+    // Publish the marker
+    markerarray_pub.publish(markerarray);
+}
+
 
 void GestureVisualizer::gestureCallback(const audiogesture::GestureVector::ConstPtr& msg) {
     rows = msg->height;
@@ -43,7 +68,7 @@ void GestureVisualizer::gestureCallback(const audiogesture::GestureVector::Const
     for(int i=0; i<rows; i++) {
         for(int j=0; j<columns; j++) {
             id = j + i*columns;
-            markerarray.markers.push_back(createMarker(id, i*scale, j*scale, msg->data[id]));
+            markerarray.markers.push_back(createMarker(id, i*scale, j*scale, msg->data[id]*amp));
         }
     }
     // Publish the marker
