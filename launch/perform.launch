@@ -23,8 +23,8 @@
   <param name="output_to_file" value="false" />
   <param name="parameter_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/parameters" />
   <param name="pca_dimension" value="3" />
-  <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca/giverny/choral" />
-  <param name="sample_duration" value="0.2" />
+  <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca/4x8/giverny/choral" />
+  <param name="sample_duration" value="0.05" />
   <param name="sample_log" value="100" />
   <param name="transform_rows" value="32" />
   <param name="transform_columns" value="48"/>
@@ -54,7 +54,7 @@
   
   <node pkg="audiogesture" type="gesture_visualizer" name="GestureVisualizer" output="screen"/>
     
-  
+  <node pkg="audiogesture" type="audio_input" name="AudioInput" output="log"/>
   
   <node pkg="audiogesture" type="pca_regression" name="PCARegression" output="screen"/>
   
@@ -65,7 +65,7 @@
 <!--%EndTag(FULL)%-->
 
 <!--
-  <node pkg="audiogesture" type="audio_input" name="AudioInput" output="screen"/>
+  
 
 	<node pkg="audiogesture" type="pca_extractor" name="PCAExtractor" output="screen"/>
   

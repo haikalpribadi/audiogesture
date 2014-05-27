@@ -89,11 +89,10 @@ void PCARegression::mapFeatureToGesture() {
     
     arma::mat inputScalar(1,dimension+1);
     inputScalar(0,0) = 0;
-    cout << "Input Scalar:\t";
+    
     for(int i=0; i<dimension; i++) {
         inputScalar(0, i+1) = inner_product(featureVector.begin(), featureVector.end(),
-                                      feature_eigenvectors[i].begin(), 0.0); //TODO
-        cout << inputScalar(0,i+1) << ",\t";
+                                      feature_eigenvectors[i].begin(), 0.0);
     }
     
     arma::mat outputScalar = inputScalar * correlationMatrix;
@@ -101,13 +100,10 @@ void PCARegression::mapFeatureToGesture() {
     arma::vec outputVector(gestureRows*gestureCols);
     outputVector.fill(0);
     
-    cout << "Output Scalar:\t";
     for(int i=0; i<dimension; i++) {
-        cout << outputScalar(i) << ",\t";
         arma::vec gestureEigenVector(gesture_eigenvectors[i]);
         outputVector = outputVector + outputScalar(i) * gestureEigenVector;
     }
-    cout << endl;
     
     audiogesture::GestureVector msg;
     for(int i=0; i<outputVector.n_elem; i++) {
@@ -318,9 +314,9 @@ void PCARegression::solveCorrelationMatrix() {
         arma::vec parameters = regression.Parameters();
         for(int j=0; j<parameters.size(); j++) {
             if(j==0)
-                correlationMatrix(j,i) = parameters(j);//TODO
+                correlationMatrix(j,i) = parameters(j);
             else
-                correlationMatrix(j,i) = parameters(j);//TODO
+                correlationMatrix(j,i) = parameters(j);
             
             file << correlationMatrix(j,i) << ",";
         }

@@ -72,7 +72,7 @@ void AudioInput::process() {
     ss.str("");
     ss.clear();
     //rec -c 2 test.wav trim 0 0.2
-    ss << "rec -c 2 " << output << ".wav trim 0 " << duration;
+    ss << "rec -c 2 " << output << ".wav trim 0 " << duration << " 2>/dev/null";
     //ss << "arecord -d " << duration << " -f cd -t wav " << output << ".wav";
     
     command = ss.str();
