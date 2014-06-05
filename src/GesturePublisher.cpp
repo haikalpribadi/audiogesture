@@ -50,10 +50,9 @@ int main(int argc, char** argv) {
     ros::init(argc, argv, "SerialDataPublisher");
     
     GesturePublisher serial;
-    ros::Rate rate(100);
+    ros::Rate rate(1000000);
     
     while(ros::ok()) {
-        ros::spinOnce();
         ros::spinOnce();
         serial.publishGestureVector();
         rate.sleep();

@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
     ros::init(argc, argv, "SamplePlayer");
     
     SamplePlayer player;
-    ros::Rate rate(100);
+    ros::Rate rate(1000000);
     
     while(ros::ok()) {
         ros::spinOnce();

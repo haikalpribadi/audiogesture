@@ -38,7 +38,7 @@ void MusicExtractorBuffer::processBuffer() {
 int main(int argc, char** argv) {
     ros::init(argc, argv, "MusicFeatureExtractorBuffer");
     MusicExtractorBuffer buffer;
-    ros::Rate rate(100);
+    ros::Rate rate(1000000);
     
     
     while(ros::ok()) {

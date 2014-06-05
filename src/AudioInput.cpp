@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
     ros::init(argc, argv, "AudioInput");
 
     AudioInput input;
-    ros::Rate rate(1000);
+    ros::Rate rate(1000000);
     signal(SIGKILL, signalCallback);
     
     usleep(2000000);
