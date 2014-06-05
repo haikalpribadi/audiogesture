@@ -336,6 +336,31 @@ void PCARegression::savePCA() {
     ROS_INFO("SAVING PCA results for feature data ...");
     feature_pca.save("result/feature");
     ROS_INFO("=DONE=");
+    
+    string path = pca_dir + "/result/eigenfeature";
+    remove(path.c_str());
+    ofstream file;
+    file.open(path.c_str());
+    
+    for(int i=0; i<feature_eigenvectors.size(); i++) {
+        for(int j=0; j<feature_eigenvectors[i].size(); j++) {
+            file << fixed << setprecision(5) << feature_eigenvectors[i][j] << ",";
+        }
+        file << endl;
+    }
+    file.close();
+    
+    path = pca_dir + "/result/eigengesture";
+    remove(path.c_str());
+    file.open(path.c_str());
+    
+    for(int i=0; i<gesture_eigenvectors.size(); i++) {
+        for(int j=0; j<gesture_eigenvectors[i].size(); j++) {
+            file << fixed << setprecision(5) << gesture_eigenvectors[i][j] << ",";
+        }
+        file << endl;
+    }
+    file.close();
 }
 
 vector<string> PCARegression::readDirectory(const string& path) {
