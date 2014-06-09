@@ -102,7 +102,7 @@ void DataVisualizer::visualizeFile(string filename, int height, int width) {
     
     if(normalize) {
         for(int i=0; i<data.size(); i++) {
-            for(int j=0; j<data.size(); j++) {
+            for(int j=0; j<data[i].size(); j++) {
                 if(max-min==0){
                     data[i][j] = 0;
                 } else {

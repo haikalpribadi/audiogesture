@@ -14,9 +14,9 @@ DataTransformer::DataTransformer() : rate(30) {
     if(node.getParam("experiment_data_dir", data_dir)) {
         ROS_INFO("DataTransformer using experiment_data_dir: %s", data_dir.c_str());
     }
-    scale = 1.4;
-    if(node.getParam("transform_scale", scale)) {
-        ROS_INFO("DataTransformer using transform_scale: %f", scale);
+    power = 1.4;
+    if(node.getParam("transform_power", power)) {
+        ROS_INFO("DataTransformer using transform_scale: %f", power);
     }
     reduction_x = 1;
     if(node.getParam("transform_reduction_x", reduction_x)) {
@@ -26,6 +26,24 @@ DataTransformer::DataTransformer() : rate(30) {
     if(node.getParam("transform_reduction_y", reduction_y)) {
         ROS_INFO("DataTransformer using transform_reduction_y scale: %d", reduction_y);
     }
+    
+    x_min = 1;
+    if(node.getParam("transform_min_x", x_min)) {
+        ROS_INFO("DataTransformer using transform_min_x scale: %d", x_min);
+    }
+    x_max = 1;
+    if(node.getParam("transform_max_x", x_max)) {
+        ROS_INFO("DataTransformer using transform_max_x scale: %d", x_max);
+    }
+    y_min = 1;
+    if(node.getParam("transform_min_y", y_min)) {
+        ROS_INFO("DataTransformer using transform_min_y scale: %d", y_min);
+    }
+    y_max = 1;
+    if(node.getParam("transform_max_y", y_max)) {
+        ROS_INFO("DataTransformer using transform_max_y scale: %d", y_max);
+    }
+    
     cols = 48;
     if(node.getParam("transform_columns", cols)) {
         ROS_INFO("DataTransformer using transform_columns: %d", cols);
@@ -60,6 +78,23 @@ void DataTransformer::fileCallback(const std_msgs::String::ConstPtr& msg) {
         path = data_dir + "/" + path;
     }
     
+    stringstream folder;
+    int r = min(rows, y_max) - max(y_min, 0);
+    cout << r << endl;
+    int c = min(cols, x_max) - max(x_min, 0);
+    cout << c << endl;
+    folder << path << "/transformed_" << (int)(r/reduction_y) << "x" << (int)(c/reduction_x);
+    
+    string append = "";
+    int i=1;
+    while(stat((folder.str()+append).c_str(), &sb) == 0 && S_ISDIR(sb.st_mode)) {
+        stringstream str;
+        str << "_" << i++;
+        append = str.str();
+    }
+    folder << append;
+    mkdir(folder.str().c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    
     dirent* de;
     DIR* dp;
     errno = 0;
@@ -71,15 +106,15 @@ void DataTransformer::fileCallback(const std_msgs::String::ConstPtr& msg) {
             if (de == NULL) break;
             string name = path + "/" + string(de->d_name);
             if(stat(name.c_str(), &sb) == 0 && !S_ISDIR(sb.st_mode))
-                transformFile(path + "/" + string(de->d_name));
+                transformFile(path + "/" + string(de->d_name), folder.str());
         }
         closedir(dp);
     } else {
-        transformFile(path);
+        transformFile(path, folder.str());
     }
 }
 
-void DataTransformer::transformFile(string filename) {
+void DataTransformer::transformFile(string filename, string outpath) {
     vector<vector<double> > data;
     string line;
     float f;
@@ -93,7 +128,7 @@ void DataTransformer::transformFile(string filename) {
             istringstream stream(line);
             while(getline(stream, val, ',')) {
                 f = atof(val.c_str());
-                f = pow(f, scale);
+                f = pow(f, power);
                 values.push_back(f);
             }
             data.push_back(values);
@@ -108,21 +143,16 @@ void DataTransformer::transformFile(string filename) {
     
     
     string name = filename.substr(filename.rfind("/"));
-    string path = filename.substr(0, filename.rfind("/"));
-    stringstream folder;
-    folder << path << "/transformed_" << (int)(rows/reduction_y) << "x" << (int)(cols/reduction_x);
-    remove(folder.str().c_str());
-    mkdir(folder.str().c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     
-    path = folder.str() + name;
+    string path = outpath + name;
     ofstream outfile;
     outfile.open(path.c_str());
     
     int j;
     float val;
     for(int i=0; i<data.size(); i++) {
-        for(int y=0; y<rows; y+=reduction_y) {
-            for(int x=0; x<cols; x+=reduction_x) {
+        for(int y=max(0,y_min); y<rows && y<y_max; y+=reduction_y) {
+            for(int x=max(0,x_min); x<cols && x<x_max; x+=reduction_x) {
                 val = 0;
                 for(int a=0; a<reduction_y; a++) {
                     for(int b=0; b<reduction_x; b++) {

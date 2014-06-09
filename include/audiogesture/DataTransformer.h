@@ -32,15 +32,19 @@ private:
     ros::Rate rate;
     
     string data_dir;
-    double scale;
+    double power;
     int reduction_x;
     int reduction_y;
     int rows;
     int cols;
+    int x_min;
+    int x_max;
+    int y_min;
+    int y_max;
     
     
     void fileCallback(const std_msgs::String::ConstPtr& msg);
-    void transformFile(string filename);
+    void transformFile(string filename, string outpath);
 };
 
 #endif	/* DATATRANSFORMER_H */

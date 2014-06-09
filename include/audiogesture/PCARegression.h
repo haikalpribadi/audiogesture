@@ -14,6 +14,7 @@
 #include <dirent.h>
 #include <fstream>
 #include <iostream>
+#include <math.h>
 #include <mlpack/core.hpp>
 #include <mlpack/methods/linear_regression/linear_regression.hpp>
 #include <numeric>
@@ -21,6 +22,7 @@
 #include <ros/ros.h>
 #include <sstream>
 #include <std_msgs/Float64MultiArray.h>
+#include <std_msgs/String.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <vector>
@@ -28,6 +30,7 @@
 #include "audiogesture/ExtractorStatus.h"
 #include "audiogesture/FeatureVector.h"
 #include "audiogesture/GestureVector.h"
+#include "audiogesture/OutputRecord.h"
 #include "CompareNatural.h"
 
 using namespace std;
@@ -46,7 +49,9 @@ private:
     ros::NodeHandle node;
     ros::Subscriber featureVector_sub;
     ros::Subscriber extractorStatus_sub;
+    ros::Subscriber recordStatus_sub;
     ros::Publisher outputVector_pub;
+    ros::Publisher outputRecord_pub;
     
     stats::pca gesture_pca;
     stats::pca feature_pca;
@@ -56,6 +61,7 @@ private:
     string gesture_dir;
     string feature_dir;
     bool filter;
+    bool record;
     int dimension;
     int gestureRows;
     int gestureCols;
@@ -65,15 +71,15 @@ private:
     double gestureRate;
     double gestureDelay;
     arma::mat correlationMatrix;
-    arma::mat featureScalarMatrix;
-    arma::mat gestureScalarMatrix;
+    arma::mat featureMagnitudeMatrix;
+    arma::mat gestureMagnitudeMatrix;
     vector<LinearRegression> regressionModel;
     vector<string> featureFiles;
     vector<string> gestureFiles;
     vector<double> featureVector;
     vector<vector<double> > featureVectors;
-    vector<vector<double> > featureScalars;
-    vector<vector<double> > gestureScalars;
+    vector<vector<double> > featureMagnitudes;
+    vector<vector<double> > gestureMagnitudes;
     vector<vector<double> > feature_eigenvectors;
     vector<vector<double> > gesture_eigenvectors;
     vector<vector<double> > correlation;
@@ -86,10 +92,11 @@ private:
     
     void loadPCA();
     void solvePCA();
-    void savePCA();
+    void saveResults();
     void outputToFile(const vector<vector<double> >& data, const string& path);
     void featureVectorCallback(const audiogesture::FeatureVector::ConstPtr& msg);
     void extractorStatusCallback(const audiogesture::ExtractorStatus::ConstPtr& msg);
+    void recordCallback(const std_msgs::String::ConstPtr& msg);
     void mapFeatureToGesture();
     void solveScalarVectors();
     void solveCorrelationMatrix();

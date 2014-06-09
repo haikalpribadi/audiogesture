@@ -25,6 +25,7 @@ PCARegression::PCARegression() {
         ros::requestShutdown();
     }
     
+    record = false;
     filter = false;
     if(node.getParam("filter_peaks", filter)) {
         if(filter) {
@@ -64,12 +65,24 @@ PCARegression::PCARegression() {
 
 void PCARegression::setupNode() {
     outputVector_pub = node.advertise<audiogesture::GestureVector>("gesture_output", 1000);
+    outputRecord_pub = node.advertise<audiogesture::OutputRecord>("output_record", 1000);
     
     featureVector_sub = node.subscribe("feature_vector", 1000,
             &PCARegression::featureVectorCallback, this);
     extractorStatus_sub = node.subscribe("extractor_status", 1000,
             &PCARegression::extractorStatusCallback, this);
+    recordStatus_sub = node.subscribe("record_status", 1000,
+            &PCARegression::recordCallback, this);
 }
+
+void PCARegression::recordCallback(const std_msgs::String::ConstPtr& msg) {
+    if(msg->data == "start") {
+        record = true;
+    } else if(msg->data == "stop") {
+        record = false;
+    }
+}
+
 
 void PCARegression::featureVectorCallback(const audiogesture::FeatureVector::ConstPtr& msg) {
     //vector<double> feature(msg->data.begin(), msg->data.end());
@@ -87,11 +100,10 @@ void PCARegression::mapFeatureToGesture() {
     if(featureVector.size()==0)
         return;
     
-    arma::mat inputScalar(1,dimension+1);
-    inputScalar(0,0) = 0;
+    arma::mat inputScalar(1,dimension);
     
     for(int i=0; i<dimension; i++) {
-        inputScalar(0, i+1) = inner_product(featureVector.begin(), featureVector.end(),
+        inputScalar(0, i) = inner_product(featureVector.begin(), featureVector.end(),
                                       feature_eigenvectors[i].begin(), 0.0);
     }
     
@@ -107,12 +119,27 @@ void PCARegression::mapFeatureToGesture() {
     
     audiogesture::GestureVector msg;
     for(int i=0; i<outputVector.n_elem; i++) {
-        msg.data.push_back(outputVector(i));
+        double dat = outputVector(i) > 0 ? outputVector(i) : -1*outputVector(i);
+        dat = dat + 1;
+        dat = log(dat)/log(1.4);
+        dat = dat - 1;
+        //dat = pow(dat, 2)/4;
+        msg.data.push_back(dat);
+        //msg.data.push_back(outputVector(i));
     }
     
     msg.height = gestureRows;
     msg.width = gestureCols;
     outputVector_pub.publish(msg);
+    
+    if(record) {
+        audiogesture::OutputRecord msg2;
+        msg2.feature_data.insert(msg2.feature_data.begin(), featureVector.begin(), featureVector.end());
+        msg2.gesture_data = msg.data;
+        msg2.gesture_height = gestureRows;
+        msg2.gesture_width = gestureCols;
+        outputRecord_pub.publish(msg2);
+    }
 }
 
 void PCARegression::process() {
@@ -141,7 +168,7 @@ void PCARegression::process() {
     ROS_INFO("Completed regression to compute correlation Matrix! Duration: %d seconds", (int)duration);
     ROS_INFO("================================================================================");
     
-    savePCA();
+    saveResults();
     
 }
 
@@ -233,6 +260,20 @@ void PCARegression::solveScalarVectors() {
     ofstream file;
     file.open(path.c_str());
     
+    vector<vector<double> > feature_out;
+    path = pca_dir + "/result/featuremagnitude";
+    remove(path.c_str());
+    ofstream file2;
+    file2.open(path.c_str());
+    bool featuremagnitude_ext = false;
+    
+    vector<vector<double> > gesture_out;
+    path = pca_dir + "/result/gesturemagnitude";
+    remove(path.c_str());
+    ofstream file3;
+    file3.open(path.c_str());
+    bool gesturemagnitude_ext = false;
+    
     for(int f=0; f<features.size(); f++) {
         for(int g=0; g<gestures.size(); g++) {
             counter = 0;
@@ -256,7 +297,9 @@ void PCARegression::solveScalarVectors() {
                     file << fixed << setprecision(5) << scalar << ", ";
                 }
                 //featureScals << arma::endr;
-                featureScalars.push_back(fscalars);
+                featureMagnitudes.push_back(fscalars);
+                if(!featuremagnitude_ext)
+                  feature_out.push_back(fscalars);
                 
                 file << "] <----> [";
                 
@@ -272,51 +315,70 @@ void PCARegression::solveScalarVectors() {
                     file << fixed << setprecision(5) << scalar << ", ";
                 }
                 //gestureScals << arma::endr;
-                gestureScalars.push_back(gscalars);
+                gestureMagnitudes.push_back(gscalars);
+                if(!gesturemagnitude_ext)
+                  gesture_out.push_back(gscalars);
                 
                 file << "]" << endl;
                 counter++;
             }
+            featuremagnitude_ext = true;
+            gesturemagnitude_ext = true;
+            
             file << "----------------------------------------------------------------------------------------------------------------" << endl;
             file << "Total number of correlation samples: " << counter << endl;
             file << endl << endl << endl;
             total += counter;
         }
     }
-    featureScalarMatrix = arma::mat(total,dimension);
-    gestureScalarMatrix = arma::mat(total,dimension);
+    featureMagnitudeMatrix = arma::mat(total,dimension);
+    gestureMagnitudeMatrix = arma::mat(total,dimension);
 
     for(int i=0; i<total; i++) {
         for(int j=0; j<dimension; j++) {
-            featureScalarMatrix(i,j) = featureScalars[i][j];
-            gestureScalarMatrix(i,j) = gestureScalars[i][j];
+            featureMagnitudeMatrix(i,j) = featureMagnitudes[i][j];
+            gestureMagnitudeMatrix(i,j) = gestureMagnitudes[i][j];
         }
     }
+    
+    for(int j=0; j<feature_out[0].size(); j++) {
+      for(int i=0; i<feature_out.size(); i++) {
+        file2 << fixed << setprecision(5) << feature_out[i][j] << ",";
+      }
+      file2 << endl;
+    }
+    file2.close();
+    
+    
+    for(int j=0; j<gesture_out[0].size(); j++) {
+      for(int i=0; i<gesture_out.size(); i++) {
+        file3 << fixed << setprecision(5) << gesture_out[i][j] << ",";
+      }
+      file3 << endl;
+    }
+    file3.close();
 
-    cout << "Feature Scalar Matrix: " << featureScalarMatrix.n_rows << " (rows) x " << featureScalarMatrix.n_cols << " (cols)" << endl;
-    cout << "Gesture Scalar Matrix: " << gestureScalarMatrix.n_rows << " (rows) x " << gestureScalarMatrix.n_cols << " (cols)" << endl;
+    cout << "Feature Scalar Matrix: " << featureMagnitudeMatrix.n_rows << " (rows) x " << featureMagnitudeMatrix.n_cols << " (cols)" << endl;
+    cout << "Gesture Scalar Matrix: " << gestureMagnitudeMatrix.n_rows << " (rows) x " << gestureMagnitudeMatrix.n_cols << " (cols)" << endl;
 }
 
 void PCARegression::solveCorrelationMatrix() {
     ROS_INFO("SOLVING correlation matrix ...");
     
-    correlationMatrix = arma::mat(dimension+1, dimension);
+    correlationMatrix = arma::mat(dimension, dimension);
     string path = pca_dir + "/result/correlation";
     remove(path.c_str());
     ofstream file;
     file.open(path.c_str());
     
     for(int i=0; i<dimension; i++) {
-        arma::vec res = gestureScalarMatrix.col(i);
-        LinearRegression regression(featureScalarMatrix.t(), res);
+        arma::vec res = gestureMagnitudeMatrix.col(i);
+        LinearRegression regression(featureMagnitudeMatrix.t(), res);
         regressionModel.push_back(regression);
         
         arma::vec parameters = regression.Parameters();
-        for(int j=0; j<parameters.size(); j++) {
-            if(j==0)
-                correlationMatrix(j,i) = parameters(j);
-            else
-                correlationMatrix(j,i) = parameters(j);
+        for(int j=0; j<parameters.size()-1; j++) {
+            correlationMatrix(j,i) = parameters(j+1);
             
             file << correlationMatrix(j,i) << ",";
         }
@@ -327,7 +389,7 @@ void PCARegression::solveCorrelationMatrix() {
     cout << "Correlation Matrix: " << correlationMatrix.n_rows << " (rows) x " << correlationMatrix.n_cols << " (cols)" << endl;
 }
 
-void PCARegression::savePCA() {
+void PCARegression::saveResults() {
     if(!(stat("result", &sb) == 0 && S_ISDIR(sb.st_mode))) {
         mkdir("result", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     }
@@ -359,6 +421,22 @@ void PCARegression::savePCA() {
             file << fixed << setprecision(5) << gesture_eigenvectors[i][j] << ",";
         }
         file << endl;
+    }
+    file.close();
+    
+    path = pca_dir + "/result/eigenvalue_feature";
+    remove(path.c_str());
+    file.open(path.c_str());
+    for(int i=0; i<feature_pca.get_num_variables(); i++) {
+      file << fixed << setprecision(5) << feature_pca.get_eigenvalue(i) << ",";
+    }
+    file.close();
+    
+    path = pca_dir + "/result/eigenvalue_gesture";
+    remove(path.c_str());
+    file.open(path.c_str());
+    for(int i=0; i<gesture_pca.get_num_variables(); i++) {
+      file << fixed << setprecision(5) << gesture_pca.get_eigenvalue(i) << ",";
     }
     file.close();
 }

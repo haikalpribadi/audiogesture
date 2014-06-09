@@ -32,7 +32,7 @@ private:
     
     double scale;
     double amp;
-    int rate;
+    double rate;
     bool normalize;
     string data_dir;
     string filename;

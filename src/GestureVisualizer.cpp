@@ -30,8 +30,8 @@ GestureVisualizer::GestureVisualizer() {
         scale = 2;
     }
     
-    node.param("sample_duration", duration, 0.2);
-    duration = duration * 10;
+    node.param("sample_duration", duration, 5.0);
+    duration = 2 / duration;
     
     marker_pub = node.advertise<visualization_msgs::Marker>("visualization_marker", 1000);
     markerarray_pub = node.advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 1000);

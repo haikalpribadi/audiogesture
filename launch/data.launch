@@ -2,7 +2,7 @@
 <launch>
   
 	<param name="bextract_args" value=""/>
-	<param name="experiment_data_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/experiment" />
+	<param name="experiment_data_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/experiment/gestures" />
 	<param name="feature_set" value="31"/>
   <param name="feature_subs" value="1" />
   <param name="filter_peaks" value="false"/>
@@ -18,20 +18,25 @@
   <param name="osc_offset" value="40" />
   <param name="output_to_file" value="false" />
   <param name="parameter_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/parameters" />
-  <param name="pca_dimension" value="10" />
+  <param name="pca_dimension" value="3" /> 
   <param name="pca_dir" value="/home/haikalpribadi/Workspace/ROS/radiophonic/dir/pca" />
-  <param name="sample_duration" value="1" />
+  <param name="sample_duration" value="-1" />
   <param name="sample_log" value="100" />
   <param name="transform_rows" value="32" />
   <param name="transform_columns" value="48"/>
-  <param name="transform_reduction_x" value="3" />
-  <param name="transform_reduction_y" value="4" />
+  <param name="transform_min_x" value="2" />
+  <param name="transform_max_x" value="42" />
+  <param name="transform_min_y" value="2" />
+  <param name="transform_max_y" value="30" />
+  <param name="transform_reduction_x" value="5" />
+  <param name="transform_reduction_y" value="7" />
+  <param name="transform_power" value="1.3" />
   <param name="transform_scale" value="1" />
-  <param name="transform_mult" value="10" />
+  <param name="transform_mult" value="1" />
   <param name="visualizer_height" value="48" />
   <param name="visualizer_width" value="64" />
   <param name="visualizer_scale" value="2" />
-  <param name="visualizer_data_rate" value="1" />
+  <param name="visualizer_data_rate" value="30" />
   <param name="visualizer_normalize" value="false" />
   <param name="wait_for_pca" value="true" />
   
