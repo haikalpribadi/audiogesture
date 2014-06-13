@@ -31,6 +31,7 @@
 #include "audiogesture/FeatureVector.h"
 #include "audiogesture/GestureVector.h"
 #include "audiogesture/OutputRecord.h"
+#include "audiogesture/MagnitudeRecord.h"
 #include "CompareNatural.h"
 
 using namespace std;
@@ -52,6 +53,7 @@ private:
     ros::Subscriber recordStatus_sub;
     ros::Publisher outputVector_pub;
     ros::Publisher outputRecord_pub;
+    ros::Publisher magnitudeRecord_pub;
     
     stats::pca gesture_pca;
     stats::pca feature_pca;

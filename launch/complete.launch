@@ -9,7 +9,7 @@
   <param name="filter_peaks" value="false"/>
   <param name="input_mode" value="live" />
   <param name="gesture_output" value="gesture_output" />
-  <param name="gesture_input" value="gesture_output" />
+  <param name="gesture_input" value="gesture_kinect_input" />
   <param name="gesture_range" value="70" />
   <param name="gesture_rows" value="4"/>
   <param name="gesture_cols" value="8"/>
@@ -38,30 +38,52 @@
   <param name="visualizer_scale" value="2" />
   <param name="visualizer_data_rate" value="30" />
   <param name="wait_for_pca" value="true" />
-
-  <node pkg="audiogesture" type="audio_gesture_server" name="AudioGestureServer" output="screen"/>
-
-  <node pkg="audiogesture" type="music_extractor" name="MusicFeatureExtractor" output="log"/>
-
-  <node pkg="audiogesture" type="music_extractor_buffer" name="MusicFeatureExtractorBuffer" output="screen"/>
-
-  <node pkg="audiogesture" type="sample_listener" name="SampleListener" output="log"/>
-
-  <node pkg="audiogesture" type="collection_generator" name="CollectionGenerator" output="screen"/>
-
-  <node pkg="audiogesture" type="feature_normalizer" name="FeatureNormalizer" output="screen"/>
   
-  <node pkg="audiogesture" type="gesture_output" name="GestureOutput" output="screen"/>
-  
-  <node pkg="audiogesture" type="gesture_visualizer" name="GestureVisualizer" output="screen"/>
-    
+  <param name="kinect_x_min" value="45"/>
+	<param name="kinect_x_max" value="525"/>
+  <param name="kinect_y_min" value="40"/>
+  <param name="kinect_y_max" value="360"/>
+  <param name="kinect_z_min" value="0"/>
+  <param name="kinect_z_max" value="200"/>
+  <param name="kinect_filter_size_n" value="5"/>
+  <param name="kinect_smoothing" value="true"/>
+
   <node pkg="audiogesture" type="audio_input" name="AudioInput" output="log"/>
-  
-  <node pkg="audiogesture" type="pca_regression" name="PCARegression" output="screen"/>
-  
+  <node pkg="audiogesture" type="audio_gesture_server" name="AudioGestureServer" output="screen"/>
+  <node pkg="audiogesture" type="audio_gesture_trainer" name="AudioGestureTrainer" output="screen"/>
+  <node pkg="audiogesture" type="collection_generator" name="CollectionGenerator" output="screen"/>
+  <node pkg="audiogesture" type="data_transformer" name="DataTransfomer" output="screen" />
+  <node pkg="audiogesture" type="data_visualizer" name="DataVisualizer" output="screen" />
+  <node pkg="audiogesture" type="feature_normalizer" name="FeatureNormalizer" output="screen"/>
+  <node pkg="audiogesture" type="gesture_kinect_input" name="GestureKinectInput" output="screen"/>
+  <node pkg="audiogesture" type="gesture_output" name="GestureOutput" output="screen"/>
+  <node pkg="audiogesture" type="gesture_publisher" name="GesturePublisher" output="screen"/>
+  <node pkg="audiogesture" type="gesture_receiver" name="GestureReceiver0" output="screen">
+	  <param name="trainer_topic" value="trainer_log_status"/>
+	</node>
+	<node pkg="audiogesture" type="gesture_receiver" name="GestureReceiver1" output="screen">
+	  <param name="trainer_topic" value="trainer_status"/>
+	</node>
+  <node pkg="audiogesture" type="gesture_visualizer" name="GestureVisualizer" output="screen"/>
+  <node pkg="audiogesture" type="music_extractor" name="MusicFeatureExtractor" output="log"/>
+  <node pkg="audiogesture" type="music_extractor_buffer" name="MusicFeatureExtractorBuffer" output="screen"/>
   <node pkg="audiogesture" type="output_recorder" name="OutputRecorder" output="screen"/>
+  <node pkg="audiogesture" type="pca_regression" name="PCARegression" output="screen"/>
+  <node pkg="audiogesture" type="sample_listener" name="SampleListener" output="log"/>
+  <node pkg="audiogesture" type="sample_player" name="SamplePlayer" output="screen"/>
+  
+  
+  <node pkg="serialport" type="serial_port_reader" name="SerialPortReader0" output="screen">
+	  <param name="port" value="/dev/ttyACM0"/>
+	</node>
+	
+	<node pkg="serialport" type="serial_port_reader" name="SerialPortReader1" output="screen">
+	  <param name="port" value="/dev/ttyACM1"/>
+	</node>
   
 	
+  <node pkg="oscpack" type="osc_sender" name="OscSender" output="screen"/> 
+  
 </launch>
   
 <!--%EndTag(FULL)%-->

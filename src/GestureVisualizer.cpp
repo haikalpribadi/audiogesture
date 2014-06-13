@@ -8,7 +8,7 @@
 #include "GestureVisualizer.h"
 
 GestureVisualizer::GestureVisualizer() {
-    if(node.getParam("gesture_topic", gestureTopic)) {
+    if(node.getParam("gesture_output", gestureTopic)) {
         gesture_sub = node.subscribe(gestureTopic, 1000, &GestureVisualizer::gestureCallback, this);
         ROS_INFO("GestureVisualizer started listening to /%s and publishing markers", gestureTopic.c_str());
     } else if(node.getParam("feature_topic", featureTopic)) {

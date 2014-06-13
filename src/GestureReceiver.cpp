@@ -27,7 +27,7 @@ GestureReceiver::GestureReceiver() {
         ROS_ERROR("Please set trainer_topic for %s", nh.getNamespace().c_str());
         ros::requestShutdown();
     }
-    if(node.getParam("gesture_topic", gesture_topic)) {
+    if(node.getParam("gesture_input", gesture_topic)) {
         ROS_INFO("GestureReceiver has subscribed to %s", gesture_topic.c_str());
     }
     else {

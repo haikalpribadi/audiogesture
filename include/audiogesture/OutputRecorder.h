@@ -19,6 +19,7 @@
 #include <vector>
 
 #include "audiogesture/OutputRecord.h"
+#include "audiogesture/MagnitudeRecord.h"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ private:
     ros::NodeHandle node;
     ros::Subscriber output_sub;
     ros::Subscriber status_sub;
+    ros::Subscriber magnitude_sub;
     
     bool record;
     int recordCounter;
@@ -39,9 +41,14 @@ private:
     string pca_dir;
     ofstream featureFile;
     ofstream gestureFile;
+    ofstream featureMagFile;
+    ofstream gestureMagFile;
+    vector<vector<float> > featureMagnitudes;
+    vector<vector<float> > gestureMagnitudes;
     
     void recordCallback(const audiogesture::OutputRecord::ConstPtr& msg);
     void statusCallback(const std_msgs::String::ConstPtr& msg);
+    void magnitudeCallback(const audiogesture::MagnitudeRecord::ConstPtr& msg);
 };
 
 #endif	/* OUTPUTRECORDER_H */

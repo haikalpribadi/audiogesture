@@ -66,6 +66,7 @@ PCARegression::PCARegression() {
 void PCARegression::setupNode() {
     outputVector_pub = node.advertise<audiogesture::GestureVector>("gesture_output", 1000);
     outputRecord_pub = node.advertise<audiogesture::OutputRecord>("output_record", 1000);
+    magnitudeRecord_pub = node.advertise<audiogesture::MagnitudeRecord>("magnitude_record",1000);
     
     featureVector_sub = node.subscribe("feature_vector", 1000,
             &PCARegression::featureVectorCallback, this);
@@ -108,7 +109,7 @@ void PCARegression::mapFeatureToGesture() {
     }
     
     arma::mat outputScalar = inputScalar * correlationMatrix;
-    outputScalar = outputScalar * -1 * gestureScale;
+    outputScalar = outputScalar * -1;
     arma::vec outputVector(gestureRows*gestureCols);
     outputVector.fill(0);
     
@@ -120,9 +121,10 @@ void PCARegression::mapFeatureToGesture() {
     audiogesture::GestureVector msg;
     for(int i=0; i<outputVector.n_elem; i++) {
         double dat = outputVector(i) > 0 ? outputVector(i) : -1*outputVector(i);
+        dat = dat * gestureScale;
         dat = dat + 1;
         dat = log(dat)/log(1.4);
-        dat = dat - 1;
+        dat = dat * gestureScale;
         //dat = pow(dat, 2)/4;
         msg.data.push_back(dat);
         //msg.data.push_back(outputVector(i));
@@ -139,6 +141,13 @@ void PCARegression::mapFeatureToGesture() {
         msg2.gesture_height = gestureRows;
         msg2.gesture_width = gestureCols;
         outputRecord_pub.publish(msg2);
+        
+        audiogesture::MagnitudeRecord msg3;
+        for(int i=0; i<inputScalar.n_elem; i++)
+            msg3.feature_data.push_back(inputScalar(i));
+        for(int i=0; i<outputScalar.n_elem; i++)
+            msg3.gesture_data.push_back(outputScalar(i));
+        magnitudeRecord_pub.publish(msg3);
     }
 }
 
