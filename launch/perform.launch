@@ -70,7 +70,6 @@
 <!--
 
 just testing a file change
-
 <node pkg="audiogesture" type="output_recorder" name="OutputRecorder" output="screen"/>
 	<node pkg="audiogesture" type="pca_extractor" name="PCAExtractor" output="screen"/>
   
